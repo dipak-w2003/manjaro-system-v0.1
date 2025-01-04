@@ -504,3 +504,10 @@ export const sysLoad = [
         "isSuccess": true
     }
 ]
+
+export type ISysLoad = {
+    id: number;
+    isSuccess: boolean;
+    comment: string;
+};
+

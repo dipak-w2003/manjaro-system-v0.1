@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 type IsBootedType = {
   isBoot: boolean;
@@ -15,8 +15,6 @@ const IsBootedContext = React.createContext<IsBootedType | undefined>(
 
 export const BootedContextProvider: React.FC<INode> = ({ children }) => {
   const [isBoot, setIsBoot] = useState<boolean>(false);
-
-  // Function to update boot state
   const settingBoot = () => {
     setIsBoot((prev) => (prev = true));
   };

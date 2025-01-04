@@ -1,21 +1,19 @@
-import { sysLoad } from "./systemBootings";
+import { sysLoad, ISysLoad } from "./systemBootings";
 import React, { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
-import videoF from "./loading.mp4";
+// ? context
 import { useIsBootedContext } from "@/context/1-isBooted/isBootedContext";
-type ISysLoad = {
-  id: number;
-  isSuccess: boolean;
-  comment: string;
-};
+// ? session
+import { getIsBooted, setIsBooted } from "@/constants/sessionStorage";
+import videoF from "./loading.mp4";
 const SystemLogInfo1 = () => {
-  const [sys, setSys] = useState<ISysLoad[]>(sysLoad);
+  const [sys, _] = useState<ISysLoad[]>(sysLoad);
   const [sysIndex, setSysIndex] = useState<number>(0);
-  const { setIsBoot, isBoot } = useIsBootedContext();
+  const { setIsBoot } = useIsBootedContext();
 
   useEffect(() => {
     // Stop incrementing at the last index
     if (sysIndex >= sys.length - 1) {
+      setIsBooted();
       setIsBoot();
       return;
     }
@@ -24,7 +22,8 @@ const SystemLogInfo1 = () => {
       setSysIndex((prev) => Math.min(prev + 1, sys.length - 1));
     }, 133);
 
-    return () => clearTimeout(timer); // Cleanup timeout on unmount
+    // Cleanup timeout on unmount
+    return () => clearTimeout(timer);
   }, [sysIndex, sys.length]);
 
   return (
@@ -34,7 +33,7 @@ const SystemLogInfo1 = () => {
           className={`  h-full w-[200px] rounded flex items-center absolute left-[0] bottom-[.5px] `}
         >
           <h2 className="text-xl px-2 text-cyan-300 font-bold mt-1 text-left">
-            {sysIndex + 1}%
+            {sysIndex}%
           </h2>
         </div>
         <h2 className="text-2xl text-cyan-300 font-bold text-left relative left-16 z-50  min-w-[full]  ">
@@ -49,8 +48,10 @@ const SystemLogInfo1 = () => {
           autoPlay={true}
           loop
           muted
-          src={videoF} // Replace with your video URL
-          controls={false} // Custom controls instead of browser defaults
+          // Replace with your video URL
+          src={videoF}
+          // Custom controls instead of browser defaults
+          controls={false}
         />
       </span>
     </div>
