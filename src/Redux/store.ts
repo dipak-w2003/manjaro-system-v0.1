@@ -2,9 +2,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './slices/counter';
 
 // Create the Redux store
+import activeUserSlice from './1-user-state/activeUserSlice';
 const store = configureStore({
     reducer: {
-        counter: counterReducer, // Add reducers here
+        // Add reducers here
+        counter: counterReducer,
+        activeUser: activeUserSlice
     },
 });
 

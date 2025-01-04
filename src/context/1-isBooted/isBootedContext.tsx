@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react";
-
+import { getIsBooted } from "@/constants/sessionStorage";
 type IsBootedType = {
   isBoot: boolean;
   setIsBoot: () => void;
@@ -14,7 +14,7 @@ const IsBootedContext = React.createContext<IsBootedType | undefined>(
 );
 
 export const BootedContextProvider: React.FC<INode> = ({ children }) => {
-  const [isBoot, setIsBoot] = useState<boolean>(false);
+  const [isBoot, setIsBoot] = useState<boolean>(getIsBooted);
   const settingBoot = () => {
     setIsBoot((prev) => (prev = true));
   };

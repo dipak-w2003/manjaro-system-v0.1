@@ -20,9 +20,9 @@ const Login = () => {
 
   return (
     <div
-      className={`cursor-default h-[100vh] overflow-hidden ${bgClass} bg-no-repeat bg-cover flex justify-center items-center relative`}
+      className={`cursor-default h-[100vh] overflow-hidden ${bgClass} bg-no-repeat bg-cover flex justify-center items-center relative bg-black `}
     >
-      <div className="bg-white h-[260px] w-[440px] rounded absolute">
+      <div className="bg-cyan-700 *:h-full *:full overflow-hidden  h-[260px] w-[440px] rounded-md absolute">
         <UserLogIn />
       </div>
       <div className="absolute bottom-0 bg-slate-900 h-7 w-full">
