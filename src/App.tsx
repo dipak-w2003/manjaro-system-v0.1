@@ -5,13 +5,14 @@ const Login = React.lazy(() => import("./components/Pages/2-login/Login"));
 
 // ? context
 import { useIsBootedContext } from "./context/1-isBooted/isBootedContext";
-import { getIsBooted, setNotBooted } from "./constants/sessionStorage";
+import { getIsBooted, getIsLogged } from "./constants/sessionStorage";
+import { useIsLoggedContext } from "./context/1-isBooted/isLoggedContext";
+
 const App = () => {
   const { isBoot } = useIsBootedContext();
-  console.log(isBoot);
+  const { isLogged } = useIsLoggedContext();
   return (
     <BrowserRouter>
-      {/* <SystemLoadMain /> */}
       <Routes>{BootOrLogin(isBoot)}</Routes>
     </BrowserRouter>
   );
@@ -30,4 +31,3 @@ function BootOrLogin(isBooted: boolean) {
     throw new Error("Error Occurred !");
   }
 }
-window.addEventListener("close", setNotBooted, true);

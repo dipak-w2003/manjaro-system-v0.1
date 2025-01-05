@@ -1,38 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUsers, Users as User } from "@/components/Pages/2-login/usersAccount";
 
-interface ActiveUserState {
-    user: User[];
-}
+// Constant array with objects
+import { sysUser as UserArr } from "@/components/Pages/2-login/usersAccount";
 
-const initialState: ActiveUserState = {
-    user: [],
+// Initial state
+const initialState = {
+    // Default user is the first one from UserArr
+    user: [UserArr[0]],
 };
 
 const activeUserSlice = createSlice({
     name: "activeUser",
     initialState,
     reducers: {
-        addUser: (state, action: PayloadAction<User>) => {
-            state.user.push(action.payload);
+        setUserById: (state, action: PayloadAction<string>) => {
+            const id = action.payload;
+            const foundUser = UserArr.find((item) => item.id === id);
+            if (foundUser) {
+                state.user[0] = foundUser
+            }
         },
-        clearUser: (state) => {
-            state.user = [];
+
+        removeUser: (state) => {
+            state.user = null;
         },
     },
 });
 
-export const { addUser, clearUser } = activeUserSlice.actions;
-
+export const { setUserById, removeUser } = activeUserSlice.actions;
 export default activeUserSlice.reducer;
-
-// updateUser: (state, action: PayloadAction<User>) => {
-//     const index = state.user.findIndex((user) => user.id === action.payload.id);
-//     if (index !== -1) {
-//         state.user[index] = action.payload;
-//     }
-// },
-
-// removeUser: (state, action: PayloadAction<string>) => {
-//     state.user = state.user.filter((user) => user.id !== action.payload);
-// },

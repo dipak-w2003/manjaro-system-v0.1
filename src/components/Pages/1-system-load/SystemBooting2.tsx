@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 // ? context
 import { useIsBootedContext } from "@/context/1-isBooted/isBootedContext";
 // ? session
-import { getIsBooted, setIsBooted } from "@/constants/sessionStorage";
+import { setIsBooted } from "@/constants/sessionStorage";
 import videoF from "./loading.mp4";
 const SystemLogInfo1 = () => {
   const [sys, _] = useState<ISysLoad[]>(sysLoad);

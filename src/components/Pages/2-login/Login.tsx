@@ -7,6 +7,7 @@ const Login = () => {
   const [bgClass, setBgClass] = useState<string>("bg-black");
 
   useEffect(() => {
+    //  TODO :on network or media issue custom styling not applying i.e bg & color
     const imageUrl = "https://wallpapercave.com/wp/wp1947767.jpg";
     const img = new Image();
 
@@ -22,7 +23,7 @@ const Login = () => {
     <div
       className={`cursor-default h-[100vh] overflow-hidden ${bgClass} bg-no-repeat bg-cover flex justify-center items-center relative bg-black `}
     >
-      <div className="bg-cyan-700 *:h-full *:full overflow-hidden  h-[260px] w-[440px] rounded-md absolute">
+      <div className="bg-[#8effff6e] *:h-full *:full overflow-hidden  h-[190px] w-[380px] rounded-md absolute">
         <UserLogIn />
       </div>
       <div className="absolute bottom-0 bg-slate-900 h-7 w-full">

@@ -1,21 +1,21 @@
-import { useState } from "react";
 import { SelectUser } from "./SelectUser";
-import { sysUser } from "./usersAccount";
+import { useSelector } from "react-redux";
+import { RootState } from "@/Redux/store";
+
 const UserLogIn = () => {
-  const [imgPP, setImgPP] = useState<string>(sysUser[0].imgPP);
-  function setSrcImg(prop: string): void {
-    if (!imgPP && prop.length < 0) return;
-    setImgPP((prev) => (prev = prop));
-  }
+  const userImPP = useSelector(
+    (state: RootState) => state.activeUser.user[0].imgPP
+  );
+
   return (
     <div className="flex h-ful justify-center space-x-6 items-center">
       <img
-        src={imgPP}
+        src={userImPP}
         alt="img"
-        className="object-cover rounded-full h-[130px] w-[130px]"
+        className="object-cover rounded-full h-[120px] w-[120px] mb-2"
       />
       <div className="user-log w-[50%] *:w-full">
-        <SelectUser getSrcImg={setSrcImg} />
+        <SelectUser />
       </div>
     </div>
   );

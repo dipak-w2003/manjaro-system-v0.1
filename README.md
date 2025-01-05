@@ -97,8 +97,8 @@ export default App;
 ```
 # BrowserStorage(session,local,index,cookies else) Data Update issue to UI
 Storage which holds up our data in the string format with the limited storage(approximately 10Mib).
-- ⁉️ Unlike vanilla projects like SPA does not loads [BrowserStorage] data dynamically or does loads but after refreshing then it can be dynamically shown on UI.
- ### Solution ([customHook.ts]):
+- ⁉️ Unlike vanilla projects like SPA does not loads BrowserStorage data dynamically or does loads but after refreshing then it can be dynamically shown on UI.
+ ### Solution (customHook.ts):
  export const isBootedKey: string = "isBooted";
 ``` ts
 // Function to set "isBooted" to true in sessionStorage
@@ -119,3 +119,134 @@ export const getIsBooted = (): boolean => {
 };
 ```  
 - Then it can be accessable directly without refreshing the page.
+
+
+
+
+# React Toastify
+React Toastify is a popular library used in React applications for displaying customizable toast notifications. It is easy to use and allows you to add notifications to your project with minimal setup.
+
+## Installation
+- To install React Toastify, run the following command:
+```bash
+npm install react-toastify
+```
+- or Using Yan:
+```bash
+yarn add react-toastify
+```
+
+## Basic Usage
+- Import Styles: Import the toastify CSS file in your project (typically in your main entry point).
+- Use the ToastContainer: Add the ToastContainer component to your app.
+- Trigger Notifications: Use the toast method to display a toast.
+
+```tsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+function App() {
+  const notify = () => toast("This is a toast notification!");
+
+  return (
+    <div>
+      <button onClick={notify}>Show Toast</button>
+      <ToastContainer />
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root")!);
+root.render(<App />);
+```
+## Toast Types
+You can display different types of notifications using the methods provided:
+- toast.success("Success message!")
+- toast.error("Error message!")
+- toast.info("Info message!")
+- toast.warning("Warning message!")
+Example
+```tsx 
+<button onClick={() => toast.success("Success!")}>Success Toast</button>
+<button onClick={() => toast.error("Error!")}>Error Toast</button>
+```
+
+## Custom Configuration
+You can customize toast notifications with options like position, auto-close duration, and more.
+```tsx
+toast("Custom Toast!", {
+  position: "top-right", 
+  // Default: "top-right"
+  autoClose: 5000,      
+  // Time in ms, Default: 5000
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+});
+```
+
+## ToastContainer Props 
+You can also set global configurations via the ToastContainer component.
+```tsx
+<ToastContainer
+  position="bottom-left"
+  autoClose={3000}
+  hideProgressBar
+  newestOnTop
+  closeOnClick
+  rtl={false}
+  pauseOnFocusLoss
+  draggable
+  pauseOnHover
+/>
+```
+## Examples
+### 1. Success Notification with Custom Options:
+```tsx
+toast.success("Operation successful!", {
+  position: "top-center",
+  autoClose: 2000,
+});
+```
+### 2. Notification Error:
+```tsx
+toast.error("Something went wrong!", {
+  position: "bottom-right",
+});
+```
+### 3. Custom JSX in Toast:
+```tsx
+toast(<div>Custom <strong>Content</strong>!</div>);
+```
+
+
+
+
+## Full Example:
+```tsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+function App() {
+  const notify = () => {
+    toast.success("Success Notification!", { autoClose: 3000 });
+    toast.error("Error Notification!", { autoClose: 5000 });
+    toast.info(<div>Custom JSX Notification!</div>, { autoClose: 4000 });
+  };
+
+  return (
+    <div>
+      <button onClick={notify}>Show Notifications</button>
+      <ToastContainer />
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root")!);
+root.render(<App />);
+```

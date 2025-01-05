@@ -1,10 +1,5 @@
 import * as React from "react";
 import {
-  Users as USER,
-  getUsersCertainDataList,
-  sysUser as sysUserArray,
-} from "./usersAccount";
-import {
   Select,
   SelectContent,
   SelectGroup,
@@ -16,39 +11,68 @@ import {
 import { sysUser } from "./usersAccount";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-type IPROPS = {
-  // ....
-  getSrcImg: (imgSrc: string) => void;
-  // ....
-};
-export const SelectUser: React.FC<IPROPS> = ({ getSrcImg }) => {
-  const [username, setUsername] = React.useState<string>(sysUser[0].username);
+// ? Toast
+import { ToastContainer, toast } from "react-toastify";
+// ? ⬆️ Packages : Hooks or basic utils ⬇️
+import {
+  Users as USER,
+  getUsersCertainDataList,
+  sysUser as sysUserArray,
+  getDefaultUser$What,
+  LoginType,
+} from "./usersAccount";
+// ? Redux
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/Redux/store";
+import { setUserById } from "@/Redux/1-user-state/activeUserSlice";
+import { checkAuthSysUser } from "@/constants/checkUserAuth";
+import { useIsLoggedContext } from "@/context/1-isBooted/isLoggedContext";
+import { setIsLogged } from "@/constants/sessionStorage";
+// ? return jsx
+export const SelectUser = () => {
+  const { setIsLog } = useIsLoggedContext();
+  const [username, setUsername] = React.useState<string>(
+    getDefaultUser$What().toString()
+  );
   const [password, setPassword] = React.useState<string>("");
-  const [user, setUser] = React.useState<USER | undefined>(undefined);
-
   const getUsersList = getUsersCertainDataList("username", sysUser);
+  const dispatch: AppDispatch = useDispatch();
 
   // ? setUser & pass props(....)
   function handleUserName(Iusername: string) {
     if (!Iusername && Iusername.length < 0) return;
     setUsername((prev) => (prev = Iusername));
     console.log("woorked", Iusername);
-
-    // get filtered data from specific one
     const tempArray: USER[] = sysUserArray;
     const foundUserArray = tempArray.filter((e) => e.username === Iusername);
-    const imgSrc = foundUserArray[0].imgPP;
-    getSrcImg(imgSrc);
+    // Dispatch
+    dispatch(setUserById(foundUserArray[0].id));
   }
 
   // ? Handle Login
-  const handleLogin = (data: USER) => {
+  const handleLogin = (user: LoginType) => {
+    const stat = checkAuthSysUser({
+      username: user.username,
+      password: user.password,
+    });
+    if (stat) {
+      // ? context & session
+      setIsLog();
+      setIsLogged();
+      toast.success("Successfully Logged", {
+        position: "bottom-right",
+        delay: 100,
+        autoClose: 2500,
+      });
+    } else {
+      toast.error("Login Error", {
+        position: "bottom-right",
+        autoClose: 2500,
+        delay: 100,
+      });
+    }
     setPassword("");
   };
-
-  // ? default
-  //   getSrcImg(sysUser[0].imgPP);
   React.useEffect(() => {}, [password, sysUser, username]);
   return (
     <main className=" flex flex-col space-y-1 *:w-full ">
@@ -89,6 +113,8 @@ export const SelectUser: React.FC<IPROPS> = ({ getSrcImg }) => {
           Login
         </Button>
       </div>
+
+      <ToastContainer />
     </main>
   );
 };
