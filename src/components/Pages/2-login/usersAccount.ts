@@ -1,5 +1,8 @@
+// ? Icons
+import React, { ComponentType, ReactNode, SVGProps } from "react";
+import { SiXfce, SiGnome, SiKde } from "react-icons/si";
 import { v7 as uuidv7 } from "uuid";
-export type DesktopEnv = "kde" | "gnome" | "xcfe"
+export type DesktopEnv = "kde" | "gnome" | "xfce"
 export type DataList = "username" | "password" | "id" | "imgPP" | "desktopEnv" | "gifLogin" | "sysUname"
 export interface Users {
     username: string,
@@ -7,8 +10,10 @@ export interface Users {
     sysUname?: string,
     imgPP?: string
     id?: string,
+    gifLogin?: string,
+    // ? desktop
     desktopEnv?: DesktopEnv
-    gifLogin?: string
+    desktopIcon?: DesktopEnv
 }
 export type IUsers = Users[]
 
@@ -17,19 +22,27 @@ export const sysUser: IUsers = [{
     password: "naruto2003",
     sysUname: "naruto",
     id: uuidv7(),
-    desktopEnv: "gnome",
     imgPP: "https://cdn.pixabay.com/photo/2023/09/04/03/24/ai-generated-8231889_960_720.png",
-    gifLogin: "https://www.gifcen.com/wp-content/uploads/2022/12/naruto-gif-11.gif"
+    desktopEnv: "xfce",
 }, {
     username: "Tanjiro",
     password: "DT2003",
     sysUname: "tKamado",
     id: uuidv7(),
     imgPP: "https://preview.redd.it/9oj53qb4rms91.jpg?auto=webp&s=38235c65658c1e3b3857054c9cfe8e1ec0574492",
-    desktopEnv: "kde"
-    , gifLogin: ""
+    desktopEnv: "kde",
 
-},]
+},
+{
+    username: "Ichigo",
+    password: "DT2003",
+    sysUname: "getsuga",
+    id: uuidv7(),
+    imgPP: "https://i.pinimg.com/736x/a6/33/00/a633005571e8dcb13fc41cea010fcfb1.jpg",
+    desktopEnv: "gnome",
+
+}
+]
 
 // ? Get values list
 export const getUsersCertainDataList = (data: DataList, users: IUsers) => {
@@ -54,3 +67,11 @@ export type LoginType = {
     password: any
     loggedFullDate?: Date
 }
+
+
+
+
+
+
+// ? Icons Desktop | SVG TYpe
+export type DesktopIcon = ComponentType<SVGProps<SVGSVGElement>>

@@ -13,7 +13,7 @@ const ManjaroLoading1 = () => {
         </div>
         {/* ? Logo */}
         <section className="text-6xl  flex font-serif justify-center items-center space-x-3 relative">
-          <SiManjaro className="rounded-lg" />
+          <SiManjaro className="rounded-md text-md" />
           <h2 className="font-bold">Manjaro</h2>
           <PiTrademarkRegisteredThin className="text-3xl absolute -right-7 -top-[1px]" />
         </section>

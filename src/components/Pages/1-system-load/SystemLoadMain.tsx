@@ -26,7 +26,7 @@ const SystemLoadMain: React.FC = () => {
   }, [queueNode, enrollTSXui.length]);
 
   return (
-    <div className="text-white bg-black h-[100vh] w-full *:cursor-none">
+    <div className="text-white bg-black h-[100vh] w-full *:cursor-none fira-sans">
       {enrollTSXui[queueNode]}
     </div>
   );

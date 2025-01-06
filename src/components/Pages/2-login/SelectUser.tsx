@@ -75,15 +75,15 @@ export const SelectUser = () => {
   };
   React.useEffect(() => {}, [password, sysUser, username]);
   return (
-    <main className=" flex flex-col space-y-1 *:w-full ">
+    <main className=" flex flex-col space-y-1 *:w-full  relative mb-12">
       <Select
         value={username}
         onValueChange={(Iusername) => handleUserName(Iusername)}
       >
-        <SelectTrigger className=" *:text-gray-700 w-[180px]">
+        <SelectTrigger className=" *:text-gray-700 w-[180px] border-gray-400 focus:ring-offset-0 text-gray-500  ">
           <SelectValue placeholder="Select a user.." />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="*:text-gray-500">
           <SelectGroup>
             <SelectLabel>User Names</SelectLabel>
             {getUsersList.map((e) => {
@@ -97,16 +97,17 @@ export const SelectUser = () => {
         </SelectContent>
       </Select>
 
-      <div className="log-password">
+      <div className="log-password ">
         <Input
+          autoFocus
           type="password"
           placeholder="password"
-          className="rounded-md"
+          className="rounded-md border-gray-400  text-gray-500 cursor-pointer"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button
-          className=" mt-1"
+          className=" mt-1 absolute -bottom-[64%] right-0"
           type="submit"
           onClick={() => handleLogin({ username, password })}
         >

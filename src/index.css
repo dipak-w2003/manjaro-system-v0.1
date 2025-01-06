@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -116,34 +118,22 @@
   }
 }
 
-/* ? load system  animation*/
-.manjaro-loading {
-  /* background: red; */
-}
-/* .manjaro-loading .blink-1 {
-  background: #9c9ea1;
-  animation: 1.5s blink infinite 0.33333s;
-}
-
-.manjaro-loading .blink-2 {
-  background: #9c9ea1;
-  animation: 1.5s blink infinite 0.66666s;
-}
-
-.manjaro-loading .blink-3 {
-  background: #9c9ea1;
-  animation: 1.5s blink infinite 0.99999s;
-}
-.manjaro-loading .blink-4 {
-  background: #9c9ea1;
-  animation: 1.5s blink infinite 1.11111s;
-}
-@keyframes blink {
-  50% {
-    opacity: 1;
-  }
-} */
 html {
   text-size-adjust: 100%; /* Standard */
   -webkit-text-size-adjust: 100%; /* WebKit-specific */
+}
+
+.noto-sans,
+.kde-desktop {
+  font-family: "Noto Sans", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+.fira-sans,
+.xfce-desktop-font {
+  font-family: "Fira Sans", serif;
+  font-weight: 100;
+  font-style: normal;
 }

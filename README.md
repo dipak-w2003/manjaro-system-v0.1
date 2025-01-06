@@ -221,10 +221,6 @@ toast.error("Something went wrong!", {
 ```tsx
 toast(<div>Custom <strong>Content</strong>!</div>);
 ```
-
-
-
-
 ## Full Example:
 ```tsx
 import React from "react";
@@ -249,4 +245,115 @@ function App() {
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(<App />);
+```
+
+
+
+# React Icons Type - TypeScript
+In TypeScript, React Icons are treated as React components. When you're using React Icons (e.g., from the react-icons package), the type of an individual icon is React.ComponentType<React.SVGProps<SVGSVGElement>>.
+
+Here's a breakdown:
+- React.ComponentType: This represents a generic React component type.
+- React.SVGProps<SVGSVGElement>: This represents the properties that can be passed to an SVG element.
+
+## Example (Normal Usecase):
+```tsx
+import { ReactNode } from "react";
+import { SiGnome } from "react-icons/si";
+let Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> = SiGnome;
+// Or if you have a variable holding the JSX directly:
+let IconNode: ReactNode = <SiGnome />;
+```
+
+## Example (Redux & Toolkit)
+- Note 🎈 : This error occurs because Redux enforces immutability and serialization of state. Non-serializable values, such as functions or React components, should not be stored in the Redux state. In your case, you're trying to store the desktopIcon, which is a React component (a function), in the Redux store.
+- Error ⁉️: A non-serializable value was detected in the state, in the path: `activeUser.desktopIcon`. Value: 
+function SiGnome(props) 
+Take a look at the reducer(s) handling this action type: `activeUser/setUser`.
+(See https://redux.js.org/faq/organizing-state#can-i-put-functions-promises-or-other-non-serializable-items-in-my-store-state)
+    at checkSerializableValue (redux-toolkit.esm.js:12:145)
+    at middleware (redux-toolkit.esm.js:11:257)
+    at dispatch (redux-toolkit.esm.js:9:23)
+    at setUser (UserComponent.jsx:42)
+    at handleClick (UserComponent.jsx:15)
+    at onClick (index.js:17)
+    at HTMLButtonElement.dispatch (react-dom.js:13)
+    at HTMLButtonElement.handle (react-dom.js:12)
+    less
+
+## Wrong Code / Non-serialization
+```jsx
+// ? Wrong Code: Non-serializable state in Redux Toolkit
+import { createSlice } from '@reduxjs/toolkit';
+import { SiGnome } from 'react-icons/si';
+// Initial state with non-serializable value (React component)
+const initialState = {
+    activeUser: {
+        id: 'user123',
+        username: 'Naruto',
+        desktopIcon: <SiGnome />, 
+        // React component directly in state
+    },
+};
+
+const userSlice = createSlice({
+    name: 'activeUser',
+    initialState,
+    reducers: {
+        setUser(state, action) {
+            state.activeUser = action.payload;
+        },
+    },
+});
+
+export const { setUser } = userSlice.actions;
+export default userSlice.reducer; ```
+
+## Right Code / Serialization
+```jsx
+// ? Correct Code: Storing serializable values in Redux Toolkit
+import { createSlice } from '@reduxjs/toolkit';
+
+// Map icon names to identifiers
+const iconMap = {
+    gnome: 'gnome-icon',
+    kde: 'kde-icon',
+};
+
+// Initial state with serializable values
+const initialState = {
+    activeUser: {
+        id: 'user123',
+        username: 'Naruto',
+        desktopIcon: 'gnome', 
+        // Store string identifier
+    },
+};
+
+const userSlice = createSlice({
+    name: 'activeUser',
+    initialState,
+    reducers: {
+        setUser(state, action) {
+            state.activeUser = action.payload; 
+            // Payload should be serializable
+        },
+    },
+});
+
+export const { setUser } = userSlice.actions;
+export default userSlice.reducer;
+
+// Render icon dynamically
+import { SiGnome, SiKde } from 'react-icons/si';
+
+const iconComponents = {
+    gnome: SiGnome,
+    kde: SiKde,
+};
+
+export const RenderIcon = ({ iconKey }) => {
+    const Icon = iconComponents[iconKey];
+    return Icon ? <Icon /> : null;
+};
 ```

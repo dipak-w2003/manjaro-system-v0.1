@@ -6,14 +6,17 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        "blink-ball-1": "1.5s blink 4 0.33333s",
-        "blink-ball-2": "1.5s blink 4 0.66666s",
-        "blink-ball-3": "1.5s blink 4 0.99999s",
-        "blink-ball-4": "1.5s blink 4 1.11111s",
+        "blink-ball-1": "2s blink 4 0.33333s",
+        "blink-ball-2": "2s blink 4 0.66666s",
+        "blink-ball-3": "2s blink 4 0.99999s",
+        "blink-ball-4": "2s blink 4 1.11111s",
       },
       keyframes: {
         blink: {
-          "50%": { opacity: "0.5" },
+          "0%,80%,100%": {
+            opacity: "0",
+          },
+          "40%": { opacity: "1" },
         },
       },
       borderRadius: {

@@ -8,13 +8,13 @@ const UserLogIn = () => {
   );
 
   return (
-    <div className="flex h-ful justify-center space-x-6 items-center">
+    <div className="flex h-ful justify-center space-x-6 items-center bg-[#eeeeee]">
       <img
         src={userImPP}
-        alt="img"
-        className="object-cover rounded-full h-[120px] w-[120px] mb-2"
+        alt="...loading img"
+        className="object-cover rounded-full h-[100px] w-[100px]  mb-12 p-1"
       />
-      <div className="user-log w-[50%] *:w-full">
+      <div className="user-log w-[50%] *:w-full  relative *:h-full">
         <SelectUser />
       </div>
     </div>
@@ -22,4 +22,3 @@ const UserLogIn = () => {
 };
 
 export default UserLogIn;
-// https://www.specfictionshop.com/cdn/shop/products/MAIN-ICHIGO_6e485844-362b-4304-b5ce-462ead404369_2000x.png?v=1678306501
