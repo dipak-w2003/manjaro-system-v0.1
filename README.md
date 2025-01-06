@@ -270,7 +270,8 @@ let IconNode: ReactNode = <SiGnome />;
 - Error ⁉️: A non-serializable value was detected in the state, in the path: `activeUser.desktopIcon`. Value: 
 function SiGnome(props) 
 Take a look at the reducer(s) handling this action type: `activeUser/setUser`.
-(See https://redux.js.org/faq/organizing-state#can-i-put-functions-promises-or-other-non-serializable-items-in-my-store-state)
+(See https://redux.js.org/faq/
+organizing-state#can-i-put-functions-promises-or-other-non-serializable-items-in-my-store-state)
     at checkSerializableValue (redux-toolkit.esm.js:12:145)
     at middleware (redux-toolkit.esm.js:11:257)
     at dispatch (redux-toolkit.esm.js:9:23)
@@ -281,7 +282,7 @@ Take a look at the reducer(s) handling this action type: `activeUser/setUser`.
     at HTMLButtonElement.handle (react-dom.js:12)
     less
 
-## Wrong Code / Non-serialization
+## Non/Serializtion Redux/Toolkit
 ```jsx
 // ? Wrong Code: Non-serializable state in Redux Toolkit
 import { createSlice } from '@reduxjs/toolkit';
@@ -304,13 +305,15 @@ const userSlice = createSlice({
             state.activeUser = action.payload;
         },
     },
-});
+})
 
 export const { setUser } = userSlice.actions;
-export default userSlice.reducer; ```
+export default userSlice.reducer; 
+```
 
-## Right Code / Serialization
-```jsx
+## Right Code  Serialization
+```tsx
+
 // ? Correct Code: Storing serializable values in Redux Toolkit
 import { createSlice } from '@reduxjs/toolkit';
 
