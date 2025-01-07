@@ -1,21 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SystemLoadMain from "./components/Pages/1-system-load/SystemLoadMain";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-const Login = React.lazy(() => import("./components/Pages/2-login/Login"));
-
+import Login from "./components/Pages/2-login/Login";
 // ? context
 import { useIsBootedContext } from "./context/1-isBooted/isBootedContext";
-import { getIsBooted, getIsLogged } from "./constants/sessionStorage";
-import { useIsLoggedContext } from "./context/1-isBooted/isLoggedContext";
+import { getIsBooted } from "./constants/sessionStorage";
+import { useSelector } from "react-redux";
+import { RootState } from "./Redux/store";
+import DesktopMain from "./components/Desktop/DesktopMain";
 
 const App = () => {
   const { isBoot } = useIsBootedContext();
-  const { isLogged } = useIsLoggedContext();
-  return (
-    <BrowserRouter>
-      <Routes>{BootOrLogin(isBoot)}</Routes>
-    </BrowserRouter>
+  const isLogged = useSelector(
+    (state: RootState) => state.isLoggedSlice.isLogged
   );
+  useEffect(() => {
+    console.log("Logged,", isLogged);
+  }, [isLogged]);
+  return !isLogged ? <Routes>{BootOrLogin(isBoot)}</Routes> : <DesktopMain />;
 };
 
 export default App;

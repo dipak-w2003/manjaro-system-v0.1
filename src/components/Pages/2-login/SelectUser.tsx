@@ -12,7 +12,7 @@ import { sysUser } from "./usersAccount";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 // ? Toast
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 // ? ⬆️ Packages : Hooks or basic utils ⬇️
 import {
   Users as USER,
@@ -26,11 +26,12 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/Redux/store";
 import { setUserById } from "@/Redux/1-user-state/activeUserSlice";
 import { checkAuthSysUser } from "@/constants/checkUserAuth";
-import { useIsLoggedContext } from "@/context/1-isBooted/isLoggedContext";
-import { setIsLogged } from "@/constants/sessionStorage";
+import { setLogin, setLogout } from "@/Redux/1-user-state/isLoggedSlice";
+import { DelayLog } from "@/components/Utils/Buttons/delayLog";
+import { SuccessToast, UnsuccessToast } from "@/constants/toast";
+
 // ? return jsx
 export const SelectUser = () => {
-  const { setIsLog } = useIsLoggedContext();
   const [username, setUsername] = React.useState<string>(
     getDefaultUser$What().toString()
   );
@@ -56,20 +57,10 @@ export const SelectUser = () => {
       password: user.password,
     });
     if (stat) {
-      // ? context & session
-      setIsLog();
-      setIsLogged();
-      toast.success("Successfully Logged", {
-        position: "bottom-right",
-        delay: 100,
-        autoClose: 2500,
-      });
+      SuccessToast();
+      DelayLog(dispatch, setLogin);
     } else {
-      toast.error("Login Error", {
-        position: "bottom-right",
-        autoClose: 2500,
-        delay: 100,
-      });
+      UnsuccessToast();
     }
     setPassword("");
   };

@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 // Create the Redux store
+// ? user logging related slices
 import activeUserSlice from './1-user-state/activeUserSlice';
+import isLoggedSlice from './1-user-state/isLoggedSlice';
 const store = configureStore({
     reducer: {
-        // Add reducers here
-        activeUser: activeUserSlice
+        activeUser: activeUserSlice,
+        isLoggedSlice: isLoggedSlice
     },
 });
 

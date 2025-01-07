@@ -1,6 +1,5 @@
 // ? Icons
-import React, { ComponentType, ReactNode, SVGProps } from "react";
-import { SiXfce, SiGnome, SiKde } from "react-icons/si";
+import React, { ComponentType, SVGProps } from "react";
 import { v7 as uuidv7 } from "uuid";
 export type DesktopEnv = "kde" | "gnome" | "xfce"
 export type DataList = "username" | "password" | "id" | "imgPP" | "desktopEnv" | "gifLogin" | "sysUname"
