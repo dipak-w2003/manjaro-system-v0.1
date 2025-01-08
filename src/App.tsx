@@ -11,6 +11,9 @@ import { RootState } from "./Redux/store";
 
 // ProtectedRoute
 import ProtectedRoute from "./components/ProtectedRoute";
+import XfceMain from "./components/Desktop/xfce/XfceMain";
+import KdeMain from "./components/Desktop/kde/KdeMain";
+import GnomeMain from "./components/Desktop/gnome/GnomeMain";
 
 const App = () => {
   const { isBoot } = useIsBootedContext();
@@ -25,7 +28,7 @@ const App = () => {
   useEffect(() => {
     BootOrLogin(isBoot);
     if (isLogged) {
-      navigate("/desktop");
+      navigate("/desktop/xfce");
     }
   }, [isLogged, isBoot]);
 
@@ -34,13 +37,36 @@ const App = () => {
       {/* Public Routes */}
       <Route path="/" element={<SystemLoadMain />} />
       <Route path="/login" element={<Login />} />
-
       {/* Protected Routes */}
       <Route
-        path="/desktop/*"
+        path="/desktop"
         element={
           <ProtectedRoute isLogged={isLogged}>
             <DesktopMain />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/desktop/xfce"
+        element={
+          <ProtectedRoute isLogged={isLogged}>
+            <XfceMain />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/desktop/kde"
+        element={
+          <ProtectedRoute isLogged={isLogged}>
+            <KdeMain />
+          </ProtectedRoute>
+        }
+      />{" "}
+      <Route
+        path="/desktop/gnome"
+        element={
+          <ProtectedRoute isLogged={isLogged}>
+            <GnomeMain />
           </ProtectedRoute>
         }
       />
