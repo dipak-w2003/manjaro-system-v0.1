@@ -1,17 +1,55 @@
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 import { AppDispatch } from "@/Redux/store";
-import React from "react";
 import { FaPowerOff } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
-import { setLogout } from "@/Redux/1-user-state/isLoggedSlice";
 
 const TbPowerBtn = () => {
-  const dispatch: AppDispatch = useDispatch();
-
   return (
-    <div>
-      <p title="p">
-        <FaPowerOff />
-      </p>
+    <div className=" relative overflow-hidden">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            className="bg-transparent    focus:ring-0 focus:ring-offset-0
+          focus-visible:ring-0 focus-visible:ring- focus-visible:ring-offset-0
+          "
+          >
+            <FaPowerOff />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56  rounded-none  -mb-[9px]">
+          <DropdownMenuLabel>Power</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuItem>
+              Suspend
+              <DropdownMenuShortcut></DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              Hibernate
+              <DropdownMenuShortcut>F2</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              Restart
+              <DropdownMenuShortcut>Alt+Delete</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              Shut Down
+              <DropdownMenuShortcut>Alt+F4</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 };

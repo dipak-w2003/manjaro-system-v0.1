@@ -361,3 +361,102 @@ export const RenderIcon = ({ iconKey }) => {
 };
 ```
 
+
+
+# Protected Route (React-Router-DomV^7)
+React Router is an external package for routing react page components.
+```tsx
+// ProtectedRoute.tsx
+import React from "react";
+import { Navigate } from "react-router-dom";
+
+interface ProtectedRouteProps {
+  isLogged: boolean;
+  children: JSX.Element;
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+  isLogged,
+  children,
+}) => {
+  return isLogged ? children : <Navigate to="/" />;
+};
+
+export default ProtectedRoute;
+```
+
+```tsx
+App.tsx
+import React, { useEffect } from "react";
+import SystemLoadMain from "./components/Pages/1-system-load/SystemLoadMain";
+import Login from "./components/Pages/2-login/Login";
+import DesktopMain from "./components/Desktop/DesktopMain";
+import {  Route, Routes, useNavigate } from "react-router-dom";
+
+// Context & Redux
+import { useIsBootedContext } from "./context/1-isBooted/isBootedContext";
+import { useSelector } from "react-redux";
+import { RootState } from "./Redux/store";
+
+// ProtectedRoute
+import ProtectedRoute from "./components/ProtectedRoute";
+
+const App = () => {
+  const navigate = useNavigate();
+  const { isBoot } = useIsBootedContext();
+  const isLogged = useSelector(
+    (state: RootState) => state.isLoggedSlice.isLogged
+  );
+  useEffect(() => {
+    BootOrLogin(isBoot);
+  }, [isLogged]);
+
+  function BootOrLogin(isBooted: boolean) {
+    if (isBooted) navigate("/login");
+  }
+
+  return (
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<SystemLoadMain />} />
+      <Route path="/login" element={<Login />} />
+
+      {/* Protected Routes */}
+      <Route
+        path="/desktop/*"
+        element={
+          <ProtectedRoute isLogged={isLogged}>
+            <DesktopMain />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
+};
+export default App;
+```
+
+
+```tsx
+// Main.tsx
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import { BootedContextProvider as BootProvider } from "./context/1-isBooted/isBootedContext";
+import { Provider } from "react-redux";
+import store from "./Redux/store";
+import { BrowserRouter } from "react-router-dom";
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <Provider store={store}>
+      <BootProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </BootProvider>
+    </Provider>
+  </StrictMode>
+);
+```
+- Using protected routes in an application is essential for managing access control and ensuring that certain parts of your app are accessible only to authorized or authenticated users.

@@ -5,7 +5,9 @@ import { useIsBootedContext } from "@/context/1-isBooted/isBootedContext";
 // ? session
 import { setIsBooted } from "@/constants/sessionStorage";
 import videoF from "./loading.mp4";
+import { useNavigate } from "react-router-dom";
 const SystemLogInfo1 = () => {
+  const navigate = useNavigate();
   const [sys, _] = useState<ISysLoad[]>(sysLoad);
   const [sysIndex, setSysIndex] = useState<number>(0);
   const { setIsBoot } = useIsBootedContext();
@@ -15,6 +17,7 @@ const SystemLogInfo1 = () => {
     if (sysIndex >= sys.length - 1) {
       setIsBooted();
       setIsBoot();
+
       return;
     }
     const timer = setTimeout(() => {

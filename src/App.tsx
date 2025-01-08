@@ -1,35 +1,51 @@
 import React, { useEffect } from "react";
 import SystemLoadMain from "./components/Pages/1-system-load/SystemLoadMain";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Pages/2-login/Login";
-// ? context
+import DesktopMain from "./components/Desktop/DesktopMain";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+
+// Context & Redux
 import { useIsBootedContext } from "./context/1-isBooted/isBootedContext";
-import { getIsBooted } from "./constants/sessionStorage";
 import { useSelector } from "react-redux";
 import { RootState } from "./Redux/store";
-import DesktopMain from "./components/Desktop/DesktopMain";
+
+// ProtectedRoute
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   const { isBoot } = useIsBootedContext();
   const isLogged = useSelector(
     (state: RootState) => state.isLoggedSlice.isLogged
   );
+  const navigate = useNavigate();
+  function BootOrLogin(isBooted: boolean) {
+    if (isBooted) navigate("/login");
+  }
+
   useEffect(() => {
-    console.log("Logged,", isLogged);
-  }, [isLogged]);
-  return !isLogged ? <Routes>{BootOrLogin(isBoot)}</Routes> : <DesktopMain />;
+    BootOrLogin(isBoot);
+    if (isLogged) {
+      navigate("/desktop");
+    }
+  }, [isLogged, isBoot]);
+
+  return (
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<SystemLoadMain />} />
+      <Route path="/login" element={<Login />} />
+
+      {/* Protected Routes */}
+      <Route
+        path="/desktop/*"
+        element={
+          <ProtectedRoute isLogged={isLogged}>
+            <DesktopMain />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
 };
 
 export default App;
-
-// ? Booting or Login
-function BootOrLogin(isBooted: boolean) {
-  if (!isBooted) {
-    return <Route path="/" index element={<SystemLoadMain />} />;
-  }
-  if (isBooted && getIsBooted) {
-    return <Route path="/" index element={<Login />} />;
-  } else {
-    throw new Error("Error Occurred !");
-  }
-}
