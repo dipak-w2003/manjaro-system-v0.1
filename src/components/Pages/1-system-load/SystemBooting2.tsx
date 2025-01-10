@@ -31,7 +31,7 @@ const SystemLogInfo1 = () => {
 
   return (
     <div className="bg-black h-full w-full  max-h[100vh]  flex items-center justify-center overflow-hidden relative">
-      <span className=" relative p-2 left-[40px] max-w-[700px] w-[580px] z-50 rounded-md bg-[#1963603e] ">
+      <span className=" relative p-2 left-[40px] max-w-[700px] w-[580px] z-50 rounded-xl bg-[#1963603e] ">
         <div
           className={`  h-full w-[200px] rounded flex items-center absolute left-[0] bottom-[.5px] `}
         >

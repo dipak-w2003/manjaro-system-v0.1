@@ -460,3 +460,92 @@ createRoot(document.getElementById("root")!).render(
 );
 ```
 - Using protected routes in an application is essential for managing access control and ensuring that certain parts of your app are accessible only to authorized or authenticated users.
+
+
+
+# Event Listener + React TS (Key)
+In React with TypeScript, key events are used to handle user input when interacting with keyboard keys. The most commonly used key events are onKeyDown, onKeyPress, and onKeyUp.
+
+## 1.onKeyDown:
+- Triggered when a key is pressed down.
+- Used to capture key events as soon as the key is pressed.
+- Suitable for handling key combinations, such as Ctrl + C, or when you need to prevent default behavior immediately.
+## 2. onKeyPress (Deprecated in React 18):
+- Triggered when a key is pressed and produces a character (like letters or numbers).
+- Generally replaced by onKeyDown for all key input handling.
+
+## 3. onKeyUp:
+- Triggered when a key is released.
+- Can be used to capture the moment when the key is released.
+
+Simple Example : Accepts keyEvent and object
+```tsx
+import React, { useState } from "react";
+const SelectUser = () => {
+  const [username, setUsername] = useState<string>("defaultUser");
+  const [password, setPassword] = useState<string>("");
+  // Function to handle login event where we pass both the event and user object
+  const handleLogin = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+    user: { username: string; password: string }
+  ) => {
+    if (event.key === "Enter") {
+      // Prevent default behavior (e.g., form submit)
+      event.preventDefault(); 
+      // Log the event and user data
+      console.log("Login Attempt:", user);
+    }
+  };
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Enter username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Enter password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        onKeyDown={(e) => handleLogin(e, { username, password })} 
+        // Pass the event and user object as a parameter
+      />
+    </div>
+  );
+};
+```
+## Key("Enter") & Type (Click) -> Event 
+Optional Event between Key & Type where we can perform certain function execution with by Key-KeyBoard & Type-MouseEvent.
+- keyboardEvent(key) - used for inputs
+- MouseEvent(type) - used especially for buttons and else divs
+```tsx 
+export type HandleLoginType = {
+  event:
+    | React.KeyboardEvent<HTMLInputElement>
+    | React.MouseEvent<HTMLButtonElement>;
+  user: LoginType;
+};
+
+const HandleLogin = ({ event, user }: HandleLoginType) => {
+    // Check if it's a valid event (either keyboard or mouse event)
+    // Type Guarding ("key" or "type" in event)
+    const isKeyEvent = "key" in event && event.key === "Enter";
+    const isClickEvent = "type" in event && event.type === "click";
+    // Proceed only if it's a valid key or click event
+    if (isKeyEvent || isClickEvent) {
+      event.preventDefault();
+      const stat = checkAuthSysUser({
+        username: user.username,
+        password: user.password,
+      });
+      if (stat) {
+        SuccessToast();
+        DelayLog(dispatch, setLogin);
+      } else {
+        UnsuccessToast();
+      }
+      setPassword("");
+    }
+  }```

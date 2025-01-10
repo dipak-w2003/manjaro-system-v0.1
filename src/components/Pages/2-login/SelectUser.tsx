@@ -30,6 +30,13 @@ import { setLogin, setLogout } from "@/Redux/1-user-state/isLoggedSlice";
 import { DelayLog } from "@/components/Utils/Buttons/delayLog";
 import { SuccessToast, UnsuccessToast } from "@/constants/toast";
 
+export type HandleLoginType = {
+  event:
+    | React.KeyboardEvent<HTMLInputElement>
+    | React.MouseEvent<HTMLButtonElement>;
+  user: LoginType;
+};
+
 // ? return jsx
 export const SelectUser = () => {
   const [username, setUsername] = React.useState<string>(
@@ -50,40 +57,47 @@ export const SelectUser = () => {
     dispatch(setUserById(foundUserArray[0].id));
   }
 
-  // ? Handle Login
-  const handleLogin = (user: LoginType) => {
-    const stat = checkAuthSysUser({
-      username: user.username,
-      password: user.password,
-    });
-    if (stat) {
-      SuccessToast();
-      DelayLog(dispatch, setLogin);
-    } else {
-      UnsuccessToast();
+  // ? Handle Login : Form is not used so onenter listener is putted
+  const HandleLogin = ({ event, user }: HandleLoginType) => {
+    // Check if it's a valid event (either keyboard or mouse event)
+    // Type Guarding ("key" or "type" in event)
+    const isKeyEvent = "key" in event && event.key === "Enter";
+    const isClickEvent = "type" in event && event.type === "click";
+    // Proceed only if it's a valid key or click event
+    if (isKeyEvent || isClickEvent) {
+      event.preventDefault();
+      const stat = checkAuthSysUser({
+        username: user.username,
+        password: user.password,
+      });
+      if (stat) {
+        SuccessToast();
+        DelayLog(dispatch, setLogin);
+      } else {
+        UnsuccessToast();
+      }
+      setPassword("");
     }
-    setPassword("");
   };
+
   React.useEffect(() => {}, [password, sysUser, username]);
   return (
-    <main className=" flex flex-col space-y-1 *:w-full  relative mb-12">
+    <main className="flex flex-col space-y-1 *:w-full relative mb-12">
       <Select
         value={username}
         onValueChange={(Iusername) => handleUserName(Iusername)}
       >
-        <SelectTrigger className=" *:text-gray-700 w-[180px] border-gray-400 focus:ring-offset-0 text-gray-500  ">
+        <SelectTrigger className="*:text-gray-700 w-[180px] border-gray-400 focus:ring-offset-0 text-gray-500">
           <SelectValue placeholder="Select a user.." />
         </SelectTrigger>
         <SelectContent className="*:text-gray-500">
           <SelectGroup>
             <SelectLabel>User Names</SelectLabel>
-            {getUsersList.map((e) => {
-              return (
-                <SelectItem key={e} value={e}>
-                  {e}
-                </SelectItem>
-              );
-            })}
+            {getUsersList.map((e) => (
+              <SelectItem key={e} value={e}>
+                {e}
+              </SelectItem>
+            ))}
           </SelectGroup>
         </SelectContent>
       </Select>
@@ -93,14 +107,19 @@ export const SelectUser = () => {
           autoFocus
           type="password"
           placeholder="password"
-          className="rounded-md border-gray-400  text-gray-500 cursor-pointer"
+          className="rounded-md border-gray-400 text-gray-500 cursor-pointer"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) =>
+            HandleLogin({ event: e, user: { username, password } })
+          }
         />
         <Button
-          className=" mt-1 absolute -bottom-[64%] right-0"
+          className="mt-1 absolute -bottom-[64%] right-0"
           type="submit"
-          onClick={() => handleLogin({ username, password })}
+          onClick={(e) =>
+            HandleLogin({ event: e, user: { username, password } })
+          }
         >
           Login
         </Button>

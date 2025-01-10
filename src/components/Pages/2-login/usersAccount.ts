@@ -66,7 +66,10 @@ export type LoginType = {
     password: any
     loggedFullDate?: Date
 }
-
+export type HandleLoginType = {
+    event: React.KeyboardEvent<HTMLInputElement>,
+    user: LoginType
+}
 
 
 

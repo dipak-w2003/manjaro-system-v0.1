@@ -1,34 +1,37 @@
 import React from "react";
-
-// ? Desktops
+import { useParams, useSearchParams } from "react-router-dom";
 import XfceMain from "./xfce/XfceMain";
-import GnomeMain from "./gnome/GnomeMain";
 import KdeMain from "./kde/KdeMain";
+import GnomeMain from "./gnome/GnomeMain";
+import { DesktopEnv } from "../Pages/2-login/usersAccount";
 
-// ? Routes
-import { Route, Routes } from "react-router-dom";
+// Add all valid environments based on your union type
 
-// ? Redux
-import { AppDispatch } from "@/Redux/store";
-import { useDispatch } from "react-redux";
-import { setLogout } from "@/Redux/1-user-state/isLoggedSlice";
-import { DelayLog } from "../Utils/Buttons/delayLog";
+const DesktopMain: React.FC = () => {
+  const validEnvs = ["xfce", "kde", "gnome"] as const;
+  const { desktopEnv } = useParams<{ desktopEnv: string }>();
 
-// ? DesktopMain Component
-const DesktopMain = (): JSX.Element => {
-  const dispatch: AppDispatch = useDispatch();
+  // not includes same with both party
+  if (!desktopEnv || !validEnvs.includes(desktopEnv as DesktopEnv)) {
+    return <p>Invalid Desktop Environment</p>;
+  }
+  const [searchParams] = useSearchParams();
+  const userId = searchParams.get("u");
 
-  // Logout Button Component
-  const LogoutButton = () => (
-    <button
-      className="bg-cyan-800 text-xl px-3 py-2"
-      onClick={() => DelayLog(dispatch, setLogout)}
-    >
-      Logout
-    </button>
-  );
+  if (!desktopEnv || !userId) {
+    return <p>Invalid Desktop Environment or Missing User ID</p>;
+  }
 
-  return <LogoutButton />;
+  switch (desktopEnv) {
+    case "xfce":
+      return <XfceMain />;
+    case "kde":
+      return <KdeMain />;
+    case "gnome":
+      return <GnomeMain />;
+    default:
+      return <p>Desktop Environment Not Supported</p>;
+  }
 };
 
 export default DesktopMain;

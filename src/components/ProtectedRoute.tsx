@@ -3,14 +3,18 @@ import { Navigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
   isLogged: boolean;
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   isLogged,
   children,
 }) => {
-  return isLogged ? children : <Navigate to="/" />;
+  if (!isLogged) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;
