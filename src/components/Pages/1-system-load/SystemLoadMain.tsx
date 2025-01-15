@@ -13,7 +13,6 @@ const SystemLoadMain: React.FC = () => {
   useEffect(() => {
     // Stop incrementing at the last index
     if (queueNode >= enrollTSXui.length - 1) return;
-
     const timer = setTimeout(() => {
       // Increment or stay at last index
       setQueueNode((prev) => Math.min(prev + 1, enrollTSXui.length - 1));

@@ -4,7 +4,7 @@ import XfceMain from "./xfce/XfceMain";
 import KdeMain from "./kde/KdeMain";
 import GnomeMain from "./gnome/GnomeMain";
 import { DesktopEnv } from "../Pages/2-login/usersAccount";
-
+import "./Themes/CSS/CursorTheme.css";
 // Add all valid environments based on your union type
 
 const DesktopMain: React.FC = () => {

@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { sysUser } from "./usersAccount";
+import { HandleEventLoginType, sysUser } from "./usersAccount";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 // ? Toast
@@ -29,13 +29,6 @@ import { checkAuthSysUser } from "@/constants/checkUserAuth";
 import { setLogin, setLogout } from "@/Redux/1-user-state/isLoggedSlice";
 import { DelayLog } from "@/components/Utils/Buttons/delayLog";
 import { SuccessToast, UnsuccessToast } from "@/constants/toast";
-
-export type HandleLoginType = {
-  event:
-    | React.KeyboardEvent<HTMLInputElement>
-    | React.MouseEvent<HTMLButtonElement>;
-  user: LoginType;
-};
 
 // ? return jsx
 export const SelectUser = () => {
@@ -58,7 +51,7 @@ export const SelectUser = () => {
   }
 
   // ? Handle Login : Form is not used so onenter listener is putted
-  const HandleLogin = ({ event, user }: HandleLoginType) => {
+  const HandleLogin = ({ event, user }: HandleEventLoginType) => {
     // Check if it's a valid event (either keyboard or mouse event)
     // Type Guarding ("key" or "type" in event)
     const isKeyEvent = "key" in event && event.key === "Enter";

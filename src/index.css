@@ -118,11 +118,6 @@
   }
 }
 
-html {
-  text-size-adjust: 100%; /* Standard */
-  -webkit-text-size-adjust: 100%; /* WebKit-specific */
-}
-
 .noto-sans,
 .kde-desktop {
   font-family: "Noto Sans", serif;

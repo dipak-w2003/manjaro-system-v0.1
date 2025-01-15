@@ -17,19 +17,19 @@ export interface Users {
 export type IUsers = Users[]
 
 export const sysUser: IUsers = [{
-    username: "Naruto-Uzumaki",
+    username: "Naruto Uzumaki",
     password: "naruto2003",
     sysUname: "naruto",
     id: uuidv7(),
+    desktopEnv: "kde",
     imgPP: "https://cdn.pixabay.com/photo/2023/09/04/03/24/ai-generated-8231889_960_720.png",
-    desktopEnv: "xfce",
 }, {
     username: "Tanjiro",
     password: "DT2003",
     sysUname: "tKamado",
     id: uuidv7(),
     imgPP: "https://preview.redd.it/9oj53qb4rms91.jpg?auto=webp&s=38235c65658c1e3b3857054c9cfe8e1ec0574492",
-    desktopEnv: "kde",
+    desktopEnv: "xfce",
 
 },
 {
@@ -40,6 +40,14 @@ export const sysUser: IUsers = [{
     imgPP: "https://i.pinimg.com/736x/a6/33/00/a633005571e8dcb13fc41cea010fcfb1.jpg",
     desktopEnv: "gnome",
 
+},
+{
+    username: "Obito Uchiha",
+    password: "mupeLeliya",
+    sysUname: "Zinz",
+    id: uuidv7(),
+    desktopEnv: "kde",
+    imgPP: "https://artistsimages.b-cdn.net/johnny-sins/johnny-sins-1.jpg?width=3840&quality=75&format=webp&flop=false",
 }
 ]
 
@@ -66,10 +74,14 @@ export type LoginType = {
     password: any
     loggedFullDate?: Date
 }
-export type HandleLoginType = {
-    event: React.KeyboardEvent<HTMLInputElement>,
-    user: LoginType
-}
+
+//  User login with Login Type & EventListener
+export type HandleEventLoginType = {
+    event:
+    | React.KeyboardEvent<HTMLInputElement>
+    | React.MouseEvent<HTMLButtonElement>;
+    user: LoginType;
+};
 
 
 
