@@ -12,10 +12,10 @@ const ManjaroLoading1 = () => {
           <span className="animate-blink-ball-4"></span>
         </div>
         {/* ? Logo */}
-        <section className="text-6xl  flex font-serif justify-center items-center space-x-3 relative">
-          <SiManjaro className="rounded-md text-md" />
-          <h2 className="font-bold">Manjaro</h2>
-          <PiTrademarkRegisteredThin className="text-3xl absolute -right-7 -top-[1px]" />
+        <section className="text-3xl  flex font-serif justify-center items-center space-x-3 relative">
+          <SiManjaro className="rounded-sm text-[2rem]" />
+          <h2 className="font-bold">manjaro</h2>
+          <PiTrademarkRegisteredThin className="text-2xl absolute -right-8 -top-[1px]" />
         </section>
       </div>
     </main>

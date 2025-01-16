@@ -21,15 +21,15 @@ export const getIsBooted = (): boolean => {
 
 
 // ? ---------- Logged ---------------------------------------
-// export const isLoggedKey: string = "isLogged"
-// export const setIsLogged = (): void => {
-//     sessionStorage.setItem(isLoggedKey, JSON.stringify(true));
-// };
-// export const setLogout = (): void => {
-//     sessionStorage.removeItem(isLoggedKey);
-// };
-// // Function to get "isBooted" from sessionStorage and parse it
-// export const getIsLogged = (): boolean => {
-//     const item = sessionStorage.getItem(isLoggedKey);
-//     return item ? JSON.parse(item) === true : false;
-// };
+export const isLoggedKey: string = "isLogged"
+export const setIsLogged = (): void => {
+    sessionStorage.setItem(isLoggedKey, JSON.stringify(true));
+};
+export const setLogout = (): void => {
+    sessionStorage.removeItem(isLoggedKey);
+};
+// Function to get "isBooted" from sessionStorage and parse it
+export const getIsLogged = (): boolean => {
+    const item = sessionStorage.getItem(isLoggedKey);
+    return item ? JSON.parse(item) === true : false;
+};

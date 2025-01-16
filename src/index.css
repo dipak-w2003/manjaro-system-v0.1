@@ -118,6 +118,12 @@
   }
 }
 
+#main-screen {
+  background: url("components/Desktop/Themes/Images/wallpaper-village.jpg")
+    center center no-repeat;
+  background-size: cover;
+}
+
 .noto-sans,
 .kde-desktop {
   font-family: "Noto Sans", serif;

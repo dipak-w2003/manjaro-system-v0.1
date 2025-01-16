@@ -1,0 +1,11 @@
+import bookmarks from "../Apps/favorites.svg"
+import applications from "../Apps/applications.svg"
+import developments from "../Apps/developments.svg"
+import games from "../Apps/games.svg"
+import graphics from "../Apps/graphics.svg"
+import internets from "../Apps/internets.svg"
+import offices from "../Apps/offices.svg"
+import settings from "../Apps/settings.svg"
+import systems from "../Apps/systems.svg"
+import utilitiess from "../Apps/utilities.svg"
+export { bookmarks, applications, developments, games, graphics, internets, offices, settings, systems, utilitiess }

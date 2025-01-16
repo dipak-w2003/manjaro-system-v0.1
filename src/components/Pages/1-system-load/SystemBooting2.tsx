@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 // ? context
 import { useIsBootedContext } from "@/context/1-isBooted/isBootedContext";
 // ? session
-import { setIsBooted } from "@/constants/sessionStorage";
+import { setIsBooted, setIsLogged } from "@/constants/sessionStorage";
 import videoF from "./loading.mp4";
 import { useNavigate } from "react-router-dom";
 const SystemLogInfo1 = () => {
@@ -17,7 +17,7 @@ const SystemLogInfo1 = () => {
     if (sysIndex >= sys.length - 1) {
       setIsBooted();
       setIsBoot();
-
+      setIsLogged();
       return;
     }
     const timer = setTimeout(() => {

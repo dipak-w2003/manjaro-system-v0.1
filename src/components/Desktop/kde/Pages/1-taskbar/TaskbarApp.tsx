@@ -1,7 +1,7 @@
 import React from "react";
-import { IStyleProps } from "../../KdeApp";
-import AppMenu from "./1-AppsMenu/AppMenu";
-const TaskbarApp: React.FC<IStyleProps> = ({ styles }) => {
+import { IStyleClassProps } from "../../KdeApp";
+import AppMenu from "./1-apps-menu/AppMenu";
+const TaskbarApp: React.FC<IStyleClassProps> = ({ styles }) => {
   return (
     <div
       className={` ${styles} ct-pointer *:h-full *:w-1/2 w-full   flex *:flex items-center *:items-center `}

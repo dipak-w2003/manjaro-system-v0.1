@@ -1,6 +1,6 @@
-.ct-pointer {
-  cursor: url("../SVG/Cursors/pointer.svg"), pointer;
+.ct-default {
+  cursor: url("../SVG/Cursors/pointer.svg"), default;
 }
-.ct-click {
-  cursor: url("../SVG/Cursors/click.svg"), grab;
+.ct-pointer {
+  cursor: url("../SVG/Cursors/click.svg"), pointer;
 }

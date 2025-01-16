@@ -13,6 +13,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@Desktop/*": [
+        "./src/Components/Desktop/*"
       ]
     }
   }

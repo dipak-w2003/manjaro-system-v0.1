@@ -1,0 +1,48 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="0 0 512 512" xml:space="preserve" width="120px" height="26px" fill="#000000">
+    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+    <g id="SVGRepo_iconCarrier">
+        <g>
+            <path style="fill:#0CA7A6;"
+                d="M170.831,417.589H98.247c-30.38,0-55.096-24.716-55.096-55.096v-52.245 c0-30.38,24.716-55.096,55.096-55.096h33.161c13.096,0,23.749-10.654,23.749-23.749v-33.916h31.347v33.915 c0,30.38-24.716,55.096-55.096,55.096H98.247c-13.096,0-23.749,10.654-23.749,23.749v52.245c0,13.096,10.654,23.749,23.749,23.749 h72.585L170.831,417.589L170.831,417.589z">
+            </path>
+            <path style="fill:#0CA7A6;"
+                d="M413.753,417.589h-72.585v-31.347h72.585c13.096,0,23.75-10.654,23.75-23.749v-52.245 c0-13.096-10.654-23.749-23.75-23.749h-33.161c-30.38,0-55.096-24.716-55.096-55.096v-33.916h31.347v33.915 c0,13.096,10.654,23.749,23.749,23.749h33.161c30.38,0,55.096,24.716,55.096,55.096v52.245 C468.85,392.873,444.134,417.589,413.753,417.589z">
+            </path>
+        </g>
+        <rect y="4.18" style="fill:#52E6F8;" width="512" height="216.775"></rect>
+        <rect y="4.18" style="fill:#6FF7FF;" width="257.108" height="216.775"></rect>
+        <g>
+            <rect x="39.515" y="149.452" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="105.169" y="149.452" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="170.83" y="149.452" style="fill:#3CC8D8;" width="170.339" height="31.347"></rect>
+            <rect x="367.804" y="149.452" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="433.465" y="149.452" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="39.515" y="96.893" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="105.169" y="96.893" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="170.83" y="96.893" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="236.492" y="96.893" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="302.153" y="96.893" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="367.804" y="96.893" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="433.465" y="96.893" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="39.515" y="44.335" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="105.169" y="44.335" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="170.83" y="44.335" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="236.492" y="44.335" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="302.153" y="44.335" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="367.804" y="44.335" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+            <rect x="433.465" y="44.335" style="fill:#3CC8D8;" width="39.016" height="31.347"></rect>
+        </g>
+        <path style="fill:#0CA7A6;"
+            d="M225.97,416.579v61.211c0,16.586,13.445,30.03,30.03,30.03s30.03-13.445,30.03-30.03v-61.211H225.97z ">
+        </path>
+        <path style="fill:#26D9DA;" d="M256,416.579h-30.03v61.211c0,16.586,13.445,30.03,30.03,30.03V416.579z"></path>
+        <path style="fill:#FBB500;"
+            d="M256,312.336c-35.379,0-64.059,28.68-64.059,64.059c0,17.5,7.018,33.362,18.392,44.923l0.004-0.004 c7.782,7.754,13.336,17.742,15.633,28.918v9.125h60.061v-9.125c2.297-11.176,7.85-21.163,15.633-28.918l0.004,0.004 c11.375-11.562,18.392-27.423,18.392-44.923C320.059,341.016,291.379,312.336,256,312.336z">
+        </path>
+        <path style="fill:#FFCE47;"
+            d="M256,459.355V312.336c-35.379,0-64.059,28.68-64.059,64.059c0,17.5,7.018,33.362,18.392,44.923 l0.004-0.005c7.782,7.754,13.336,17.742,15.633,28.919v9.124H256z">
+        </path>
+    </g>
+</svg>
