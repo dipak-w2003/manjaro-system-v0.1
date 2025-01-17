@@ -11,20 +11,30 @@ export type AppCategory =
     | "system"
     | "utilities";
 
+
+
+
 export interface IAppMenu {
     appName: string;
     appCategory: AppCategory;
     appIcon?: string;
     isSelected?: boolean;
+    childrens?: {
+        appName?: string;
+        appIcon?: string;
+        isSelected?: boolean;
+    }[]
 
 }
+
 import { applications, bookmarks, developments, games, graphics, internets, offices, settings, systems, utilitiess } from "@/components/Desktop/Themes/SVG/Apps/SVGs";
 export const AppLists: IAppMenu[] = [
     {
         appName: "Favorites",
         appCategory: "favorites",
         appIcon: bookmarks,
-        isSelected: true
+        isSelected: true,
+        childrens: [{ appName: "Vs Code" }, { appName: "Chrome" }, { appName: "Pubg" }]
 
     },
     {

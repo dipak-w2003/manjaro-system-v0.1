@@ -9,7 +9,9 @@ const AppMenuContents = ({ setToggle }: { setToggle: () => void }) => {
       setToggle();
     }, 1000);
   const [selectedOption, setSelected] = useState<IAppMenu | null>(AppLists[0]);
-  useEffect(() => {}, [onMouseRemoveClose, selectedOption]);
+  useEffect(() => {
+    console.log(AppLists[0].childrens);
+  }, [onMouseRemoveClose, selectedOption]);
   return (
     <div
       className="bg-[#3d4247] h-[75vh]  ct-default w-[50vw] absolute left-0 bottom-[3.3vh] rounded-tr-sm  overflow-hidden motion-preset-confetti
