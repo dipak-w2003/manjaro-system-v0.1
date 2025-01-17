@@ -14,8 +14,6 @@ export type AppCategory =
 export interface IAppMenu {
     appName: string;
     appCategory: AppCategory;
-    // `readonly` getter property
-    // readonly appIcon?: string;
     appIcon?: string;
     isSelected?: boolean;
 

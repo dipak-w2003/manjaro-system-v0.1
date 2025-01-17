@@ -9,7 +9,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { useIsBootedContext } from "./context/1-isBooted/isBootedContext";
 import { useSelector } from "react-redux";
 import { RootState } from "./Redux/store";
-import { getIsLogged } from "./constants/sessionStorage";
 
 const App: React.FC = () => {
   const { isBoot } = useIsBootedContext();
@@ -26,14 +25,11 @@ const App: React.FC = () => {
       // ? make it session Logged or local Storage logged based so, ever time we exit or refresh we don't have to automatically to login page
       // TODO : if !isLogged (sOrL_storage{}) navigate '/login'
       navigate("/login");
+    } else if (isLogged && activeUser?.desktopEnv && activeUser?.id) {
+      // '?' is used : true navigate dynamic
+      navigate(`/desktop/${activeUser.desktopEnv}?u=${activeUser.id}`);
     }
-    if (isLogged && getIsLogged) {
-      if (activeUser?.desktopEnv && activeUser?.id) {
-        // '?' is used : true navigate dynamic
-        navigate(`/desktop/${activeUser.desktopEnv}?u=${activeUser.id}`);
-      }
-    }
-  }, [isBoot, isLogged, activeUser, navigate, getIsLogged]);
+  }, [isBoot, isLogged, activeUser, navigate]);
   return (
     <Routes>
       {/* Public Routes */}

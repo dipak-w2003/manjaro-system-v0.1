@@ -1,16 +1,22 @@
 // Redux slice
-import { createSlice } from '@reduxjs/toolkit';
 
+
+
+import { getIsLogged, setIsLogged, setLogout as setLoggedOut } from '@/constants/sessionStorage';
+import { createSlice } from '@reduxjs/toolkit';
 const isLoggedSlice = createSlice({
     name: 'auth',
     initialState: {
-        isLogged: false,
+        // ! Note : session storage boolean value is added for constant loggedIn unless the setLogout -> reducer called helps to prevent from refresh
+        isLogged: getIsLogged(),
     },
     reducers: {
         setLogin: (state) => {
+            setIsLogged()
             state.isLogged = true;
         },
         setLogout: (state) => {
+            setLoggedOut()
             state.isLogged = false;
         },
     },

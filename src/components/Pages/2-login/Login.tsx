@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import LoginTaskBar from "./LoginTaskBar";
 import UserLogIn from "./UserLogIn";
 
@@ -20,16 +20,18 @@ const Login = () => {
   }, []);
 
   return (
-    <div
-      className={`cursor-default h-[100vh] noto-sans overflow-hidden bg-no-repeat bg-cover flex justify-center items-center relative bg-black `}
-    >
-      <div className=" *:h-full *:full overflow-hidden  h-[190px] w-[380px] rounded-md absolute">
-        <UserLogIn />
+    <Suspense fallback={<h1>....login</h1>}>
+      <div
+        className={`cursor-default h-[100vh] noto-sans overflow-hidden bg-no-repeat bg-cover flex justify-center items-center relative bg-black `}
+      >
+        <div className=" *:h-full *:full overflow-hidden  h-[190px] w-[380px] rounded-md absolute">
+          <UserLogIn />
+        </div>
+        <div className="absolute bottom-0 bg-slate-900 h-7 w-full">
+          <LoginTaskBar />
+        </div>
       </div>
-      <div className="absolute bottom-0 bg-slate-900 h-7 w-full">
-        <LoginTaskBar />
-      </div>
-    </div>
+    </Suspense>
   );
 };
 

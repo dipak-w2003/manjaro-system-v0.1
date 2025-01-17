@@ -3,13 +3,12 @@ import { SiKdeplasma } from "react-icons/si";
 import AppMenuContents from "./Contents/AppMenuContents";
 
 const AppMenu = () => {
-  const [toggle, setToggle] = useState<boolean>(true);
-
+  const [toggle, setToggle] = useState<boolean>(false);
   return (
     <div className="relative flex items-center  ">
       <button
         title="App Menu "
-        className="py-1 px-3 text-sm relative z-10 ct-pointer "
+        className="py-1 px-2 text-sm relative z-10 ct-pointer "
         onClick={() => setToggle(!toggle)}
       >
         <SiKdeplasma />

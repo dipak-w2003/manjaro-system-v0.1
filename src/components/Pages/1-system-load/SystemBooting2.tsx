@@ -17,7 +17,6 @@ const SystemLogInfo1 = () => {
     if (sysIndex >= sys.length - 1) {
       setIsBooted();
       setIsBoot();
-      setIsLogged();
       return;
     }
     const timer = setTimeout(() => {
