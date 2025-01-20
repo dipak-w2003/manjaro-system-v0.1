@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import SystemLoadMain from "./components/Pages/1-system-load/SystemLoadMain";
-import Login from "./components/Pages/2-login/Login";
-import DesktopMain from "./components/Desktop/DesktopMain";
-import ProtectedRoute from "./components/ProtectedRoute";
+const SystemLoadMain = lazy(
+  () => import("./components/Pages/1-system-load/SystemLoadMain")
+);
+const Login = lazy(() => import("./components/Pages/2-login/Login"));
+const DesktopMain = lazy(() => import("./components/Desktop/DesktopMain"));
+const ProtectedRoute = lazy(() => import("./components/ProtectedRoute"));
 
 // Context & Redux
 import { useIsBootedContext } from "./context/1-isBooted/isBootedContext";
@@ -23,7 +25,6 @@ const App: React.FC = () => {
   useEffect(() => {
     if (isBoot && !isLogged) {
       // ? make it session Logged or local Storage logged based so, ever time we exit or refresh we don't have to automatically to login page
-      // TODO : if !isLogged (sOrL_storage{}) navigate '/login'
       navigate("/login");
     } else if (isLogged && activeUser?.desktopEnv && activeUser?.id) {
       // '?' is used : true navigate dynamic

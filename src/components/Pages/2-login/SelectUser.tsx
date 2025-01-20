@@ -19,7 +19,6 @@ import {
   getUsersCertainDataList,
   sysUser as sysUserArray,
   getDefaultUser$What,
-  LoginType,
 } from "./usersAccount";
 // ? Redux
 import { useDispatch } from "react-redux";
@@ -28,10 +27,9 @@ import { setUserById } from "@/Redux/1-user-state/activeUserSlice";
 import { checkAuthSysUser } from "@/constants/checkUserAuth";
 import { setLogin, setLogout } from "@/Redux/1-user-state/isLoggedSlice";
 import { DelayLog } from "@/components/Utils/Buttons/delayLog";
-import { SuccessToast, UnsuccessToast } from "@/constants/toast";
-import { Form } from "@/components/ui/form";
+import { useToast } from "@/constants/toast";
 
-// ? return jsx
+// ? return tsx
 export const SelectUser = () => {
   const [username, setUsername] = React.useState<string>(
     getDefaultUser$What().toString()
@@ -39,7 +37,7 @@ export const SelectUser = () => {
   const [password, setPassword] = React.useState<string>("");
   const getUsersList = getUsersCertainDataList("username", sysUser);
   const dispatch: AppDispatch = useDispatch();
-
+  const { SuccessToast, UnsuccessToast } = useToast();
   // ? setUser & pass props(....)
   function handleUserName(Iusername: string) {
     if (!Iusername && Iusername.length < 0) return;
@@ -47,7 +45,6 @@ export const SelectUser = () => {
     console.log("woorked", Iusername);
     const tempArray: USER[] = sysUserArray;
     const foundUserArray = tempArray.filter((e) => e.username === Iusername);
-    // Dispatch
     dispatch(setUserById(foundUserArray[0].id));
   }
 

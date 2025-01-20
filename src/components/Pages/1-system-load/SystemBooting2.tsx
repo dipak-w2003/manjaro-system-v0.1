@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useIsBootedContext } from "@/context/1-isBooted/isBootedContext";
 // ? session
 import { setIsBooted, setIsLogged } from "@/constants/sessionStorage";
-import videoF from "./loading.mp4";
 import { useNavigate } from "react-router-dom";
 const SystemLogInfo1 = () => {
   const navigate = useNavigate();
@@ -41,20 +40,6 @@ const SystemLogInfo1 = () => {
         <h2 className="text-2xl text-cyan-300 font-bold text-left relative left-16 z-50  min-w-[full]  ">
           {sys[sysIndex].comment}
         </h2>
-
-        {/* ? video */}
-        <video
-          className={`
-            w-full h-full left-0 rounded-lg object-cover absolute opacity-35 top-0
-         `}
-          autoPlay={true}
-          loop
-          muted
-          // Replace with your video URL
-          src={videoF}
-          // Custom controls instead of browser defaults
-          controls={false}
-        />
       </span>
     </div>
   );

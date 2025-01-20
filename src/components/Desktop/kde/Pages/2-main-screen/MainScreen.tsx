@@ -1,5 +1,4 @@
 import React from "react";
-import wallpaperLeaves from "../../../Themes/Images/wallpaper-leaves.jpg";
 import { IStyleClassProps } from "../../KdeApp";
 
 const MainScreen: React.FC<IStyleClassProps> = ({ styles }) => {

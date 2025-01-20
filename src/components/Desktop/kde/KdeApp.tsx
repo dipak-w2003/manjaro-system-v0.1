@@ -5,7 +5,7 @@ const LazyMainScreen = lazy(() => import("./Pages/2-main-screen/MainScreen"));
 const KdeApp = () => {
   return (
     <Suspense fallback={<LazyKdeLoad />}>
-      <div className="h-[100vh] w-full ct-default *:w-full bg-slate-700 *:noto-sans text-white relative flex flex-col selection:bg-transparent overflow-hidden ">
+      <div className="h-[100vh] w-full ct-default *:w-full bg-slate-900 *:noto-sans text-white relative flex flex-col selection:bg-transparent overflow-hidden ">
         <LazyMainScreen styles="h-[96vh]" />
         <LazyTaskbarApp styles="h-[4vh] " />
       </div>

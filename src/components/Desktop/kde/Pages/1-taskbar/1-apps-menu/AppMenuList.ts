@@ -1,5 +1,6 @@
 export type AppCategory =
     | "favorites"
+    | "recents"
     | "all-applications"
     | "development"
     | "game"

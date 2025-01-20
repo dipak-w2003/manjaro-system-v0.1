@@ -33,9 +33,7 @@ const SystemLoadMain: React.FC = () => {
 
 // BlinkBlack Component
 function BlinkBlack() {
-  return (
-    <div className=" motion-bg-in-black motion-ease-in-out-quad h-full "></div>
-  );
+  return <div className=" motion-bg-in-black  h-full "></div>;
 }
 
 export default SystemLoadMain;

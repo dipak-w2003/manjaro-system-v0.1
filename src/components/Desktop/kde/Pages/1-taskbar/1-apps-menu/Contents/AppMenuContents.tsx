@@ -2,27 +2,28 @@ import React, { useEffect, useState } from "react";
 import TopMenu from "./TopMenu";
 import CenterMenu from "./CenterMenu";
 import BottomMenu from "./BottomMenu";
-import { AppLists, IAppMenu } from "../AppMenuList";
-const AppMenuContents = ({ setToggle }: { setToggle: () => void }) => {
+const AppMenuContents = ({
+  setToggle,
+  toggle,
+}: {
+  setToggle: () => void;
+  toggle: boolean;
+}) => {
   const onMouseRemoveClose = () =>
     setTimeout(() => {
       setToggle();
     }, 1000);
-  const [selectedOption, setSelected] = useState<IAppMenu | null>(AppLists[0]);
-  useEffect(() => {
-    console.log(AppLists[0].childrens);
-  }, [onMouseRemoveClose, selectedOption]);
   return (
     <div
-      className="bg-[#3d4247] h-[75vh]  ct-default w-[50vw] absolute left-0 bottom-[3.3vh] rounded-tr-sm  overflow-hidden motion-preset-confetti
-      flex *:flex flex-col   justify-center  *:items-center 
-      *:overflow-hidden text-black
-      noto-sans px-4"
+      className={`bg-[#3d4247] h-[75vh]  ct-default w-[50vw] absolute -z-50 left-0 bottom-[3.8vh] rounded-tr-sm  overflow-hidden flex *:flex flex-col   justify-center  *:items-center *:overflow-hidden text-black noto-sans px-4
+      *:motion-translate-y-in-100 *:motion-duration-[0.35s] *:motion-ease-spring-smooth 
+
+      `}
       onMouseLeave={() => onMouseRemoveClose()}
     >
-      <TopMenu styles={"h-[6.5%] bg-red-200"} />
-      <CenterMenu styles={"h-[87%]  "} />
-      <BottomMenu styles={"h-[6.5%] bg-green-800 "} />
+      <TopMenu styles={"h-[8%]"} />
+      <CenterMenu styles={"h-[84%]  "} />
+      <BottomMenu styles={"h-[8%] bg-green-800 "} />
     </div>
   );
 };

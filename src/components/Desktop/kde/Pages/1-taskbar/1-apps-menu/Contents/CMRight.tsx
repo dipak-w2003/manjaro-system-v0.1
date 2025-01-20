@@ -1,4 +1,3 @@
-import { IStyleClassProps } from "@/components/Desktop/kde/KdeApp";
 import React from "react";
 import { setLogout } from "@/Redux/1-user-state/isLoggedSlice";
 import { AppDispatch } from "@/Redux/store";

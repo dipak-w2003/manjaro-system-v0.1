@@ -6,10 +6,10 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        "blink-ball-1": "2.5s blink ease-in-out  6 0.33333s",
-        "blink-ball-2": "2.5s blink ease-in-out  6 0.66666s",
-        "blink-ball-3": "2.5s blink ease-in-out  6 0.99999s",
-        "blink-ball-4": "2.5s blink ease-in-out  6 1.11111s",
+        "blink-ball-1": "2.5s blink infinite 0.33333s",
+        "blink-ball-2": "2.5s blink infinite 0.66666s",
+        "blink-ball-3": "2.5s blink infinite 0.99999s",
+        "blink-ball-4": "2.5s blink infinite 1.11111s",
       },
       keyframes: {
         blink: {

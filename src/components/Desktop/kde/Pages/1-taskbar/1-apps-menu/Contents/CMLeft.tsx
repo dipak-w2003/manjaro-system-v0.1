@@ -20,7 +20,7 @@ const CMLeft: React.FC<SelectType> = ({ setSelected, selectedOption }) => {
   };
 
   return (
-    <div className={` w-[40%]  relative flex flex-col`}>
+    <div className={` w-[40%]  relative flex flex-col `}>
       {AppLists.map((e, _) => {
         return (
           <span
