@@ -1,7 +1,7 @@
 import { IStyleClassProps } from "@/components/Desktop/kde/KdeApp";
-import React, { useEffect, useState } from "react";
-import CMLeft from "./CMLeft";
-import CMRight from "./CMRight";
+import React, { lazy, useEffect, useState } from "react";
+const CMLeft = lazy(() => import("./CMLeft"));
+const CMRight = lazy(() => import("./CMRight"));
 import { AppLists, IAppMenu } from "../AppMenuList";
 
 const CenterMenu: React.FC<IStyleClassProps> = ({ styles }) => {

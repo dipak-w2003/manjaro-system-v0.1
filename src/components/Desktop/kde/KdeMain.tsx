@@ -1,10 +1,10 @@
 import React, { lazy, Suspense } from "react";
 import LazyKdeLoad from "./Pages/LazyKdeLoad";
-const LazyKdeApp = lazy(() => import("./KdeApp"));
+import KdeApp from "./KdeApp";
 const KdeMain = () => {
   return (
     <Suspense fallback={<LazyKdeLoad />}>
-      <LazyKdeApp />
+      <KdeApp />
     </Suspense>
   );
 };

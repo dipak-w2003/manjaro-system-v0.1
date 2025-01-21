@@ -10,10 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { AppDispatch } from "@/Redux/store";
 import { FaPowerOff } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
-
 const TbPowerBtn = () => {
   return (
     <div className=" relative overflow-hidden">

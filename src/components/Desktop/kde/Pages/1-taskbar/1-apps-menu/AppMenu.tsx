@@ -1,7 +1,6 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { SiKdeplasma } from "react-icons/si";
 import AppMenuContents from "./Contents/AppMenuContents";
-
 const AppMenu = () => {
   const [toggle, setToggle] = React.useState<boolean>(false);
   return (

@@ -12,8 +12,8 @@ interface SelectType {
   setSelected: (value: IAppMenu | null) => void;
 }
 const CMLeft: React.FC<SelectType> = ({ setSelected, selectedOption }) => {
-  const handleSelection = (appOption: IAppMenu) => {
-    setSelected({
+  const handleSelection = async (appOption: IAppMenu) => {
+    await setSelected({
       ...appOption,
       isSelected: true,
     });

@@ -1,9 +1,10 @@
+import { lazy } from "react";
 import { RootState } from "@/Redux/store";
 import { useSelector } from "react-redux";
-import TbPowerBtn from "./1-TaskBar/TbPowerBtn";
-import TbAccessibility from "./1-TaskBar/TbAccessibility";
-import TbDesktopChange from "./1-TaskBar/TbDesktopChange";
-import TbLangChange from "./1-TaskBar/TbLangChange";
+const TbPowerBtn = lazy(() => import("./1-TaskBar/TbPowerBtn"));
+const TbAccessibility = lazy(() => import("./1-TaskBar/TbAccessibility"));
+const TbDesktopChange = lazy(() => import("./1-TaskBar/TbDesktopChange"));
+const TbLangChange = lazy(() => import("./1-TaskBar/TbLangChange"));
 const LoginTaskBar = () => {
   const currentUser = useSelector(
     (state: RootState) => state.activeUser.user[0].sysUname

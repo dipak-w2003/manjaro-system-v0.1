@@ -1,9 +1,9 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 const SystemLoadMain = lazy(
   () => import("./components/Pages/1-system-load/SystemLoadMain")
 );
-const Login = lazy(() => import("./components/Pages/2-login/Login"));
+import Login from "./components/Pages/2-login/Login";
 const DesktopMain = lazy(() => import("./components/Desktop/DesktopMain"));
 const ProtectedRoute = lazy(() => import("./components/ProtectedRoute"));
 
@@ -21,6 +21,9 @@ const App: React.FC = () => {
     (state: RootState) => state.activeUser.user[0]
   );
   const navigate = useNavigate();
+  const [isLandscape, setIsLandscape] = useState<boolean>(
+    window.matchMedia("(orientation: landscape)").matches
+  );
 
   useEffect(() => {
     if (isBoot && !isLogged) {
@@ -30,12 +33,29 @@ const App: React.FC = () => {
       // '?' is used : true navigate dynamic
       navigate(`/desktop/${activeUser.desktopEnv}?u=${activeUser.id}`);
     }
+
+    // ? handle orientation
+    const handleOrientationChange = () => {
+      setIsLandscape(window.matchMedia("(orientation: landscape)").matches);
+    };
+
+    const mediaQuery = window.matchMedia("(orientation: landscape)");
+    mediaQuery.addEventListener("change", handleOrientationChange);
   }, [isBoot, isLogged, activeUser, navigate]);
   return (
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<SystemLoadMain />} />
-      <Route path="/login" element={<Login />} />
+      <Route
+        path="/login"
+        element={
+          <Suspense
+            fallback={<p> {isLogged ? "Logging In" : "Logging Off"} </p>}
+          >
+            <Login />
+          </Suspense>
+        }
+      />
 
       {/* Protected Routes */}
       <Route
