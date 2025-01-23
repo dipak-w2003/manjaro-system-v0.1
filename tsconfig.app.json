@@ -7,7 +7,8 @@
       "dom",
       "esnext"
     ],
-    "allowJs": true,
+    "noEmit": true,
+    "allowJs": false,
     "jsx": "react-jsx",
     "moduleResolution": "node",
     "esModuleInterop": true,
