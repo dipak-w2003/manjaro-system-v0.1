@@ -1,19 +1,22 @@
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+// import { Button } from "@/components/ui/button";
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuGroup,
+//   DropdownMenuItem,
+//   DropdownMenuLabel,
+//   DropdownMenuSeparator,
+//   DropdownMenuShortcut,
+//   DropdownMenuTrigger,
+// } from "@/components/ui/dropdown-menu";
 
 import { FaPowerOff } from "react-icons/fa6";
+import { setNotBooted } from "@/constants/sessionStorage";
 const TbPowerBtn = () => {
   return (
     <div className=" relative overflow-hidden">
+      <FaPowerOff onClick={setNotBooted} />
+      {/* 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -46,7 +49,7 @@ const TbPowerBtn = () => {
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu> */}
     </div>
   );
 };

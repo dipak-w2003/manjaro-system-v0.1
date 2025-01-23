@@ -10,7 +10,9 @@ const AppMenu = () => {
         className="py-1 px-2 text-sm relative z-10 ct-pointer "
         onClick={() => setToggle(!toggle)}
       >
-        <SiKdeplasma />
+        <Suspense fallback={<p>SiKdeplasma</p>}>
+          <SiKdeplasma />
+        </Suspense>
       </button>
       {toggle && (
         <AppMenuContents toggle={toggle} setToggle={() => setToggle(false)} />

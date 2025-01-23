@@ -46,16 +46,7 @@ const App: React.FC = () => {
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<SystemLoadMain />} />
-      <Route
-        path="/login"
-        element={
-          <Suspense
-            fallback={<p> {isLogged ? "Logging In" : "Logging Off"} </p>}
-          >
-            <Login />
-          </Suspense>
-        }
-      />
+      <Route path="/login" element={<Login />} />
 
       {/* Protected Routes */}
       <Route

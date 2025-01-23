@@ -1,66 +1,53 @@
+import React, { useCallback, useMemo } from "react";
 import { CheckTriangle } from "@/components/Desktop/Themes/SVG/reusableSVGs";
-import React, { useEffect, useState } from "react";
 import { AppLists, IAppMenu } from "../AppMenuList";
 
 interface SelectType {
-  //  same as below but over complex
-  // setSelected: React.Dispatch<React.SetStateAction<IAppMenu | null>>;
-  // check down Comment
-
-  // ? param type and logic with its types
   selectedOption: IAppMenu;
   setSelected: (value: IAppMenu | null) => void;
 }
-const CMLeft: React.FC<SelectType> = ({ setSelected, selectedOption }) => {
-  const handleSelection = async (appOption: IAppMenu) => {
-    await setSelected({
-      ...appOption,
-      isSelected: true,
-    });
-  };
 
-  return (
-    <div className={` w-[40%]  relative flex flex-col `}>
-      {AppLists.map((e, _) => {
+const CMLeft: React.FC<SelectType> = ({ setSelected, selectedOption }) => {
+  // Optimized handleSelection
+  const handleSelection = useCallback(
+    (appOption: IAppMenu) => {
+      setSelected({ ...appOption, isSelected: true });
+    },
+    [setSelected]
+  );
+
+  // Memoized app list to avoid re-rendering
+  const appListItems = useMemo(
+    () =>
+      AppLists.map((app) => {
+        const isSelected = app.appName === selectedOption.appName;
         return (
           <span
-            onMouseEnter={() => handleSelection(e)}
-            key={e.appName}
-            className="h-[70px] overflow-hidden flex w-full  relative items-center hover:border-[#4d9a91d5] border-transparent bg-[] p-3 border-[1.5px] rounded"
+            onMouseEnter={() => handleSelection(app)}
+            key={app.appName}
+            className={`h-[70px] overflow-hidden flex w-full relative items-center border-[1.5px] p-3 rounded 
+              ${isSelected ? "border-[#4d9a91d5]" : "border-transparent"}
+              hover:border-[#4d9a91d5]`}
           >
             <img
               className="ct-pointer -left-10 text-sm absolute"
-              src={e.appIcon}
+              src={app.appIcon}
+              alt={`${app.appName} icon`}
             />
-            <h3 className="text-sm w-fit ml-9">{e.appName}</h3>
-
-            {e.appName === selectedOption.appName ? (
-              <CheckTriangle
-                className="absolute right-[1px]"
-                height="6px"
-                width="10px"
-                fill="white"
-              />
-            ) : (
-              <CheckTriangle
-                className="absolute right-[1px]"
-                height="5px"
-                width="10px"
-              />
-            )}
+            <h3 className="text-sm w-fit ml-9">{app.appName}</h3>
+            <CheckTriangle
+              className="absolute right-[1px]"
+              height={isSelected ? "6px" : "5px"}
+              width="10px"
+              fill={isSelected ? "white" : "none"}
+            />
           </span>
         );
-      })}
-    </div>
+      }),
+    [AppLists, handleSelection, selectedOption.appName]
   );
+
+  return <div className="w-[40%] relative flex flex-col">{appListItems}</div>;
 };
 
 export default CMLeft;
-
-// ?
-// setSelected: React.Dispatch<React.SetStateAction<IAppMenu | null>>;
-// * setSelected -> a state updateer function designed to update the state of a value that can either be of IAppMenu or null
-// * React.Dispatch<React.SetStateAction<IAppMenu | null >>
-//   ------------> ensures the function works like the one returned by React's useState meaning:
-//  ----------------> 1) It can directly accept a new state (IAppMenu | null)
-//  ----------------> 2) Or it can accept a function that calculates the new state based on the current state
