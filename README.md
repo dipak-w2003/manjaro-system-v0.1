@@ -48,7 +48,7 @@ export default tseslint.config({
   },
 });
 ```
-
+---
 # UUID
 
 The uuid library supports multiple UUID versions
@@ -61,8 +61,8 @@ npm install --save-dev @types/uuid
 
 - For TypeScript projects, install the type definitions:
 
-```npm install --save-dev @types/uuid
-
+```bash
+npm install --save-dev @types/uuid
 ```
 
 - Syntax & useCase
@@ -103,7 +103,7 @@ const App = () => {
 };
 export default App;
 ```
-
+---
 # BrowserStorage(session,local,index,cookies else) Data Update issue to UI
 
 Storage which holds up our data in the string format with the limited storage(approximately 10Mib).
@@ -403,12 +403,65 @@ export const RenderIcon = ({ iconKey }) => {
 };
 ```
 
-# Protected Route (React-Router-DomV^7)
+# React-Router-DomV^7
 
 React Router is an external package for routing react page components.
 
+## Navigate & useNavigate
+
+### `<Navigate />`
+
+`<Navigate />` is a React component used to declaratively navigate to a different route during the rendering phase.
+
+- Use <Navigate /> for conditional or automatic redirection during rendering.
+- Useage : Protecting routes or redirecting after certain checks.
+
+## Protected Route
+
 ```tsx
-// ProtectedRoute.tsx
+import { Navigate } from "react-router-dom";
+
+function ProtectedRoute({ isAuthenticated }) {
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+    // Redirect to login
+  }
+  return <Dashboard />;
+  // Render protected content
+}
+```
+
+- `replace` prop ensures that the current history entry is replaced (user cannot go back)
+- UI Blocking: Causes Page Smoothness with fast redirect
+
+---
+
+### `<useNavigate/>`
+
+`<useNavigate/>` is a React hook used for programmatic navigation, typically in event handlers or dynamic logic.
+
+- Use useNavigate for navigation triggered by events (e.g., button clicks)
+
+```tsx
+import { useNavigate } from "react-router-dom";
+function LoginButton() {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    // Perform login logic here
+    navigate("/dashboard", { replace: true });
+    // Redirect programmatically
+  };
+
+  return <button onClick={handleLogin}>Login</button>;
+}
+```
+
+It is an technique where we can cantrol routes on the basis of statement (mostly boolean)
+
+### ProtectedRoute.tsx
+
+```tsx
 import React from "react";
 import { Navigate } from "react-router-dom";
 
@@ -427,8 +480,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 export default ProtectedRoute;
 ```
 
+---
+
+### App.tsx
+
 ```tsx
-App.tsx;
 import React, { useEffect } from "react";
 import SystemLoadMain from "./components/Pages/1-system-load/SystemLoadMain";
 import Login from "./components/Pages/2-login/Login";
@@ -478,8 +534,11 @@ const App = () => {
 export default App;
 ```
 
+---
+
+### Main.tsx
+
 ```tsx
-// Main.tsx
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";

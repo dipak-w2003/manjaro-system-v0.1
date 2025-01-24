@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 const SystemLoadMain = lazy(
   () => import("./components/Pages/1-system-load/SystemLoadMain")
 );
@@ -28,7 +28,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (isBoot && !isLogged) {
       // ? make it session Logged or local Storage logged based so, ever time we exit or refresh we don't have to automatically to login page
-      navigate("/login");
+      navigate("/login", { replace: true });
     } else if (isLogged && activeUser?.desktopEnv && activeUser?.id) {
       // '?' is used : true navigate dynamic
       navigate(`/desktop/${activeUser.desktopEnv}?u=${activeUser.id}`);

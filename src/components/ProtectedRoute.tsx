@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
   isLogged: boolean;
@@ -10,9 +10,15 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   isLogged,
   children,
 }) => {
-  if (!isLogged) {
-    return <Navigate to="/login" replace />;
-  }
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLogged) {
+      // Navigate programmatically to avoid UI blocking
+      navigate("/login", { replace: true });
+    }
+  }, [isLogged, navigate]); 
+  // / Include navigate in dependency array
 
   return <>{children}</>;
 };
