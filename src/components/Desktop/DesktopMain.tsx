@@ -35,3 +35,29 @@ const DesktopMain: React.FC = () => {
 };
 
 export default DesktopMain;
+
+// Key Points:
+
+//     1. Valid Desktop Environments:
+//         The code defines valid environments as xfce, kde, and gnome.
+
+//     2. Getting Parameters:
+//         desktopEnv: Comes from the URL path (e.g., /xfce or /kde).
+//         userId: Comes from the query parameter in the URL (e.g., ?u=123).
+
+//     3. Validation:
+//         If desktopEnv is missing or not in the list of valid environments, it shows:
+//         "Invalid Desktop Environment".
+//         If userId is missing, it shows:
+//         "Invalid Desktop Environment or Missing User ID".
+
+//     4. Switch Statement:
+//         Depending on the value of desktopEnv, it renders one of the following components:
+//             XfceMain for xfce.
+//             KdeMain for kde.
+//             GnomeMain for gnome.
+//         If none of these match, it shows:
+//         "Desktop Environment Not Supported".
+
+//     5. Default Behavior:
+//         If anything goes wrong or the parameters are invalid, error messages are displayed to the user.
