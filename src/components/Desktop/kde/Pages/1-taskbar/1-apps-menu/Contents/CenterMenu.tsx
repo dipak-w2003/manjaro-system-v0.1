@@ -9,7 +9,7 @@ const CenterMenu: React.FC<IStyleClassProps> = ({ styles }) => {
   useEffect(() => {}, [selectedOption]);
 
   return (
-    <div className={`${styles} *:h-full `}>
+    <div className={`${styles} *:h-full text-gray-200 font-semibold`}>
       <CMLeft setSelected={setSelected} selectedOption={selectedOption} />
       <CMRight appCategory={selectedOption.appCategory} />
     </div>

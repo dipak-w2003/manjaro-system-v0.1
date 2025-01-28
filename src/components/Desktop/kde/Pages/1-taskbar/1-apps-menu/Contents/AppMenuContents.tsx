@@ -48,7 +48,7 @@ const AppMenuContents = ({
 
   return (
     <div
-      ref={menuRef}
+      // ref={menuRef}
       className={`bg-[#3d4247] h-[75vh] ct-default w-[50vw] absolute -z-50 left-0 bottom-[3.8vh] rounded-tr-sm overflow-hidden flex *:flex flex-col justify-center *:items-center *:overflow-hidden text-black noto-sans px-4
       *:motion-translate-y-in-100 *:motion-duration-[0.35s] *:motion-ease-spring-smooth realtive`}
     >
@@ -59,7 +59,7 @@ const AppMenuContents = ({
       >
         <TopMenu styles={"h-[8%]"} />
         <CenterMenu styles={"h-[84%]"} />
-        <BottomMenu styles={"h-[8%] bg-green-800"} />
+        <BottomMenu styles={"h-[8%] "} />
       </Suspense>
     </div>
   );

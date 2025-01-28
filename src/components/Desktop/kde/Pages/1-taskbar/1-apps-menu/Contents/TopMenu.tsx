@@ -9,7 +9,7 @@ const TopMenu: React.FC<IStyleClassProps> = ({ styles }) => {
   );
   return (
     <div className={`${styles} justify-start flex-row *:h-full`}>
-      <section className="w-[40%] flex items-center gap-2">
+      <section className="w-[40%] flex items-center gap-2 font-medium ">
         <img
           className="circle h-7 w-7 rounded-full object-cover  bg-yellow-500"
           src={activeUser.imgPP}

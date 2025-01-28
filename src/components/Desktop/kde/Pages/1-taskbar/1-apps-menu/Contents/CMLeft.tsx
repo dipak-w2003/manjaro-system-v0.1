@@ -25,12 +25,12 @@ const CMLeft: React.FC<SelectType> = ({ setSelected, selectedOption }) => {
           <span
             onMouseEnter={() => handleSelection(app)}
             key={app.appName}
-            className={`h-[70px] overflow-hidden flex w-full relative items-center border-[1.5px] p-3 rounded 
+            className={`h-[70px] ct-pointer overflow-hidden flex w-full relative items-center border-[1.5px] p-3 rounded 
               ${isSelected ? "border-[#4d9a91d5]" : "border-transparent"}
               hover:border-[#4d9a91d5]`}
           >
             <img
-              className="ct-pointer -left-10 text-sm absolute"
+              className="-left-10 text-sm absolute"
               src={app.appIcon}
               alt={`${app.appName} icon`}
             />
