@@ -1,9 +1,11 @@
 import React, { ReactNode, useEffect } from "react";
 import ManjaroLoading1 from "./ManjaroLoading1";
 import SystemBooting2 from "./SystemBooting2";
+import { ProjectCopyDisclaimer } from "../ProjectCopyDisclaimer";
 
 const SystemLoadMain: React.FC = () => {
   const enrollTSXui: ReactNode[] = [
+    <ProjectCopyDisclaimer key="disclaimer" />,
     <BlinkBlack key="blink" />,
     <ManjaroLoading1 key="manjaro" />,
     <BlinkBlack key="blink" />,
@@ -16,8 +18,6 @@ const SystemLoadMain: React.FC = () => {
     const timer = setTimeout(() => {
       // Increment or stay at last index
       setQueueNode((prev) => Math.min(prev + 1, enrollTSXui.length - 1));
-      if (queueNode === 100) {
-      }
     }, 3000);
 
     // Cleanup timeout on unmount

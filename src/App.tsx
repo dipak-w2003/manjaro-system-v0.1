@@ -1,7 +1,7 @@
-import React, { lazy, Suspense, useEffect, useState } from "react";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import React, { lazy, useEffect, useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 const SystemLoadMain = lazy(
-  () => import("./components/Pages/1-system-load/SystemLoadMain")
+  () => import("./components/Pages/1-system-load/SystemLoadMain"),
 );
 import Login from "./components/Pages/2-login/Login";
 const DesktopMain = lazy(() => import("./components/Desktop/DesktopMain"));
@@ -15,19 +15,20 @@ import { RootState } from "./Redux/store";
 const App: React.FC = () => {
   const { isBoot } = useIsBootedContext();
   const isLogged = useSelector(
-    (state: RootState) => state.isLoggedSlice.isLogged
+    (state: RootState) => state.isLoggedSlice.isLogged,
   );
   const activeUser = useSelector(
-    (state: RootState) => state.activeUser.user[0]
+    (state: RootState) => state.activeUser.user[0],
   );
   const navigate = useNavigate();
   const [isLandscape, setIsLandscape] = useState<boolean>(
-    window.matchMedia("(orientation: landscape)").matches
+    window.matchMedia("(orientation: landscape)").matches,
   );
 
   useEffect(() => {
     if (isBoot && !isLogged) {
-      // ? make it session Logged or local Storage logged based so, ever time we exit or refresh we don't have to automatically to login page
+      // ? make it session Logged or local Storage logged based so,
+      // ever time we exit or refresh we don't have to automatically to login page
       navigate("/login", { replace: true });
     } else if (isLogged && activeUser?.desktopEnv && activeUser?.id) {
       // '?' is used : true navigate dynamic

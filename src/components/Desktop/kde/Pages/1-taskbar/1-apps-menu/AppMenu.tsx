@@ -1,8 +1,8 @@
-import React, { lazy, Suspense } from "react";
+import React, { Suspense } from "react";
 import { SiKdeplasma } from "react-icons/si";
 import AppMenuContents from "./Contents/AppMenuContents";
 const AppMenu = () => {
-  const [toggle, setToggle] = React.useState<boolean>(true);
+  const [toggle, setToggle] = React.useState<boolean>(false);
   return (
     <div className=" flex items-center">
       <button

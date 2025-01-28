@@ -6,7 +6,7 @@ import { MdRestartAlt } from "react-icons/md";
 import { IoLogOutOutline } from "react-icons/io5";
 
 import { LuDraftingCompass } from "react-icons/lu";
-import React, { ComponentType, SVGProps } from "react";
+import React from "react";
 import { IconType } from "react-icons";
 import { useDispatch } from "react-redux";
 import { setLogout } from "@/Redux/1-user-state/isLoggedSlice";
@@ -36,7 +36,6 @@ const BottomMenu: React.FC<IStyleClassProps> = ({ styles }) => {
       name: "Sleep",
       icon: GiNightSleep,
     },
-    ,
     {
       name: "Restart",
       icon: MdRestartAlt,
@@ -47,26 +46,34 @@ const BottomMenu: React.FC<IStyleClassProps> = ({ styles }) => {
     },
   ];
   const dispatch = useDispatch();
-  const logout = () => {
-    dispatch(setLogout());
-  };
+  async function logout() {
+    return dispatch(setLogout());
+  }
 
   return (
     <div
-      className={`${styles}  flex justify-center  *:h-full *:w-[20%] *:flex gap-1   *:gap-2 *:text-md *:items-center *:justify-center rounded-4 overflow-hidden text-gray-200 font-medium`}
+      className={`${styles}  flex justify-around  *:h-[90%] *:w-[20%] *:flex gap-1   *:gap-2 *:text-md
+        *:items-center *:justify-center   text-gray-200 font-medium relative z-50 `}
     >
-      {apps.map((app, _) => {
+      {apps.map((app) => {
         return (
           <span
+            title={app.name}
+            key={app.name}
             onClick={() => {
-              app.name === "LogOut" && logout();
+              return app.name === "LogOut" && logout();
             }}
-            className={`${
-              app.isActive && " border-t-green-400"
-            } border-t-2 border-t-transparent ct-pointer`}
+            className={`ct-pointer`}
+            style={{
+              borderTop: app.isActive
+                ? "3.5px solid #5898a5"
+                : "3.5px solid transparent",
+            }}
           >
             <app.icon />
-            <h3>{app.name}</h3>
+            <h3 className="hidden lg:text-sm lg:block xl:block line-clamp-1">
+              {app.name}
+            </h3>
           </span>
         );
       })}

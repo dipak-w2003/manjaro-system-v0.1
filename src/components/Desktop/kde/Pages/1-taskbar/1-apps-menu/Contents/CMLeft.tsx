@@ -13,7 +13,7 @@ const CMLeft: React.FC<SelectType> = ({ setSelected, selectedOption }) => {
     (appOption: IAppMenu) => {
       setSelected({ ...appOption, isSelected: true });
     },
-    [setSelected]
+    [setSelected],
   );
 
   // Memoized app list to avoid re-rendering
@@ -23,9 +23,10 @@ const CMLeft: React.FC<SelectType> = ({ setSelected, selectedOption }) => {
         const isSelected = app.appName === selectedOption.appName;
         return (
           <span
+            title={app.appCategory}
             onMouseEnter={() => handleSelection(app)}
             key={app.appName}
-            className={`h-[70px] ct-pointer overflow-hidden flex w-full relative items-center border-[1.5px] p-3 rounded 
+            className={`h-[70px] ct-pointer overflow-hidden flex w-full relative items-center border-[1.5px] p-3 rounded
               ${isSelected ? "border-[#4d9a91d5]" : "border-transparent"}
               hover:border-[#4d9a91d5]`}
           >
@@ -34,7 +35,9 @@ const CMLeft: React.FC<SelectType> = ({ setSelected, selectedOption }) => {
               src={app.appIcon}
               alt={`${app.appName} icon`}
             />
-            <h3 className="text-sm w-fit ml-9">{app.appName}</h3>
+            <h3 className="text-sm w-fit ml-9 line-clamp-1 hidden lg:block xl:block md:block">
+              {app.appName}
+            </h3>
             <CheckTriangle
               className="absolute right-[1px]"
               height={isSelected ? "6px" : "5px"}
@@ -44,7 +47,7 @@ const CMLeft: React.FC<SelectType> = ({ setSelected, selectedOption }) => {
           </span>
         );
       }),
-    [AppLists, handleSelection, selectedOption.appName]
+    [AppLists, handleSelection, selectedOption.appName],
   );
 
   return <div className="w-[40%] relative flex flex-col">{appListItems}</div>;
