@@ -13,7 +13,7 @@ const CMLeft: React.FC<SelectType> = ({ setSelected, selectedOption }) => {
     (appOption: IAppMenu) => {
       setSelected({ ...appOption, isSelected: true });
     },
-    [setSelected],
+    [setSelected]
   );
 
   // Memoized app list to avoid re-rendering
@@ -47,7 +47,7 @@ const CMLeft: React.FC<SelectType> = ({ setSelected, selectedOption }) => {
           </span>
         );
       }),
-    [AppLists, handleSelection, selectedOption.appName],
+    [AppLists, handleSelection, selectedOption.appName]
   );
 
   return <div className="w-[40%] relative flex flex-col">{appListItems}</div>;

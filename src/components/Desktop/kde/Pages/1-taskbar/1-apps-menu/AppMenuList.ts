@@ -21,66 +21,88 @@ export interface IAppMenu {
     appIcon?: string;
     isSelected?: boolean;
     childrens?: {
+        pkgId: string,
         appName?: string;
         appIcon?: string;
-        isSelected?: boolean;
+        desc?: string
     }[]
-
 }
 
+// For better package clarity : pkgId: string, -> "development-appName"
+
+
+export const emptyArr = []
 import { applications, bookmarks, developments, games, graphics, internets, offices, settings, systems, utilitiess } from "@/components/Desktop/Themes/SVG/Apps/SVGs";
+import { FavoritesApps } from "./AppCategoryList";
 export const AppLists: IAppMenu[] = [
     {
         appName: "Favorites",
         appCategory: "favorites",
         appIcon: bookmarks,
-        isSelected: true,
-        childrens: [{ appName: "Vs Code" }, { appName: "Chrome" }, { appName: "Pubg" }]
+        childrens: FavoritesApps
 
     },
     {
         appName: "All Applications",
         appCategory: "all-applications",
-        appIcon: applications
+
+        appIcon: applications,
+        childrens: emptyArr
     },
     {
         appName: "Development",
         appCategory: "development",
-        appIcon: developments
+
+        appIcon: developments,
+        childrens: emptyArr
     },
     {
         appName: "Games",
         appCategory: "game",
-        appIcon: games
+
+        appIcon: games,
+        childrens: emptyArr
     },
     {
         appName: "Graphics",
         appCategory: "graphics",
-        appIcon: graphics
+
+        appIcon: graphics,
+        childrens: emptyArr
     },
     {
         appName: "Internet",
         appCategory: "internet",
-        appIcon: internets
+
+        appIcon: internets,
+        childrens: emptyArr
     },
     {
         appName: "Office",
         appCategory: "office",
-        appIcon: offices
+
+        appIcon: offices,
+        childrens: emptyArr
     },
     {
         appName: "Settings",
         appCategory: "settings",
-        appIcon: settings
+
+        appIcon: settings,
+        childrens: emptyArr
     },
     {
         appName: "System",
         appCategory: "system",
-        appIcon: systems
+
+        appIcon: systems,
+        childrens: emptyArr
     },
     {
         appName: "Utilities",
         appCategory: "utilities",
-        appIcon: utilitiess
+
+        appIcon: utilitiess,
+        childrens: emptyArr
     },
 ];

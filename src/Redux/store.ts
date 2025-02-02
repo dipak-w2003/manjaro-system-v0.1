@@ -4,10 +4,12 @@ import { configureStore } from '@reduxjs/toolkit';
 // ? user logging related slices
 import activeUserSlice from './1-user-state/activeUserSlice';
 import isLoggedSlice from './1-user-state/isLoggedSlice';
+import recentSlice from './1-user-state/recentSlice';
 const store = configureStore({
     reducer: {
         activeUser: activeUserSlice,
-        isLoggedSlice: isLoggedSlice
+        isLoggedSlice: isLoggedSlice,
+        recents: recentSlice
     },
 });
 

@@ -6,7 +6,7 @@ const MainScreen: React.FC<IStyleClassProps> = ({ styles }) => {
     // ? background image added from index css as id
     <Suspense fallback={<div className="motion-preset-confetti "></div>}>
       <div id="main-screen" className={`${styles}`}>
-        <ProjectCopyDisclaimer />
+        {/* <ProjectCopyDisclaimer /> */}
       </div>
     </Suspense>
   );

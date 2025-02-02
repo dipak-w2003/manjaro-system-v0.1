@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { SiKdeplasma } from "react-icons/si";
 import AppMenuContents from "./Contents/AppMenuContents";
 const AppMenu = () => {
-  const [toggle, setToggle] = React.useState<boolean>(false);
+  const [toggle, setToggle] = React.useState<boolean>(true);
   return (
     <div className=" flex items-center">
       <button
