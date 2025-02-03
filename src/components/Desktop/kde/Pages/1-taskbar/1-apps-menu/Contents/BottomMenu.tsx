@@ -10,6 +10,7 @@ import React from "react";
 import { IconType } from "react-icons";
 import { useDispatch } from "react-redux";
 import { setLogout } from "@/Redux/1-user-state/isLoggedSlice";
+import { clearRecents } from "@/Redux/1-user-state/recentSlice";
 
 interface BottomMenusType {
   name: string;
@@ -47,7 +48,8 @@ const BottomMenu: React.FC<IStyleClassProps> = ({ styles }) => {
   ];
   const dispatch = useDispatch();
   async function logout() {
-    return dispatch(setLogout());
+    dispatch(setLogout());
+    dispatch(clearRecents());
   }
 
   return (

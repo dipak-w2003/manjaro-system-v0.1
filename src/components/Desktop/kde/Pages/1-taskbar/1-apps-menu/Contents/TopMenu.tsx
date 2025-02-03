@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { settings as SS } from "@/components/Desktop/Themes/SVG/Apps/SVGs";
 const TopMenu: React.FC<IStyleClassProps> = ({ styles }) => {
   const activeUser = useSelector(
-    (state: RootState) => state.activeUser.user[0],
+    (state: RootState) => state.activeUser.user[0]
   );
   const handleSearchBar = () => {};
   return (
@@ -16,10 +16,10 @@ const TopMenu: React.FC<IStyleClassProps> = ({ styles }) => {
     >
       <section className="lg:w-[40%] flex items-center gap-2 font-medium ">
         <img
-          className="circle h-7 w-7 rounded-full object-cover  bg-yellow-500"
+          className="circle h-6 w-6 rounded-full object-cover  bg-yellow-500"
           src={activeUser.imgPP}
         />
-        <h2>{activeUser.username}</h2>
+        <h2 className="text-sm">{activeUser.username}</h2>
       </section>
       <section className="w-[60%]  hidden lg:flex justify-center items-center relative ">
         <span className="relative w-[70%]">
@@ -28,7 +28,7 @@ const TopMenu: React.FC<IStyleClassProps> = ({ styles }) => {
             onChange={() => handleSearchBar}
             type="text"
             placeholder="search somethings ..."
-            className="text-[13px] text-gray-200 px-8 py-[4px] h-7  w-[100%] rounded-[2px]  bg-black border-0 focus:outline-none  "
+            className="text-[11px]  text-gray-200 px-8 py-[4px] h-6  w-[100%] rounded-[2px]  bg-black border-0 focus:outline-none  "
           />
         </span>
         <img

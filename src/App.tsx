@@ -42,7 +42,7 @@ const App: React.FC = () => {
 
     const mediaQuery = window.matchMedia("(orientation: landscape)");
     mediaQuery.addEventListener("change", handleOrientationChange);
-  }, [isBoot, isLogged, activeUser, navigate]);
+  }, [isBoot, isLogged, activeUser, navigate, isLandscape]);
   return (
     <Routes>
       {/* Public Routes */}

@@ -26,6 +26,7 @@ export const sysUser: IUsers = [{
     sysUname: "naruto",
     desktopEnv: "kde",
     imgPP: "https://cdn.pixabay.com/photo/2023/09/04/03/24/ai-generated-8231889_960_720.png",
+    id: "0194c777-5bd6-749c-ab9d-e41c2a069787"
 }, {
     username: "Tanjiro",
     password: "DT2003",
@@ -40,6 +41,8 @@ export const sysUser: IUsers = [{
     sysUname: "getsuga",
     imgPP: "https://i.pinimg.com/736x/a6/33/00/a633005571e8dcb13fc41cea010fcfb1.jpg",
     desktopEnv: "gnome",
+    id: "0794chd-5bd6-749c-ab9d-e41c2a08000"
+
 
 },
 {
@@ -48,29 +51,10 @@ export const sysUser: IUsers = [{
     sysUname: "Zinz",
     desktopEnv: "kde",
     imgPP: "https://artistsimages.b-cdn.net/johnny-sins/johnny-sins-1.jpg?width=3840&quality=75&format=webp&flop=false",
+    id: "0794cad-5bd6-749c-bb90-e41c2b070jk0"
+
 }
 ]
-// ? ID duplicated Handling. Prototype -> 
-// 1. Generated Unique which is not included : unique_UUI_Generater():string
-// 2. forEach sysUser and user.id = 'unique_UUI_Generater' & map generated unique id
-// conclusion : it helps to prevent duplicated id and user id changing frequently
-// UUID
-export function unique_UUI_Generater(existingIds: string[] = []): string {
-    let unique = uuidv7();
-
-    while (existingIds.includes(unique)) {
-        unique = uuidv7();
-    }
-
-    return unique;
-}
-
-// Assign unique IDs to sysUser after initialization
-sysUser.forEach((user) => {
-    if (!user.id) {
-        user.id = unique_UUI_Generater(sysUser.map((u) => u.id || ""))
-    };
-});
 
 
 // ? Get key -> values list
