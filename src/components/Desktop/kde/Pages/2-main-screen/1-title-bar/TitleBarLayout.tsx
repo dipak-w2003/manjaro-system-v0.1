@@ -1,4 +1,9 @@
+import MusicPlayerApp from "@/components/Desktop/Apps/Music-Player/MusicPlayerApp";
+import TerminalApp from "@/components/Desktop/Apps/Terminal/TerminalApp";
+import VSCode from "@/components/Desktop/Apps/VS-Code/VSCode";
 import React, { useEffect } from "react";
+import { AppPkgId } from "../../1-taskbar/1-apps-menu/AppCategoryList";
+
 export interface ITitleBarLayout {
   pkgId: string;
   //   children?: React.ReactNode;

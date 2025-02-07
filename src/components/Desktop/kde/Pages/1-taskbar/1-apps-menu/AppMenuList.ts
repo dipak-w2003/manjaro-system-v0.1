@@ -47,7 +47,8 @@ export const AppLists: IAppMenu[] = [
     appName: "Favorites",
     appCategory: "favorites",
     appIcon: bookmarks,
-    childrens: FavoritesApps,
+    // Error(cannot Mutable) Fixed : Convert FavoritesApps to a Mutable Array so it can mutate without any errors
+    childrens: [...FavoritesApps],
   },
   {
     appName: "All Applications",

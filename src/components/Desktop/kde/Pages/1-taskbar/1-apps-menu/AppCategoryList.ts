@@ -1,4 +1,4 @@
-// ? provides apps categories
+// ? Provides apps categories
 import {
   vscode,
   terminal,
@@ -13,8 +13,8 @@ export interface AppCategoryList {
   isFocused: boolean;
 }
 
-// Favorites
-export const FavoritesApps: AppCategoryList[] = [
+// Favorites (Set as readonly with `as const`)
+export const FavoritesApps = [
   {
     pkgId: "development-vscode",
     appName: "VS Code",
@@ -36,4 +36,8 @@ export const FavoritesApps: AppCategoryList[] = [
     desc: "Command-line interface hub.",
     isFocused: false,
   },
-];
+] as const; // ✅ `as const` ensures pkgId values are inferred as literals
+
+// Dynamically generate a union type
+export type AppPkgId = (typeof FavoritesApps)[number]["pkgId"];
+

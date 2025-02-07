@@ -70,6 +70,9 @@ const recentsSlice = createSlice({
       }
     },
 
+    // Make a reduucer or modify upper function where when we remove isFocused obj then automatically make last one obj's isFocused true so 
+    // we can still view last index component even though we removed focused appCompont
+
     clearRecents: () => {
       sessionStorage.removeItem("recents");
       return [];
