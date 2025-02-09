@@ -48,8 +48,8 @@ const BottomMenu: React.FC<IStyleClassProps> = ({ styles }) => {
   ];
   const dispatch = useDispatch();
   async function logout() {
-    dispatch(setLogout());
-    dispatch(clearRecents());
+    await dispatch(setLogout());
+    await dispatch(clearRecents());
   }
 
   return (

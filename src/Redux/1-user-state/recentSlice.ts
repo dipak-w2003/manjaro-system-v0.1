@@ -38,8 +38,14 @@ const recentsSlice = createSlice({
 
     removeRecent: (state, action: PayloadAction<string>) => {
       const findIndex = state.findIndex((app) => app.pkgId === action.payload);
-      console.log(findIndex);
       state.splice(findIndex, 1);
+      
+      
+      // ? adding a feature where a isfocused app is closed we will automatically set isFocused to last elem of state so we 
+      // can view "MainScreen.tsx => components(APP)" 
+      if(state.length>0 && state.every(pkg=>pkg.isFocused==false)) 
+        state[state.length-1] = {...state[state.length-1],isFocused:true};
+     
       sessionStorage.setItem("recents", JSON.stringify(state));
     },
 
@@ -57,21 +63,21 @@ const recentsSlice = createSlice({
           app.isFocused = false;
         });
 
+        
         // Now, update the found app's isFocused to true
         const focused = { ...findPkg, isFocused: true };
         state.splice(pkgIndex, 1, focused);
 
+
         // Save the updated state to sessionStorage
         sessionStorage.setItem("recents", JSON.stringify(state));
-      } else {
+      }else {
         // If the package is not found, just return the state as it is
         sessionStorage.setItem("recents", JSON.stringify(state));
         return state;
       }
     },
 
-    // Make a reduucer or modify upper function where when we remove isFocused obj then automatically make last one obj's isFocused true so 
-    // we can still view last index component even though we removed focused appCompont
 
     clearRecents: () => {
       sessionStorage.removeItem("recents");

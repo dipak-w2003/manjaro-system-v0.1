@@ -18,7 +18,7 @@ const AppMenuContents = ({
     const handleMouseLeave = () => {
       timeoutRef.current = setTimeout(() => {
         setToggle();
-      }, 1000);
+      }, 100);
     };
 
     const handleMouseEnter = () => {

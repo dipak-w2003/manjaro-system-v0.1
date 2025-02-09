@@ -3,6 +3,7 @@ import {
   vscode,
   terminal,
   musicplayer,
+  notes,
 } from "@/components/Desktop/Themes/SVG/Apps/Categories/categoryAppsSvgs";
 
 export interface AppCategoryList {
@@ -14,7 +15,7 @@ export interface AppCategoryList {
 }
 
 // Favorites (Set as readonly with `as const`)
-export const FavoritesApps = [
+export const FavoritesApps:AppCategoryList[] = [
   {
     pkgId: "development-vscode",
     appName: "VS Code",
@@ -36,6 +37,16 @@ export const FavoritesApps = [
     desc: "Command-line interface hub.",
     isFocused: false,
   },
+  {
+    pkgId: "utilities-notepad",
+    appName: "Note Pad",
+    appIcon: notes,
+    desc: "Schedule with us.",
+    isFocused: false,
+  },
+
+
+  
 ] as const; // ✅ `as const` ensures pkgId values are inferred as literals
 
 // Dynamically generate a union type
