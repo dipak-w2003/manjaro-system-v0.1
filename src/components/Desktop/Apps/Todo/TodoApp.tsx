@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { boolean } from "zod";
 
-const TodoApp = () => {
-  return <div>Todo</div>;
+
+interface IPROPS {
+  children?: React.ReactNode
+}
+
+const TodoApp: React.FC<IPROPS> = ({ children }) => {
+ 
+   return <main className={``}>
+Todo
+    <section>
+lorem*900
+
+    </section>
+    <section></section>
+
+  </main>;
 };
 
 export default TodoApp;

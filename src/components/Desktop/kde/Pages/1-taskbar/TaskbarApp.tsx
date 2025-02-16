@@ -4,6 +4,7 @@ import AppMenu from "./1-apps-menu/AppMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/Redux/store";
 import { toggleRecent } from "@/Redux/1-user-state/recentSlice";
+import { FaCross } from "react-icons/fa6";
 const TaskbarApp: React.FC<IStyleClassProps> = ({ styles }): JSX.Element => {
   const recentApps = useSelector((state: RootState) => state.recents);
 
@@ -19,8 +20,7 @@ const TaskbarApp: React.FC<IStyleClassProps> = ({ styles }): JSX.Element => {
         >
           <span
             className={`flex justify-center  items-center gap-1 hover:scale-110  bg-gradient-to-bl
-              ${
-                app.isFocused && " from-cyan-500  to-slate-900 font-extrabold"
+              ${app.isFocused && " from-cyan-500  to-slate-900 font-extrabold"
               }  py-2 px-2 transition-all`}
             onClick={() => dispatch(toggleRecent(app))}
           >
@@ -33,13 +33,14 @@ const TaskbarApp: React.FC<IStyleClassProps> = ({ styles }): JSX.Element => {
   }
   return (
     <div
-      className={` ${styles} ct-pointer *:h-full *:w-1/2 w-full   flex *:flex items-center bg-slate-800 *:items-center relative  *:z-50 z-[9999999999999999999999999999999]`}
+      className={` ${styles} ct-pointer *:h-full *:w-1/2 w-full   flex *:flex items-center bg-slate-800 *:items-center relative  *:z-50 z-[999999999999999]`}
     >
       {/* s1 : App Menu & Apps Recent */}
       <section>
         <AppMenu />
 
         <div className=" w-full h-full flex *:flex justify-start *:justify-start items-center   border-l border-l-gray-500 overflow-hidden">
+
           {<ShowAppsRecentTaskbar />}
         </div>
       </section>

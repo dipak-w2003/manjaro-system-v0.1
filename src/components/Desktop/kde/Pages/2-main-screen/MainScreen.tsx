@@ -22,9 +22,9 @@ const MainScreen: React.FC<IStyleClassProps> = React.memo(({ styles }) => {
 
   return (
     <Suspense fallback={<div className="motion-preset-confetti"></div>}>
-      <main id="main-screen" className={styles}>
+      <main id="main-screen" className={`${styles} transition-all selection::bg-transparent`  }>
         {focusedApps.map((app) => (
-          <RenderApp key={app.pkgId} app={app} removeApp={removeApp} />
+          <RenderApp key={app.pkgId} app={app} removeApp={removeApp}  />
         ))}
       </main>
     </Suspense>

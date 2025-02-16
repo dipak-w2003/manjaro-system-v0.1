@@ -117,7 +117,6 @@
     @apply bg-background text-foreground;
   }
 }
-
 #main-screen {
   background: url("components/Desktop/Themes/Images/wallpaper-village.jpg")
     center center no-repeat;

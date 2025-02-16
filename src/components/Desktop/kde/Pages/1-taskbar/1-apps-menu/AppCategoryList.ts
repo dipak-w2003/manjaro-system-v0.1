@@ -15,6 +15,7 @@ export interface AppCategoryList {
 }
 
 // Favorites (Set as readonly with `as const`)
+// note : appIcon is imported svg -> useable for img tag
 export const FavoritesApps:AppCategoryList[] = [
   {
     pkgId: "development-vscode",
