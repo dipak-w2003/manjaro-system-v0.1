@@ -403,6 +403,36 @@ export const RenderIcon = ({ iconKey }) => {
 };
 ```
 
+
+## `handleBlur` Function: Updating Todo List Titles
+
+The `handleBlur` function is used when editing the title of a **Todo list item**. When the user finishes editing and **clicks away** or **tabs out** of the input field, this function ensures the **Redux store** is updated with the new title. 
+
+### Use Case
+
+Imagine you have a list of **Todo lists** in an app, each with a title. When editing a title, you want to ensure that the **title in the Redux store** is only updated once the user finishes typing. 
+
+### Why Not Update While Typing?
+
+Updating the store constantly while the user is typing can be inefficient. It can cause unnecessary **re-renders** (slow down the app) because the app is constantly sending updates to the Redux store. Instead, it's better to only update the Redux store once the user is done editing, which happens when they **lose focus** (click away from the input or press "Tab").
+
+### Function Explanation
+
+```tsx
+const handleBlur = (index: number) => {
+  // Check if the new title is different from the original title in the Redux store
+  if (tempTitles[index] !== undefined && tempTitles[index] !== todoList?.todo[index]?.listTitle) {
+    // If it's different, dispatch the update to Redux
+    dispatch(updateTodoListTitle({ listIdx: index, newTitle: tempTitles[index] }));
+  }
+};
+```
+-----
+----
+
+
+
+
 # React-Router-DomV^7
 
 React Router is an external package for routing react page components.
@@ -434,7 +464,6 @@ function ProtectedRoute({ isAuthenticated }) {
 - `replace` prop ensures that the current history entry is replaced (user cannot go back)
 - UI Blocking: Causes Page Smoothness with fast redirect
 
----
 
 ### `<useNavigate/>`
 

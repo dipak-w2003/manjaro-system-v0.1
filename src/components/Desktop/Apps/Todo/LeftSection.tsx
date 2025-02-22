@@ -17,39 +17,29 @@ interface TodoPROPS {
 }
 
 const LeftSection: React.FC<TodoPROPS> = ({ styles, todoList }) => {
-  const dispatch: AppDispatch = useDispatch();
-  const [editingTitle, setEditingTitle] = useState<{ [key: number]: string }>(
-    {}
-  );
-
-  const handleTitleChange = useCallback((index: number, value: string) => {
-    setEditingTitle((prev) => ({ ...prev, [index]: value }));
-  }, []);
-
-  const handleTitleBlur = useCallback(
-    (index: number) => {
-      const newTitle = editingTitle[index];
-      const currentTitle = todoList?.todo[index]?.listTitle;
-
-      if (newTitle && newTitle !== currentTitle) {
-        dispatch(updateTodoListTitle({ listIdx: index, newTitle }));
-      }
-    },
-    [dispatch, editingTitle, todoList]
-  );
-
   const { todo = [], activeIndex } = todoList || {};
 
-  useEffect(() => {
-    if (todoList) {
-      // Sync the editingTitle state with current todoList titles
-      const initialTitles = todoList.todo.reduce((acc, list, i) => {
-        acc[i] = list.listTitle;
-        return acc;
-      }, {} as { [key: number]: string });
-      setEditingTitle(initialTitles);
+  const dispatch: AppDispatch = useDispatch();
+
+  // update Title
+  // State to temporarily store edited titles before updating Redux
+  const [tempTitles, setTempTitles] = useState<{ [key: number]: string }>({});
+
+  // Updates local state when the user types
+  const handleChange = (index: number, value: string) => {
+    setTempTitles((prev) => ({ ...prev, [index]: value }));
+  };
+  // Updates Redux when input loses focus, only if the title has changed
+  const handleBlur = (index: number) => {
+    if (
+      tempTitles[index] !== undefined &&
+      tempTitles[index] !== todoList?.todo[index]?.listTitle
+    ) {
+      dispatch(
+        updateTodoListTitle({ listIdx: index, newTitle: tempTitles[index] })
+      );
     }
-  }, [todoList]);
+  };
 
   return (
     <main className={`${styles} relative`}>
@@ -74,10 +64,10 @@ const LeftSection: React.FC<TodoPROPS> = ({ styles, todoList }) => {
               >
                 <input
                   type="text"
-                  value={editingTitle[i] ?? list.listTitle}
-                  onChange={(e) => handleTitleChange(i, e.target.value)}
-                  onBlur={() => handleTitleBlur(i)}
-                  className={` w-[10vw]  selection:bg-transparent selection:text-inherit pl-2 focus:outline-none 
+                  value={tempTitles[i] ?? list.listTitle}
+                  onChange={(e) => handleChange(i, e.target.value)}
+                  onBlur={() => handleBlur(i)}
+                  className={` w-[6vw] bg-transparent selection:bg-transparent selection:text-inherit pl-2 focus:outline-none 
                     ${activeIndex === i ? "cursor-text" : "cursor-pointer"}`}
                   maxLength={10}
                 />
