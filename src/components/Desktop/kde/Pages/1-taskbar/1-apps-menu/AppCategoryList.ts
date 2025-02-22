@@ -39,8 +39,8 @@ export const FavoritesApps:AppCategoryList[] = [
     isFocused: false,
   },
   {
-    pkgId: "utilities-notepad",
-    appName: "Note Pad",
+    pkgId: "utilities-todo",
+    appName: "Todos",
     appIcon: notes,
     desc: "Schedule with us.",
     isFocused: false,

@@ -17,7 +17,7 @@ const AppComponentRender: Record<AppPkgId, React.ComponentType<any>> = {
   "development-vscode": VSCode,
   "entertainment-musicplayer": MusicPlayerApp,
   "system-terminal": TerminalApp,
-  "utilities-notepad": TodoApp,
+  "utilities-todo": TodoApp,
 };
 
 interface RenderAppProps {
@@ -63,12 +63,12 @@ const RenderApp: React.FC<RenderAppProps> = React.memo(({ app, removeApp }) => {
         {/* Show Apps Title bar. i.e close, maximize minimize titles etc includes */}
         <div className=" h-[3vh] w-full relative bg-slate-900" title="close" onClick={setView}>
           <h2 className="text-center text-sm ">{appName} - {desc}</h2>
-          <IoCloseCircle className="text-lg absolute right-2 top-[1.5px]  text-white" onClick={handleRemove} />
+          <IoCloseCircle className="text-lg absolute right-2 top-[1.5px] hover:text-red-600 transition-all cursor-pointer text-white" onClick={handleRemove} />
         </div>
 
 
         {/* Show Apps Contents */}
-        <section className="h-full overflow-y-scroll transition-all">
+        <section className="h-full overflow-y-scroll transition-all *:selection:bg-transparent">
           <Component app={app} />
         </section>
 
