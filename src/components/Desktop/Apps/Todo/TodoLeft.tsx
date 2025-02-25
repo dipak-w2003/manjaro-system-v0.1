@@ -16,7 +16,7 @@ interface TodoPROPS {
   todoList?: TodoState;
 }
 
-const LeftSection: React.FC<TodoPROPS> = ({ styles, todoList }) => {
+const TodoLeft: React.FC<TodoPROPS> = ({ styles, todoList }) => {
   const { todo = [], activeIndex } = todoList || {};
 
   const dispatch: AppDispatch = useDispatch();
@@ -58,7 +58,11 @@ const LeftSection: React.FC<TodoPROPS> = ({ styles, todoList }) => {
               <span
                 key={list.listTitle + i}
                 className={`h-[65px] rounded-md mt-4 flex items-center justify-between 
-                  ${i === activeIndex ? "bg-[#ffc847] text-black" : ""}
+                  ${
+                    i === activeIndex
+                      ? "bg-[#F0C869] text-gray-100"
+                      : "text-gray-300"
+                  }
                   transition-all cursor-pointer`}
                 onClick={() => dispatch(setActiveIndex(i))}
               >
@@ -88,11 +92,11 @@ const LeftSection: React.FC<TodoPROPS> = ({ styles, todoList }) => {
 
           {/* Add Todo List Button */}
           <button
-            className="flex gap-2 mt-6 ml-4 p-3 cursor-pointer"
+            className="flex gap-2 mt-6 ml-4 p-3 cursor-pointer text-gray-500"
             onClick={() => dispatch(addTodoList({ listTitle: "New List" }))}
           >
             <span>+</span>
-            <h5>Todo</h5>
+            <h5>Add Lists</h5>
           </button>
         </div>
       </section>
@@ -100,4 +104,4 @@ const LeftSection: React.FC<TodoPROPS> = ({ styles, todoList }) => {
   );
 };
 
-export default LeftSection;
+export default TodoLeft;
