@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface TodoItems {
   id: string;
   todoTitle: string | number;
-  date: string;
+  date: Date;
   tag: string;
   priority: "high" | "mid" | "low";
   isCompleted: boolean;
@@ -44,13 +44,14 @@ const todoSlice = createSlice({
       saveToLocalStorage(state); // Save to localStorage
     },
 
-    addTodoList: (state, action: PayloadAction<Todo>) => {
-      const newList = {
-        ...action.payload,
-        listTitle: `List ${state.todo.length + 1}`, // Dynamically set list title
+    addTodoList: (state) => {
+      const newList: Todo = {
+        listTitle: `List ${state.todo.length + 1}`,
+        // Dynamically set list title
+        items: [],
       };
       state.todo.push(newList);
-      saveToLocalStorage(state); // Save to localStorage
+      saveToLocalStorage(state);
     },
 
     updateTodoListTitle: (
@@ -58,12 +59,12 @@ const todoSlice = createSlice({
       action: PayloadAction<{ listIdx: number; newTitle: string }>
     ) => {
       state.todo[action.payload.listIdx].listTitle = action.payload.newTitle;
-      saveToLocalStorage(state); // Save to localStorage
+      saveToLocalStorage(state);
     },
 
     removeTodoList: (state, action: PayloadAction<number>) => {
       state.todo.splice(action.payload, 1);
-      saveToLocalStorage(state); // Save to localStorage
+      saveToLocalStorage(state);
     },
 
     // Items
@@ -73,18 +74,18 @@ const todoSlice = createSlice({
       if (!activeTodo.items) activeTodo.items = [];
       // Push the new TodoItem
       activeTodo.items.push(action.payload);
-      // Save to localStorage
-      saveToLocalStorage(state); // Save to localStorage
+
+      saveToLocalStorage(state);
     },
 
     addTodos: (state, action: PayloadAction<TodoItems>) => {
       state.todo[state.activeIndex].items.push(action.payload);
-      saveToLocalStorage(state); // Save to localStorage
+      saveToLocalStorage(state);
     },
 
     removeList: (state, action: PayloadAction<number>) => {
       state.todo.splice(action.payload, 1);
-      saveToLocalStorage(state); // Save to localStorage
+      saveToLocalStorage(state);
     },
   },
 });

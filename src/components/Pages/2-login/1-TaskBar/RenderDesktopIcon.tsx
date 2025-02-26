@@ -1,7 +1,5 @@
 import React, { ComponentType, ReactNode, SVGProps } from "react";
 import { SiGnome, SiKde, SiXfce } from "react-icons/si";
-import { Users } from "../usersAccount";
-import { User } from "lucide-react";
 // ? Icons Desktop | SVG TYpe
 export type DesktopIcon = ComponentType<SVGProps<SVGSVGElement>>;
 export const iconMap: Record<

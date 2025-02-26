@@ -19,7 +19,7 @@ const TodoApp: React.FC<TodoProps> = ({ children }) => {
   const clickMe = () =>
     dispatch(
       addTodoListItems({
-        date: String(new Date()),
+        date: new Date(),
         id: "111",
         isCompleted: true,
         priority: "high",
@@ -32,10 +32,7 @@ const TodoApp: React.FC<TodoProps> = ({ children }) => {
       className={`bg-[#252525] h-full overflow-hidden  w-full flex noto-sans `}
     >
       <TodoLeft styles="w-[20%] h-full  " todoList={Todos} />
-      <TodoMiddle
-        styles="w-[50%] *:w-full  h-full overflow-hidden "
-        todoListIndex={Todos.activeIndex}
-      />
+      <TodoMiddle styles="w-[50%] *:w-full  h-full overflow-hidden " />
       <TodoRight styles="w-[30%] h-full overflow-hidden " />
       <button onClick={clickMe}>Add</button>
     </main>
