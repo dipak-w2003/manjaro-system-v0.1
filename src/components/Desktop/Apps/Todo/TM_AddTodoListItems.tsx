@@ -26,7 +26,7 @@ export default function AddTodoListItems(): JSX.Element {
         initial={{ height: "70px" }}
         animate={{ height: focused ? "40vh" : "70px" }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="rounded overflow-hidden flex flex-col  bg-[#252525]"
+        className="rounded overflow-hidden flex flex-col transition-all bg-[#252525]"
       >
         <input
           required
