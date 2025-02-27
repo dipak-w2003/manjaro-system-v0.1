@@ -49,14 +49,14 @@ const TodoLeft: React.FC<TodoPROPS> = ({ styles, todoList }) => {
       </span>
 
       {/* List container */}
-      <section className="my-lists-container p-2 mt-[90px] h-[80%] overflow-scroll pb-8">
+      <section className="my-lists-container p-2 mt-[90px] h-[80%] overflow-y-scroll scrollbar-hide scroll-smooth pb-8">
         <h4 className="text-xl absolute top-36 underline">My Lists</h4>
 
         <div className="lists flex flex-col justify-around p-2">
           {todo.length ? (
             todo.map((list, i) => (
               <span
-                key={list.listTitle + i}
+                key={String(list.listTitle + i)}
                 className={`h-[65px] rounded-md mt-4 flex items-center justify-between 
                   ${
                     i === activeIndex
@@ -93,7 +93,7 @@ const TodoLeft: React.FC<TodoPROPS> = ({ styles, todoList }) => {
           {/* Add Todo List Button */}
           <button
             className="flex gap-2 mt-6 ml-4 p-3 cursor-pointer text-gray-500"
-            onClick={() => dispatch(addTodoList({ listTitle: "New List" }))}
+            onClick={() => dispatch(addTodoList())}
           >
             <span>+</span>
             <h5>Add Lists</h5>

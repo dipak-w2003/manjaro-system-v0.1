@@ -15,8 +15,16 @@ const TodoMiddle: React.FC<TodoMiddleProp> = ({ styles }) => {
   return (
     <main className={`${styles} flex flex-col bg-[#131313] pb-9 `}>
       <DateMonthReminder />
-      <AddTodoListItems />
-      <TodoListItems />
+      {Todos_.todo.length > 0 ? (
+        <React.Fragment>
+          <AddTodoListItems />
+          <TodoListItems />
+        </React.Fragment>
+      ) : (
+        <h2 className="text-xl text-center my-0 w-full h-fit text-gray-500 mt-10">
+          Create List
+        </h2>
+      )}
     </main>
   );
 };

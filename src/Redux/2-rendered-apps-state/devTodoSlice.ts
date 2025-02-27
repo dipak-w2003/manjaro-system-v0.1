@@ -3,9 +3,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface TodoItems {
   id: string;
   todoTitle: string | number;
-  date: Date;
+  date: string;
   tag: string;
-  priority: "high" | "mid" | "low";
+  priority: string;
   isCompleted: boolean;
 }
 
@@ -47,10 +47,10 @@ const todoSlice = createSlice({
     addTodoList: (state) => {
       const newList: Todo = {
         listTitle: `List ${state.todo.length + 1}`,
-        // Dynamically set list title
         items: [],
       };
       state.todo.push(newList);
+      state.activeIndex = state.todo.length - 1;
       saveToLocalStorage(state);
     },
 
@@ -62,8 +62,17 @@ const todoSlice = createSlice({
       saveToLocalStorage(state);
     },
 
+    // Todo : if payload === state.activeIndex then after deletion the activeIndex should be len of state.todo
+    // Error : last List deletion not setting
     removeTodoList: (state, action: PayloadAction<number>) => {
       state.todo.splice(action.payload, 1);
+      if (action.payload === state.activeIndex) {
+        if (state.todo.length > 1) {
+          state.activeIndex = state.todo.length - 1;
+        } else {
+          state.activeIndex = 0;
+        }
+      }
       saveToLocalStorage(state);
     },
 
@@ -80,11 +89,6 @@ const todoSlice = createSlice({
 
     addTodos: (state, action: PayloadAction<TodoItems>) => {
       state.todo[state.activeIndex].items.push(action.payload);
-      saveToLocalStorage(state);
-    },
-
-    removeList: (state, action: PayloadAction<number>) => {
-      state.todo.splice(action.payload, 1);
       saveToLocalStorage(state);
     },
   },

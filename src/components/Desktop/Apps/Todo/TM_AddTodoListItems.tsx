@@ -1,44 +1,89 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { AppDispatch, RootState } from "@/Redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { addTodoListItems } from "@/Redux/2-rendered-apps-state/devTodoSlice";
+import { dataList } from "./todo_utils";
 
 export default function AddTodoListItems(): JSX.Element {
+  const { todo } = useSelector((state: RootState) => state.devTodo);
+  const [todo_title, setTodo_title] = useState<string>("");
   const [focused, setFocused] = useState(false);
   const today = new Date().toISOString().split("T")[0];
+  const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
     console.log("Focus state updated:", focused);
   }, [focused]);
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    // Extract form values manually
-    const todoText = formData.get("add-todo") as string;
+
+    // Extract form values
+    const todoTitle = formData.get("add-todo") as string;
     const todoDate = formData.get("date-todo") as string;
-    console.log({ todoText, todoDate });
+    const todoTag = formData.get("tag-todo") as string;
+    const todoPriority = formData.get("priority-todo") as string;
+
+    console.log({ todoTitle, todoDate, todoTag, todoPriority });
+
     setFocused(false);
+
+    dispatch(
+      addTodoListItems({
+        date: todoDate,
+        id: `${todoTitle}#${todoTag}`,
+        isCompleted: false,
+        priority: todoPriority,
+        tag: todoTag,
+        todoTitle: todo_title,
+      })
+    );
+
+    setTodo_title("");
   }
 
   return (
-    <section className="flex flex-col  items-center justify-between">
+    <section className="flex flex-col items-center justify-between">
       <motion.form
         onSubmit={handleSubmit}
         onFocus={() => setFocused(true)}
-        // onMouseOutCapture={() => setTimeout(() => setFocused(false), 1500)}
         initial={{ height: "70px" }}
         animate={{ height: focused ? "40vh" : "70px" }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="rounded overflow-hidden flex flex-col transition-all bg-[#252525]"
+        className="rounded overflow-hidden flex flex-col transition-all bg-[#252525] relative"
       >
+        {/* Todo Input */}
         <input
           required
           name="add-todo"
           placeholder="Add Todo"
           className="focus-within:outline-none max-h-[70px] min-h-[70px] p-3 pl-4 w-[45vw] bg-transparent"
           type="text"
+          value={todo_title}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTodo_title(e.target.value)
+          }
           onFocus={() => setFocused(true)}
+          list="todo-suggestions"
         />
+        {/* Todo : Make suggestions optimized for better performance */}
+        <datalist id="todo-suggestions">
+          {dataList
+            .filter((list) =>
+              list.list.toLowerCase().includes(todo_title.toLowerCase())
+            )
+            .slice(0, 10)
+            // Show only the top 10 matches
+            .map((list) => (
+              <option key={list.id} value={list.list} />
+            ))}
+        </datalist>
+
         {focused && (
-          <div className="transition-all duration-150 ease-linear flex flex-col  w-full *:mt-[20px]">
-            <span className="p-3 flex justify-between   items-center h-[70px]">
+          <div className="transition-all duration-150 ease-linear flex flex-col w-full *:mt-[20px]">
+            {/* Date Picker */}
+            <span className="p-3 flex justify-between items-center h-[70px]">
               <label htmlFor="date-todo">Date</label>
               <input
                 className="bg-transparent focus-within:outline-none"
@@ -49,43 +94,50 @@ export default function AddTodoListItems(): JSX.Element {
               />
             </span>
 
-            {/* Priority */}
+            {/* Priority Selection */}
             <section
               id="todo-list-items-priority"
-              className=" p-3 flex justify-between   items-center h-[70px]"
+              className="p-3 flex justify-between items-center h-[70px]"
             >
-              <h2>Priority </h2>
-
-              <div className="priors flex gap-2 ">
-                {["high", "mid", "low"].map((priority, index) => {
-                  return (
-                    <span
-                      key={priority}
-                      className="p-3 flex justify-between items-center gap-1 "
-                    >
-                      <label htmlFor="date-todo">{priority}</label>
-                      <input
-                        className="bg-transparent rounded-full  focus-within:outline-none"
-                        type="radio"
-                        name="priority-todo"
-                      />
-                    </span>
-                  );
-                })}
+              <h2>Priority</h2>
+              <div className="priors flex gap-2">
+                {["high", "mid", "low"].map((priority) => (
+                  <span
+                    key={priority}
+                    className="p-3 flex justify-between items-center gap-2"
+                  >
+                    <input
+                      autoComplete="off"
+                      id={`priority-${priority}`}
+                      type="radio"
+                      name="priority-todo"
+                      value={priority}
+                      required
+                      className="w-4 h-4 text-gray-400 bg-gray-700 border-gray-400 focus:ring-2 focus:ring-gray-400 focus:outline-none rounded-full cursor-pointer"
+                    />
+                    <label htmlFor={`priority-${priority}`}>{priority}</label>
+                  </span>
+                ))}
               </div>
             </section>
 
-            {/* Tag */}
+            {/* Tag Input */}
             <span>
               <input
                 required
                 name="tag-todo"
-                placeholder="Tag"
+                placeholder="#tag"
                 className="focus-within:outline-none max-h-[70px] placeholder:text-gray-50 min-h-[70px] p-3 pl-4 w-[45vw] bg-transparent"
                 type="text"
                 onFocus={() => setFocused(true)}
               />
             </span>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-600 text-white  rounded-md mt-4 self-center bottom-0 absolute"
+            ></button>
           </div>
         )}
       </motion.form>
