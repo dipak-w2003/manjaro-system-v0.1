@@ -41,6 +41,10 @@ const TodoLeft: React.FC<TodoPROPS> = ({ styles, todoList }) => {
     }
   };
 
+  const handleIndexFocus = async (idx: number) => {
+    await dispatch(setActiveIndex(idx));
+  };
+
   return (
     <main className={`${styles} relative`}>
       <span className="text-4xl flex items-center justify-center mt-10 gap-5 cursor-pointer">
@@ -64,7 +68,7 @@ const TodoLeft: React.FC<TodoPROPS> = ({ styles, todoList }) => {
                       : "text-gray-300"
                   }
                   transition-all cursor-pointer`}
-                onClick={() => dispatch(setActiveIndex(i))}
+                onClick={() => handleIndexFocus(i)}
               >
                 <input
                   type="text"

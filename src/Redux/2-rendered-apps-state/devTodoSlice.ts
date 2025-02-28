@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface TodoItems {
-  id: string;
+  id: string ;
   todoTitle: string | number;
+  todoSummarize?: any;
   date: string;
   tag: string;
   priority: string;
+
   isCompleted: boolean;
 }
 
@@ -18,7 +20,6 @@ export interface TodoState {
   activeIndex: number;
   todo: Todo[];
 }
-
 const loadFromLocalStorage = (): TodoState => {
   try {
     const storedState = localStorage.getItem("devTodo");

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { motion } from "framer-motion";
 import { AppDispatch, RootState } from "@/Redux/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +7,9 @@ import { addTodoListItems } from "@/Redux/2-rendered-apps-state/devTodoSlice";
 import { dataList } from "./todo_utils";
 
 export default function AddTodoListItems(): JSX.Element {
-  const { todo } = useSelector((state: RootState) => state.devTodo);
+  const { todo, activeIndex } = useSelector(
+    (state: RootState) => state.devTodo
+  );
   const [todo_title, setTodo_title] = useState<string>("");
   const [focused, setFocused] = useState(false);
   const today = new Date().toISOString().split("T")[0];
@@ -14,7 +17,6 @@ export default function AddTodoListItems(): JSX.Element {
   useEffect(() => {
     console.log("Focus state updated:", focused);
   }, [focused]);
-
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -24,15 +26,17 @@ export default function AddTodoListItems(): JSX.Element {
     const todoDate = formData.get("date-todo") as string;
     const todoTag = formData.get("tag-todo") as string;
     const todoPriority = formData.get("priority-todo") as string;
+    const todoSummarize = formData.get("todo-summarize") as string;
 
-    console.log({ todoTitle, todoDate, todoTag, todoPriority });
+    console.log({ todoTitle, todoDate, todoTag, todoPriority, todoSummarize });
 
     setFocused(false);
 
+    // dispatch
     dispatch(
       addTodoListItems({
         date: todoDate,
-        id: `${todoTitle}#${todoTag}`,
+        id: uuidv4(),
         isCompleted: false,
         priority: todoPriority,
         tag: todoTag,
@@ -43,13 +47,16 @@ export default function AddTodoListItems(): JSX.Element {
     setTodo_title("");
   }
 
+  useEffect(() => {
+    setFocused(false);
+  }, [activeIndex]);
   return (
     <section className="flex flex-col items-center justify-between">
       <motion.form
         onSubmit={handleSubmit}
         onFocus={() => setFocused(true)}
         initial={{ height: "70px" }}
-        animate={{ height: focused ? "40vh" : "70px" }}
+        animate={{ height: focused ? "50vh" : "70px" }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
         className="rounded overflow-hidden flex flex-col transition-all bg-[#252525] relative"
       >
@@ -65,6 +72,7 @@ export default function AddTodoListItems(): JSX.Element {
             setTodo_title(e.target.value)
           }
           onFocus={() => setFocused(true)}
+          autoComplete="off"
           list="todo-suggestions"
         />
         {/* Todo : Make suggestions optimized for better performance */}
@@ -82,11 +90,21 @@ export default function AddTodoListItems(): JSX.Element {
 
         {focused && (
           <div className="transition-all duration-150 ease-linear flex flex-col w-full *:mt-[20px]">
+            <textarea
+              className="w-full p-2 pl-4
+              min-h-[75px] max-h-[75px] focus:outline-none resize-none focus:ring-2 focus:ring-blue-400 bg-transparent
+              scroll-none italic"
+              // standard task description char length
+              maxLength={300}
+              id="todo-summarize"
+              name="todo-summarize"
+              placeholder="Make Summarization.."
+            />
             {/* Date Picker */}
             <span className="p-3 flex justify-between items-center h-[70px]">
               <label htmlFor="date-todo">Date</label>
               <input
-                className="bg-transparent focus-within:outline-none"
+                className="bg-transparent focus-within:outline-none  "
                 type="date"
                 defaultValue={today}
                 name="date-todo"
