@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface TodoItems {
-  id: string ;
+  id: string;
   todoTitle: string | number;
   todoSummarize?: any;
   date: string;
@@ -87,9 +87,15 @@ const todoSlice = createSlice({
 
       saveToLocalStorage(state);
     },
-
-    addTodos: (state, action: PayloadAction<TodoItems>) => {
-      state.todo[state.activeIndex].items.push(action.payload);
+    updateTodoListItem: (
+      state,
+      action: PayloadAction<{ idx: number; item: TodoItems }>
+    ) => {
+      state.todo[state.activeIndex].items.splice(
+        action.payload.idx,
+        1,
+        action.payload.item
+      );
       saveToLocalStorage(state);
     },
   },
@@ -101,7 +107,7 @@ export const {
   removeTodoList,
   addTodoListItems,
   updateTodoListTitle,
-  addTodos,
+  updateTodoListItem,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

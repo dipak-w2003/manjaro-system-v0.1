@@ -41,6 +41,7 @@ export default function AddTodoListItems(): JSX.Element {
         priority: todoPriority,
         tag: todoTag,
         todoTitle: todo_title,
+        todoSummarize: todoSummarize,
       })
     );
 
@@ -55,8 +56,10 @@ export default function AddTodoListItems(): JSX.Element {
       <motion.form
         onSubmit={handleSubmit}
         onFocus={() => setFocused(true)}
+        onMouseEnter={() => setTimeout(() => setFocused(true), 100)}
+        onMouseLeave={() => setTimeout(() => setFocused(false), 500)}
         initial={{ height: "70px" }}
-        animate={{ height: focused ? "50vh" : "70px" }}
+        animate={{ height: focused ? "450px" : "70px" }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
         className="rounded overflow-hidden flex flex-col transition-all bg-[#252525] relative"
       >
@@ -73,6 +76,7 @@ export default function AddTodoListItems(): JSX.Element {
           }
           onFocus={() => setFocused(true)}
           autoComplete="off"
+          maxLength={50}
           list="todo-suggestions"
         />
         {/* Todo : Make suggestions optimized for better performance */}
@@ -92,7 +96,7 @@ export default function AddTodoListItems(): JSX.Element {
           <div className="transition-all duration-150 ease-linear flex flex-col w-full *:mt-[20px]">
             <textarea
               className="w-full p-2 pl-4
-              min-h-[75px] max-h-[75px] focus:outline-none resize-none focus:ring-2 focus:ring-blue-400 bg-transparent
+              min-h-[75px] max-h-[75px] focus:outline-none resize-none focus:ring-2 focus:ring-blue-400 bg-transparent font-light
               scroll-none italic"
               // standard task description char length
               maxLength={300}
