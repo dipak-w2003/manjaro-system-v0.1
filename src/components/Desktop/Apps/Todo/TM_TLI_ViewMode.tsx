@@ -23,13 +23,17 @@ export default function TM_TodoListItemsViewMode() {
   };
 
   return (
-    <main className="flex flex-col *:mt-4 items-center overflow-y-scroll scrollbar-hide scroll-smooth noto-sans">
+    <main
+      className="flex flex-col *:mt-4 items-center overflow-y-scroll scrollbar-hide scroll-smooth noto-sans "
+      onMouseLeave={() => setFocusedItem((prev) => (prev = null))}
+    >
       {activeItems.length > 0 ? (
         activeItems.map((item, idx) => {
-          const isFocused = item.id === focusedItem;
+          let isFocused = item.id === focusedItem;
 
           return (
             <motion.section
+              onDrag={() => console.log(item)}
               initial={{ height: "70px" }}
               animate={{
                 minHeight: isFocused ? "400px" : "70px",
@@ -40,9 +44,8 @@ export default function TM_TodoListItemsViewMode() {
               className={
                 "bg-[#252525] max-h-[480px] min-h-[70px] p-3 pl-4 w-[45vw] rounded-sm transition-all flex  items-center justify-center relative"
               }
-              onMouseLeave={() => setFocusedItem(null)}
             >
-              {/* setIsCompltete */}
+              {/* setIsComplete */}
               {!isFocused &&
                 (false ? (
                   <MdOutlineRadioButtonChecked
@@ -72,7 +75,13 @@ export default function TM_TodoListItemsViewMode() {
                   <pre className="absolute right-1 top-3">#{item.tag}</pre>
                 </article>
               )}
-              {isFocused && <ListItemEditableMode idx={idx} TodoItems={item} />}
+              {isFocused && (
+                <ListItemEditableMode
+                  idx={idx}
+                  setFocusedItem={() => setFocusedItem((prev) => (prev = null))}
+                  TodoItems={item}
+                />
+              )}
             </motion.section>
           );
         })

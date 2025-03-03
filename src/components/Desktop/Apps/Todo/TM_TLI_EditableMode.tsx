@@ -4,17 +4,21 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/Redux/store";
 import {
   TodoItems,
-  updateTodoListItem,
+  updateTodoListItems,
 } from "@/Redux/2-rendered-apps-state/devTodoSlice";
 import { dataList } from "./todo_utils";
+import { Delete } from "lucide-react";
+import { FaTrashCan } from "react-icons/fa6";
 
 interface ListItemEditableModeProps {
   TodoItems: TodoItems;
   idx: number;
+  setFocusedItem: (focusedItem: boolean | null) => void;
 }
 export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
   TodoItems,
   idx,
+  setFocusedItem,
 }): JSX.Element => {
   const [formDataProp, setFormDataProp] = useState<TodoItems>({
     todoTitle: TodoItems.todoTitle,
@@ -43,23 +47,15 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
       return;
     }
 
+    setFocusedItem(false);
     const updateTLItem = {
       ...formDataProp,
       isCompleted: false,
     };
 
-    dispatch(updateTodoListItem({ idx: idx, item: updateTLItem }));
-
+    dispatch(updateTodoListItems({ idx: idx, item: updateTLItem }));
+    setFocusedOut(true);
     // clear state
-    setFormDataProp({
-      todoTitle: "",
-      date: "",
-      tag: "",
-      priority: "",
-      isCompleted: false,
-      id: "",
-      todoSummarize: "",
-    });
   }
 
   const handleOnChange = (
@@ -116,7 +112,7 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
       </datalist>
 
       <textarea
-        className="w-full p-2 pl-4 min-h-[75px] max-h-[75px] focus:outline-none resize-none focus:ring-2 focus:ring-blue-400 bg-transparent scroll-none font-light"
+        className="w-full p-2 pl-4 min-h-[105px] max-h-[105px] focus:outline-none resize-none focus:ring-2 focus:ring-blue-400 bg-transparent scroll-none font-light"
         maxLength={300}
         name="todoSummarize"
         onChange={handleOnChange}
@@ -176,10 +172,14 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
         />
       </span>
 
-      <button
-        type="submit"
-        className="bg-blue-500 hover:bg-blue-600 text-white rounded-md bg-transparent  self-center bottom-0 absolute"
-      ></button>
+      <span className="top-5 absolute flex right-0">
+        <button
+          type="button"
+          className="bg-blue-500 hover:bg-blue-600 text-white rounded-md bg-transparent  self-center "
+        >
+          <FaTrashCan />
+        </button>
+      </span>
     </motion.form>
   );
 };

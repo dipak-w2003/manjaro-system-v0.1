@@ -82,11 +82,7 @@ export default function AddTodoListItems(): JSX.Element {
         {/* Todo : Make suggestions optimized for better performance */}
         <datalist id="todo-suggestions">
           {dataList
-            .filter((list) =>
-              list.list.toLowerCase().includes(todo_title.toLowerCase())
-            )
-            .slice(0, 10)
-            // Show only the top 10 matches
+            .filter((list) => list.list.toLowerCase())
             .map((list) => (
               <option key={list.id} value={list.list} />
             ))}

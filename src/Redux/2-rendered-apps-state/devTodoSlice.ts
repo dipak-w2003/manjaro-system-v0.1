@@ -77,7 +77,8 @@ const todoSlice = createSlice({
       saveToLocalStorage(state);
     },
 
-    // Items
+    // List Items CRUD
+    //  Add Todo List Items
     addTodoListItems: (state, action: PayloadAction<TodoItems>) => {
       const activeTodo = state.todo[state.activeIndex];
       // Ensure the 'items' array exists
@@ -87,7 +88,13 @@ const todoSlice = createSlice({
 
       saveToLocalStorage(state);
     },
-    updateTodoListItem: (
+    // remove list items
+    removeTodoListItems:()=>{
+
+    },
+
+    // Update Todo List Items
+    updateTodoListItems: (
       state,
       action: PayloadAction<{ idx: number; item: TodoItems }>
     ) => {
@@ -107,7 +114,7 @@ export const {
   removeTodoList,
   addTodoListItems,
   updateTodoListTitle,
-  updateTodoListItem,
+  updateTodoListItems,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;
