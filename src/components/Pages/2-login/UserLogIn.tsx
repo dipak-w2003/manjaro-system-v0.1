@@ -5,7 +5,7 @@ import { Suspense } from "react";
 
 const UserLogIn = () => {
   const userImPP = useSelector(
-    (state: RootState) => state.activeUser.user[0].imgPP
+    (state: RootState) => state.activeUser.user[0].imgPP,
   );
 
   return (

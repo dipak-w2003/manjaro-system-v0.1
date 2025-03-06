@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState } from "react";
 import clover from "./clover.svg";
 import {
   addTodoList,
@@ -7,8 +7,8 @@ import {
   TodoState,
   removeTodoList,
 } from "@/Redux/2-rendered-apps-state/devTodoSlice";
-import { AppDispatch } from "@/Redux/store";
-import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "@/Redux/store";
+import { useDispatch, useSelector } from "react-redux";
 import { RxCross2 } from "react-icons/rx";
 
 interface TodoPROPS {
@@ -17,6 +17,8 @@ interface TodoPROPS {
 }
 
 const TodoLeft: React.FC<TodoPROPS> = ({ styles, todoList }) => {
+  const devTodo = useSelector((state: RootState) => state.devTodo);
+
   const { todo = [], activeIndex } = todoList || {};
 
   const dispatch: AppDispatch = useDispatch();
@@ -42,7 +44,7 @@ const TodoLeft: React.FC<TodoPROPS> = ({ styles, todoList }) => {
   };
 
   const handleIndexFocus = async (idx: number) => {
-    await dispatch(setActiveIndex(idx));
+    dispatch(setActiveIndex(idx));
   };
 
   return (

@@ -7,7 +7,6 @@ export interface TodoItems {
   date: string;
   tag: string;
   priority: string;
-
   isCompleted: boolean;
 }
 
@@ -41,8 +40,13 @@ const todoSlice = createSlice({
   initialState,
   reducers: {
     setActiveIndex: (state, action: PayloadAction<number>) => {
-      state.activeIndex = action.payload;
-      saveToLocalStorage(state); // Save to localStorage
+      // Done : last List deletion not setting
+      if (state.todo.length === action.payload)
+        state.activeIndex = state.todo.length - 1;
+      else state.activeIndex = action.payload;
+      saveToLocalStorage(state);
+
+      /* @ if we remove list by providing idx when we remove last one we immediately after set last one as active len of todo-1 */
     },
 
     addTodoList: (state) => {
@@ -63,17 +67,8 @@ const todoSlice = createSlice({
       saveToLocalStorage(state);
     },
 
-    // Todo : if payload === state.activeIndex then after deletion the activeIndex should be len of state.todo
-    // Error : last List deletion not setting
     removeTodoList: (state, action: PayloadAction<number>) => {
       state.todo.splice(action.payload, 1);
-      if (action.payload === state.activeIndex) {
-        if (state.todo.length > 1) {
-          state.activeIndex = state.todo.length - 1;
-        } else {
-          state.activeIndex = 0;
-        }
-      }
       saveToLocalStorage(state);
     },
 
@@ -108,6 +103,7 @@ const todoSlice = createSlice({
     },
 
     // update Todo List Items (IsComplete)
+    // Todo : Update this code
     updateTodoListItemSetIsComplete: (
       state,
       action: PayloadAction<{ uid: string; completion: boolean }>

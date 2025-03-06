@@ -1,6 +1,6 @@
 import { AppDispatch, RootState } from "@/Redux/store";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MdOutlineRadioButtonChecked,
   MdOutlineRadioButtonUnchecked,
@@ -8,10 +8,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { ListItemEditableMode } from "./TM_TLI_EditableMode";
 import { updateTodoListItemSetIsComplete } from "@/Redux/2-rendered-apps-state/devTodoSlice";
-
 export default function TM_TodoListItemsViewMode() {
   const { activeIndex, todo } = useSelector(
-    (state: RootState) => state.devTodo
+    (state: RootState) => state.devTodo,
   );
   const [focusedItem, setFocusedItem] = useState<string | null>(null);
   const activeItems = todo[activeIndex]?.items || [];
@@ -58,11 +57,11 @@ export default function TM_TodoListItemsViewMode() {
                         updateTodoListItemSetIsComplete({
                           completion: true,
                           uid: item.id,
-                        })
+                        }),
                       )
                     }
                     title="Checked"
-                    className="cursor-pointer"
+                    className="cursor-pointer text-xl"
                   />
                 ) : (
                   <MdOutlineRadioButtonUnchecked
@@ -71,11 +70,11 @@ export default function TM_TodoListItemsViewMode() {
                         updateTodoListItemSetIsComplete({
                           completion: true,
                           uid: item.id,
-                        })
+                        }),
                       )
                     }
                     title="Unchecked"
-                    className="cursor-pointer"
+                    className="cursor-pointer text-xl"
                   />
                 ))}
               {/* article */}
@@ -86,7 +85,7 @@ export default function TM_TodoListItemsViewMode() {
                   onClick={(event) => {
                     event.preventDefault();
                     setFocusedItem((prev) =>
-                      prev === item.id ? null : item.id
+                      prev === item.id ? null : item.id,
                     );
                   }}
                 >
