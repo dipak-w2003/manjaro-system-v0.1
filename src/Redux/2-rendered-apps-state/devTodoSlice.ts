@@ -89,8 +89,9 @@ const todoSlice = createSlice({
       saveToLocalStorage(state);
     },
     // remove list items
-    removeTodoListItems:()=>{
-
+    removeTodoListItems: (state, action: PayloadAction<number>) => {
+      state.todo[state.activeIndex].items.splice(action.payload, 1);
+      saveToLocalStorage(state);
     },
 
     // Update Todo List Items
@@ -105,6 +106,28 @@ const todoSlice = createSlice({
       );
       saveToLocalStorage(state);
     },
+
+    // update Todo List Items (IsComplete)
+    updateTodoListItemSetIsComplete: (
+      state,
+      action: PayloadAction<{ uid: string; completion: boolean }>
+    ) => {
+      const grabItem = state.todo[state.activeIndex].items.find(
+        (item) => item.id === action.payload.uid
+      );
+      const idx: number = state.todo[state.activeIndex].items.findIndex(
+        (item) => item.id === grabItem.id
+      );
+      // alert(idx);
+
+      let setCompleteForT: TodoItems = { ...grabItem };
+      if (grabItem.isCompleted)
+        setCompleteForT = { ...grabItem, isCompleted: false };
+      else setCompleteForT = { ...grabItem, isCompleted: true };
+
+      state.todo[state.activeIndex].items.splice(idx, 1, setCompleteForT);
+      saveToLocalStorage(state);
+    },
   },
 });
 
@@ -115,6 +138,8 @@ export const {
   addTodoListItems,
   updateTodoListTitle,
   updateTodoListItems,
+  removeTodoListItems,
+  updateTodoListItemSetIsComplete,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

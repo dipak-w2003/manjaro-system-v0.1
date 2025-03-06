@@ -1,27 +1,31 @@
-import { RootState } from "@/Redux/store";
+import { AppDispatch, RootState } from "@/Redux/store";
 import { motion } from "framer-motion";
-import { Divide } from "lucide-react";
 import { useState } from "react";
 import {
   MdOutlineRadioButtonChecked,
   MdOutlineRadioButtonUnchecked,
 } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ListItemEditableMode } from "./TM_TLI_EditableMode";
+import { updateTodoListItemSetIsComplete } from "@/Redux/2-rendered-apps-state/devTodoSlice";
 
 export default function TM_TodoListItemsViewMode() {
   const { activeIndex, todo } = useSelector(
     (state: RootState) => state.devTodo
   );
   const [focusedItem, setFocusedItem] = useState<string | null>(null);
-
   const activeItems = todo[activeIndex]?.items || [];
 
   const dateFormatter = (date: string): string => {
     const [YYYY, MM, DD] = date.split("-");
     return `${YYYY}/${MM}/${DD}`;
   };
+  const dispatch: AppDispatch = useDispatch();
 
+  // Todo :
+  // 1. collect items on two basis isCompleted false : top else isCompleted true bottom
+  // make two array notCompleted [{}] and completed [{}] merge those two and map
+  // 2. Research priority based styling
   return (
     <main
       className="flex flex-col *:mt-4 items-center overflow-y-scroll scrollbar-hide scroll-smooth noto-sans "
@@ -47,13 +51,29 @@ export default function TM_TodoListItemsViewMode() {
             >
               {/* setIsComplete */}
               {!isFocused &&
-                (false ? (
+                (item.isCompleted ? (
                   <MdOutlineRadioButtonChecked
+                    onClick={() =>
+                      dispatch(
+                        updateTodoListItemSetIsComplete({
+                          completion: true,
+                          uid: item.id,
+                        })
+                      )
+                    }
                     title="Checked"
                     className="cursor-pointer"
                   />
                 ) : (
                   <MdOutlineRadioButtonUnchecked
+                    onClick={() =>
+                      dispatch(
+                        updateTodoListItemSetIsComplete({
+                          completion: true,
+                          uid: item.id,
+                        })
+                      )
+                    }
                     title="Unchecked"
                     className="cursor-pointer"
                   />

@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/Redux/store";
 import {
-  TodoItems,
   updateTodoListItems,
+  removeTodoListItems,
+  TodoItems,
 } from "@/Redux/2-rendered-apps-state/devTodoSlice";
-import { dataList } from "./todo_utils";
-import { Delete } from "lucide-react";
 import { FaTrashCan } from "react-icons/fa6";
 
 interface ListItemEditableModeProps {
@@ -15,29 +14,18 @@ interface ListItemEditableModeProps {
   idx: number;
   setFocusedItem: (focusedItem: boolean | null) => void;
 }
+
 export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
   TodoItems,
   idx,
   setFocusedItem,
-}): JSX.Element => {
-  const [formDataProp, setFormDataProp] = useState<TodoItems>({
-    todoTitle: TodoItems.todoTitle,
-    date: TodoItems.date,
-    tag: TodoItems.tag,
-    priority: TodoItems.priority,
-    isCompleted: TodoItems.isCompleted,
-    id: TodoItems.id,
-    todoSummarize: TodoItems.todoSummarize,
-  });
-
-  const [focusedOut, setFocusedOut] = useState<boolean>(false);
+}) => {
+  const [formDataProp, setFormDataProp] = useState<TodoItems>({ ...TodoItems });
   const dispatch: AppDispatch = useDispatch();
 
-  function handleUpdateSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const handleUpdateSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Final Form Data:", formDataProp);
 
-    setFocusedOut((prev) => (prev = true));
     if (
       !formDataProp.todoTitle ||
       !formDataProp.date ||
@@ -48,40 +36,26 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
     }
 
     setFocusedItem(false);
-    const updateTLItem = {
-      ...formDataProp,
-      isCompleted: false,
-    };
-
-    dispatch(updateTodoListItems({ idx: idx, item: updateTLItem }));
-    setFocusedOut(true);
-    // clear state
-  }
+    dispatch(
+      updateTodoListItems({
+        idx,
+        item: { ...formDataProp, isCompleted: false },
+      })
+    );
+  };
 
   const handleOnChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value, type } = e.target;
-
-    console.log("Updating:", name, value);
-
-    setFormDataProp((prev) => ({
-      ...prev,
-      [name]: type === "radio" ? value : value,
-    }));
+    const { name, value } = e.target;
+    setFormDataProp((prev) => ({ ...prev, [name]: value }));
   };
-
-  useEffect(() => {
-    console.log("idx Updated : ", idx);
-
-    // console.log("Updated formDataProp:", formDataProp);
-  }, [formDataProp, idx]);
 
   return (
     <motion.form
       onSubmit={handleUpdateSubmit}
       initial={{ height: "70px" }}
-      animate={{ height: !focusedOut && "400px" }}
+      animate={{ height: "400px" }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
       className="rounded overflow-hidden flex flex-col transition-all p-0 bg-[#252525] relative w-[45vw] bg-transparent"
     >
@@ -98,25 +72,27 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
         list="todo-suggestions"
       />
 
-      <datalist id="todo-suggestions">
+      {/* For now drop suggestions mapping */}
+      {/* <datalist id="todo-suggestions">
         {dataList
-          .filter((list) =>
-            list.list
-              .toLowerCase()
-              .includes(formDataProp.todoTitle.toLocaleString())
+          .filter(
+            (list) =>
+              typeof list.list === "string" &&
+              list.list
+                .toLowerCase()
+                .includes(formDataProp.todoTitle.toLowerCase())
           )
-          .slice(0, 10)
           .map((list) => (
-            <option key={list.id} value={list.list} />
+            <option key={list.id} value={String(list.list)} />
           ))}
-      </datalist>
+      </datalist> */}
 
       <textarea
         className="w-full p-2 pl-4 min-h-[105px] max-h-[105px] focus:outline-none resize-none focus:ring-2 focus:ring-blue-400 bg-transparent scroll-none font-light"
         maxLength={300}
         name="todoSummarize"
         onChange={handleOnChange}
-        value={formDataProp?.todoSummarize}
+        value={formDataProp.todoSummarize}
         placeholder="Make Summarization.."
       />
 
@@ -144,7 +120,6 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
               className="p-3 flex justify-between items-center gap-2"
             >
               <input
-                autoComplete="off"
                 id={`priority-${priority}`}
                 type="radio"
                 name="priority"
@@ -172,10 +147,13 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
         />
       </span>
 
-      <span className="top-5 absolute flex right-0">
+      <span className="top-5 absolute flex right-0 transition-all">
+        <button type="submit"></button>
         <button
+          onClick={() => dispatch(removeTodoListItems(idx))}
+          title="delete item"
           type="button"
-          className="bg-blue-500 hover:bg-blue-600 text-white rounded-md bg-transparent  self-center "
+          className="bg-blue-500 hover:bg-blue-600 text-white rounded-md self-center"
         >
           <FaTrashCan />
         </button>
