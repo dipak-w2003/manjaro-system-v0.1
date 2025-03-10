@@ -58,18 +58,18 @@ export default function AddTodoListItems(): JSX.Element {
       <motion.form
         onSubmit={handleSubmit}
         onFocus={() => setFocused(true)}
-        onMouseEnter={() => handleFocusChange(true, 100)}
-        onMouseLeave={() => handleFocusChange(false, 500)}
+        onMouseEnter={() => handleFocusChange(true, 200)}
+        onMouseLeave={() => handleFocusChange(false, 1000)}
         initial={{ height: "70px" }}
         animate={{ height: focused ? "450px" : "70px" }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="rounded overflow-hidden flex flex-col transition-all bg-[#252525] relative"
+        className="rounded overflow-hidden flex flex-col transition-all duration-100 bg-[#252525] relative"
       >
         {/* Todo Input */}
         <input
           required
           name="add-todo"
-          placeholder="Add Todo"
+          placeholder={focused ? "Todo Title" : "Add Todo"}
           className="focus-within:outline-none max-h-[70px] min-h-[70px] p-3 pl-4 w-[45vw] bg-transparent"
           type="text"
           ref={todoTitleRef}

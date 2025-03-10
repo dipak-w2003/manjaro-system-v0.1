@@ -10,7 +10,7 @@ import { ListItemEditableMode } from "./TM_TLI_EditableMode";
 import { updateTodoListItemSetIsComplete } from "@/Redux/2-rendered-apps-state/devTodoSlice";
 export default function TM_TodoListItemsViewMode() {
   const { activeIndex, todo } = useSelector(
-    (state: RootState) => state.devTodo,
+    (state: RootState) => state.devTodo
   );
   const [focusedItem, setFocusedItem] = useState<string | null>(null);
   const activeItems = todo[activeIndex]?.items || [];
@@ -27,8 +27,10 @@ export default function TM_TodoListItemsViewMode() {
   // 2. Research priority based styling
   return (
     <main
-      className="flex flex-col *:mt-4 items-center overflow-y-scroll scrollbar-hide scroll-smooth noto-sans "
-      onMouseLeave={() => setFocusedItem((prev) => (prev = null))}
+      className="flex flex-col *:mt-4 items-center overflow-y-scroll  scrollbar-hide scroll-smooth noto-sans "
+      onMouseLeave={() =>
+        setTimeout(() => setFocusedItem((prev) => (prev = null)), 1000)
+      }
     >
       {activeItems.length > 0 ? (
         activeItems.map((item, idx) => {
@@ -36,7 +38,6 @@ export default function TM_TodoListItemsViewMode() {
 
           return (
             <motion.section
-              onDrag={() => console.log(item)}
               initial={{ height: "70px" }}
               animate={{
                 minHeight: isFocused ? "400px" : "70px",
@@ -44,9 +45,10 @@ export default function TM_TodoListItemsViewMode() {
               }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
               key={item.id}
-              className={
-                "bg-[#252525] max-h-[480px] min-h-[70px] p-3 pl-4 w-[45vw] rounded-sm transition-all flex  items-center justify-center relative"
-              }
+              className={`bg-[#252525] max-h-[480px] min-h-[70px] p-3 pl-4 w-[45vw] rounded-sm transition-all flex
+                  ${
+                    isFocused ? "items-start" : "items-center"
+                  } justify-center relative`}
             >
               {/* setIsComplete */}
               {!isFocused &&
@@ -57,7 +59,7 @@ export default function TM_TodoListItemsViewMode() {
                         updateTodoListItemSetIsComplete({
                           completion: true,
                           uid: item.id,
-                        }),
+                        })
                       )
                     }
                     title="Checked"
@@ -70,14 +72,13 @@ export default function TM_TodoListItemsViewMode() {
                         updateTodoListItemSetIsComplete({
                           completion: true,
                           uid: item.id,
-                        }),
+                        })
                       )
                     }
                     title="Unchecked"
                     className="cursor-pointer text-xl"
                   />
                 ))}
-              {/* article */}
 
               {!isFocused && (
                 <article
@@ -85,13 +86,15 @@ export default function TM_TodoListItemsViewMode() {
                   onClick={(event) => {
                     event.preventDefault();
                     setFocusedItem((prev) =>
-                      prev === item.id ? null : item.id,
+                      prev === item.id ? null : item.id
                     );
                   }}
                 >
                   <pre className="text-xs">{dateFormatter(item.date)}</pre>
                   <h3>{item.todoTitle}</h3>
-                  <pre className="absolute right-1 top-3">#{item.tag}</pre>
+                  <pre className="absolute right-1 top-3 text-gray-500">
+                    #{item.tag}
+                  </pre>
                 </article>
               )}
               {isFocused && (

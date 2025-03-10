@@ -57,13 +57,14 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
       initial={{ height: "70px" }}
       animate={{ height: "400px" }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
-      className="rounded overflow-hidden flex flex-col transition-all p-0 bg-[#252525] relative w-[45vw] bg-transparent"
+      className="rounded overflow-hidden flex flex-col   p-0 transition-all duration-100  bg-[#252525] relative w-[45vw] bg-transparent "
     >
       <input
         required
+        title="Todo-Title"
         name="todoTitle"
-        placeholder="Add Todo"
-        className="focus-within:outline-none max-h-[70px] min-h-[70px] p-3 pl-4 w-[45vw] bg-transparent"
+        placeholder="Todo Title"
+        className="focus-within:outline-none max-h-[70px] min-h-[70px] p-3 -mt-4 pl-4 w-[45vw] bg-transparent"
         type="text"
         value={formDataProp.todoTitle}
         onChange={handleOnChange}
@@ -88,6 +89,7 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
       </datalist> */}
 
       <textarea
+        title="Todo-Summary"
         className="w-full p-2 pl-4 min-h-[105px] max-h-[105px] focus:outline-none resize-none focus:ring-2 focus:ring-blue-400 bg-transparent scroll-none font-light"
         maxLength={300}
         name="todoSummarize"
@@ -96,7 +98,10 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
         placeholder="Make Summarization.."
       />
 
-      <span className="p-3 flex justify-between items-center h-[70px]">
+      <span
+        className="p-3  flex justify-between items-center h-[70px] transition-all duration-100"
+        title="Todo-Date"
+      >
         <label htmlFor="date-todo">Date</label>
         <input
           className="bg-transparent focus-within:outline-none"
@@ -109,14 +114,16 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
       </span>
 
       <section
+        title="Todo-Priority"
         id="todo-list-items-priority"
-        className="p-3 flex justify-between items-center h-[70px]"
+        className="p-3 flex justify-between items-center h-[70px] transition-all duration-100"
       >
         <h2>Priority</h2>
         <div className="priors flex gap-2">
           {["high", "mid", "low"].map((priority) => (
             <span
               key={priority}
+              title={`Todo-Priority-${priority.toWellFormed()}`}
               className="p-3 flex justify-between items-center gap-2"
             >
               <input
@@ -135,8 +142,9 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
         </div>
       </section>
 
-      <span>
+      <span className="transition-all duration-100">
         <input
+          title="Todo-Tag"
           required
           name="tag"
           placeholder="#tag"
@@ -147,17 +155,17 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
         />
       </span>
 
-      <span className="top-5 absolute flex right-0 transition-all">
-        <button type="submit"></button>
+      <span className="top-2 absolute flex right-5 transition-all">
         <button
           onClick={() => dispatch(removeTodoListItems(idx))}
-          title="delete item"
+          title="Delete-Item"
           type="button"
-          className="bg-blue-500 hover:bg-blue-600 text-white rounded-md self-center"
+          className="bg-transparent text-white rounded-md self-center"
         >
           <FaTrashCan />
         </button>
       </span>
+      <button type="submit" className="absolute "></button>
     </motion.form>
   );
 };
