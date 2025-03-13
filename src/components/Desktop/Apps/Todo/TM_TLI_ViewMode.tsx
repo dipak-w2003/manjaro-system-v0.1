@@ -16,7 +16,8 @@ export default function TM_TodoListItemsViewMode() {
   const activeItems = todo[activeIndex]?.items || [];
 
   const dateFormatter = (date: string): string => {
-    const [YYYY, MM, DD] = date.split("-");
+    const DATE_ = new Date(date).toISOString().split("T")[0];
+    const [YYYY, MM, DD] = DATE_.split("-");
     return `${YYYY}/${MM}/${DD}`;
   };
   const dispatch: AppDispatch = useDispatch();
@@ -90,7 +91,12 @@ export default function TM_TodoListItemsViewMode() {
                     );
                   }}
                 >
-                  <pre className="text-xs">{dateFormatter(item.date)}</pre>
+                  <pre
+                    onClick={() => console.log(item.date)}
+                    className="text-xs"
+                  >
+                    {dateFormatter(item.date)}
+                  </pre>
                   <h3>{item.todoTitle}</h3>
                   <pre className="absolute right-1 top-3 text-gray-500">
                     #{item.tag}

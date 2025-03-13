@@ -1,11 +1,6 @@
 import React, { lazy, Suspense, useCallback, useEffect } from "react";
 import { RecentPkg } from "@/Redux/1-user-state/recentSlice";
 import { AppPkgId } from "../kde/Pages/1-taskbar/1-apps-menu/AppCategoryList";
-import { GiCrossedSwords, GiCrossMark } from "react-icons/gi";
-import { Crosshair } from "lucide-react";
-import { LuCross } from "react-icons/lu";
-import { PiCrossLight } from "react-icons/pi";
-import { CloseButton } from "react-toastify";
 import { IoCloseCircle } from "react-icons/io5";
 
 const VSCode = lazy(() => import("@/components/Desktop/Apps/VS-Code/VSCode"));

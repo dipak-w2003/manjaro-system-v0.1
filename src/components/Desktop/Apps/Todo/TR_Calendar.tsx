@@ -1,77 +1,69 @@
-import React, { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
+import "./TR_Calendar.css";
 import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { RootState } from "@/Redux/store";
 
-const TR_Calendar: React.FC = () => {
+const TR_Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [startDay, setStartDay] = useState(0);
-  const [daysInMonth, setDaysInMonth] = useState<number[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
-  const generateDaysInMonth = (date: Date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
+  // Memoized values to prevent unnecessary recalculations
+  const { daysInMonth, startDay } = useMemo(() => {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
     const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const days = [];
+    const lastDay = new Date(year, month + 1, 0); // Last day of the month
 
-    // Calculate the start day (which is the weekday of the first day of the month)
-    setStartDay(firstDay.getDay());
+    // Get the start day (Sunday-Saturday) and the array of days in the month
+    const startDay = firstDay.getDay();
+    const daysInMonth: Date[] = [];
 
-    // Loop over the number of days in the month
-    for (let i = 1; i <= lastDay.getDate(); i++) {
-      days.push(i); // Only push the day number
+    for (let date = 1; date <= lastDay.getDate(); date++) {
+      daysInMonth.push(new Date(year, month, date));
     }
 
-    setDaysInMonth(days); // Set the days in state
-  };
-
-  useEffect(() => {
-    generateDaysInMonth(currentDate);
+    return { daysInMonth, startDay };
   }, [currentDate]);
 
   const dayNames = ["S", "M", "T", "W", "T", "F", "S"];
 
-  const prevMonth = () => {
+  // Navigation functions to change months
+  const changeMonth = (increment: number) => {
     setCurrentDate(
-      (prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1)
+      (prev) => new Date(prev.getFullYear(), prev.getMonth() + increment, 1)
     );
   };
 
-  const nextMonth = () => {
-    setCurrentDate(
-      (prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1)
-    );
-  };
-
-  const handleDateClick = (day: number) => {
-    setSelectedDate(
-      `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${day}`
-    );
-  };
-
-  const isToday = (day: number): boolean => {
+  // Check if the day is today
+  const isToday = (day: Date): boolean => {
     const today = new Date();
     return (
-      today.getDate() === day &&
-      today.getMonth() === currentDate.getMonth() &&
-      today.getFullYear() === currentDate.getFullYear()
+      day.getDate() === today.getDate() &&
+      day.getMonth() === today.getMonth() &&
+      day.getFullYear() === today.getFullYear()
     );
   };
 
-  /*
-  ? Calendar
-  Todo : Collect daysInMonth as this format ["2025-03-10" ...] & map it
-  Todo : IdentifyToday : currentDate === new Date().toISOString().split("T")[0] like this
-  Todo : Grab DevTodoListItems Dates as "2025-03-10" format
-  Todo : Grab common dates : array1.filter(item => array2.includes(item));
-  Todo : conditional highlight Calendar Dates commonDates.includes(map.date) && highlightDate
-  Todo : No Need to add selectedDate styling & functionality
-   */
+  const DevTodo = useSelector((state: RootState) => state.devTodo);
+  const TODO_ACTIVE_DATES = useMemo(
+    () => DevTodo.todo[DevTodo.activeIndex]?.items || [],
+    [DevTodo.todo, DevTodo.activeIndex]
+  );
+  const activeDates = useMemo(
+    () =>
+      TODO_ACTIVE_DATES.map((item) =>
+        new Date(item.date).toLocaleString("default", { dateStyle: "long" })
+      ),
+    [TODO_ACTIVE_DATES]
+  );
+  // Todo : 4 times rendering activeDates
+  // console.log(activeDates);
+
   return (
     <main className="calendar">
-      {/* header */}
       <section className="header flex items-center gap-2 justify-center">
-        <button onClick={prevMonth}>
+        <button onClick={() => changeMonth(-1)}>
           <AiOutlineLeftCircle className="text-xl" />
         </button>
         <span className="flex flex-col items-center text-xl min-w-28 max-w-28 p-2">
@@ -80,12 +72,11 @@ const TR_Calendar: React.FC = () => {
           </h4>
           <h4>{currentDate.getFullYear()}</h4>
         </span>
-        <button onClick={nextMonth}>
+        <button onClick={() => changeMonth(1)}>
           <AiOutlineRightCircle className="text-xl" />
         </button>
       </section>
 
-      {/* day names - Sunday to Saturday */}
       <section className="day-names flex justify-around p-1">
         {dayNames.map((day, index) => (
           <pre className="day-name text-center" key={index}>
@@ -94,7 +85,6 @@ const TR_Calendar: React.FC = () => {
         ))}
       </section>
 
-      {/* days */}
       <section className="days">
         {Array.from({ length: startDay }).map((_, index) => (
           <span
@@ -102,15 +92,18 @@ const TR_Calendar: React.FC = () => {
             className="empty-day h-[35px] w-[35px]"
           />
         ))}
-        {daysInMonth.map((day, index) => (
+        {daysInMonth.map((day, _) => (
           <button
-            key={day}
-            className={`day h-[35px] w-[35px] opacity-80 rounded-[50%] flex justify-center items-center transition-all ease-linear duration-100 ${
-              isToday(day) ? "bg-[#807867]" : ""
-            }`}
-            onClick={() => handleDateClick(day)}
+            className={`day h-[35px] w-[35px] opacity-80 rounded-[50%] flex justify-center items-center transition-all ease-linear duration-100
+            ${
+              activeDates.includes(
+                day.toLocaleString("default", { dateStyle: "long" })
+              ) && "bg-gray-500"
+            }  
+            ${isToday(day) ? "bg-[#ffca4e] text-black" : ""}
+            `}
           >
-            {day}
+            {day.getDate()}
           </button>
         ))}
       </section>

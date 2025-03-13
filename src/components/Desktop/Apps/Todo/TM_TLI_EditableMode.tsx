@@ -90,7 +90,7 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
 
       <textarea
         title="Todo-Summary"
-        className="w-full p-2 pl-4 min-h-[105px] max-h-[105px] focus:outline-none resize-none focus:ring-2 focus:ring-blue-400 bg-transparent scroll-none font-light"
+        className="w-full p-2 pl-4 min-h-[105px] max-h-[105px] focus:outline-none resize-none  bg-transparent scroll-none font-light"
         maxLength={300}
         name="todoSummarize"
         onChange={handleOnChange}
@@ -106,7 +106,7 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
         <input
           className="bg-transparent focus-within:outline-none"
           type="date"
-          value={formDataProp.date}
+          value={new Date(formDataProp.date).toISOString().split("T")[0]}
           onChange={handleOnChange}
           name="date"
           required

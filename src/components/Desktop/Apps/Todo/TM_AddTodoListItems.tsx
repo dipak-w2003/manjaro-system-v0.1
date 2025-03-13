@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { AppDispatch, RootState } from "@/Redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { addTodoListItems } from "@/Redux/2-rendered-apps-state/devTodoSlice";
-import { dataList } from "./todo_utils";
+// import { dataList } from "./todo_utils";
 
 export default function AddTodoListItems(): JSX.Element {
   const { activeIndex } = useSelector((state: RootState) => state.devTodo);
@@ -37,9 +37,26 @@ export default function AddTodoListItems(): JSX.Element {
       form.elements.namedItem("todo-summarize") as HTMLTextAreaElement
     )?.value;
 
+    // ? date converting and formatting
+    const [GotY, GotM, GotD] = todoDate.split("-");
+    const DATE_NEW = new Date();
+    // ? Month -1 (for accurate month)
+    const FinalDate: Date = new Date(
+      +GotY,
+      +GotM - 1,
+      +GotD,
+      DATE_NEW.getHours(),
+      DATE_NEW.getMinutes(),
+      DATE_NEW.getSeconds(),
+      DATE_NEW.getMilliseconds()
+    );
+    // convert to new Date()
+    console.log(typeof new Date(FinalDate));
+    // ! As per Calendar formatting requirement we collect form Date as yyyy-mm-dd format as convert it to new Date() format & where
+    // slice supports string we convert it to the String(FinalDate)
     dispatch(
       addTodoListItems({
-        date: todoDate,
+        date: String(FinalDate),
         id: uuidv4(),
         isCompleted: false,
         priority: todoPriority,
@@ -87,7 +104,7 @@ export default function AddTodoListItems(): JSX.Element {
         {focused && (
           <div className="transition-all duration-150 ease-linear flex flex-col w-full *:mt-[20px]">
             <textarea
-              className="w-full p-2 pl-4 min-h-[75px] max-h-[75px] focus:outline-none resize-none focus:ring-2 focus:ring-blue-400 bg-transparent font-light italic"
+              className="w-full p-2 pl-4 min-h-[75px] max-h-[75px]  focus:outline-none resize-none  bg-transparent font-light italic"
               maxLength={300}
               id="todo-summarize"
               name="todo-summarize"
