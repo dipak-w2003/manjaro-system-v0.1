@@ -12,12 +12,11 @@ interface TodoProps {
 const TodoApp: React.FC<TodoProps> = ({ children }) => {
   const Todos = useSelector((state: RootState) => state.devTodo);
   // console.log(Todos.todo[Todos.activeIndex]);
-
   return (
     <main
       className={`bg-[#252525] h-full overflow-hidden  w-full flex noto-sans  `}
     >
-      <TodoLeft styles="w-[20%] h-full  " todoList={Todos} />
+      <TodoLeft styles="w-[20%] h-full" todoList={Todos} />
       <TodoMiddle styles="w-[50%] *:w-full  h-full overflow-hidden " />
       <TodoRight styles="w-[30%] h-full overflow-hidden " />
     </main>

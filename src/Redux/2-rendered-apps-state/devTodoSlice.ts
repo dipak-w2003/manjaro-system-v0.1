@@ -8,6 +8,14 @@ export interface TodoItems {
   tag: string;
   priority: string;
   isCompleted: boolean;
+  // ? Reminders
+  reminder?: {
+    hour: number;
+    minute: number;
+    isAmPm: string;
+    // Optional 
+    song?:string
+  };
 }
 
 export interface Todo {
@@ -78,9 +86,8 @@ const todoSlice = createSlice({
       const activeTodo = state.todo[state.activeIndex];
       // Ensure the 'items' array exists
       if (!activeTodo.items) activeTodo.items = [];
-      // Push the new TodoItem
-      activeTodo.items.push(action.payload);
-
+      // unshift the new TodoItem
+      activeTodo.items.unshift(action.payload);
       saveToLocalStorage(state);
     },
     // remove list items

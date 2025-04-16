@@ -13,7 +13,8 @@ const TR_Calendar = () => {
     const month = currentDate.getMonth();
 
     const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0); // Last day of the month
+    const lastDay = new Date(year, month + 1, 0);
+    // Last day of the month
 
     // Get the start day (Sunday-Saturday) and the array of days in the month
     const startDay = firstDay.getDay();
@@ -94,6 +95,7 @@ const TR_Calendar = () => {
         ))}
         {daysInMonth.map((day, _) => (
           <button
+            key={`${day}:${_}`}
             className={`day h-[35px] w-[35px] opacity-80 rounded-[50%] flex justify-center items-center transition-all ease-linear duration-100
             ${
               activeDates.includes(

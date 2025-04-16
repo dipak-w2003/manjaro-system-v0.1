@@ -94,7 +94,7 @@ export default function AddTodoListItems(): JSX.Element {
           maxLength={50}
           list="todo-suggestions"
         />
-        {/* Suggestions :Postpone idea */}
+        {/**  @Suggestions :Postpone idea */}
         {/* <datalist id="todo-suggestions">
           {dataList.map((list) => (
             <option key={list.id} value={list.list} />
@@ -104,7 +104,7 @@ export default function AddTodoListItems(): JSX.Element {
         {focused && (
           <div className="transition-all duration-150 ease-linear flex flex-col w-full *:mt-[20px]">
             <textarea
-              className="w-full p-2 pl-4 min-h-[75px] max-h-[75px]  focus:outline-none resize-none  bg-transparent font-light italic"
+              className="w-full p-2 pl-4 min-h-[75px] max-h-[75px]  focus:outline-none resize-none  bg-transparent font-light italic "
               maxLength={300}
               id="todo-summarize"
               name="todo-summarize"
@@ -156,16 +156,19 @@ export default function AddTodoListItems(): JSX.Element {
                 placeholder="#tag"
                 className="focus-within:outline-none max-h-[70px] placeholder:text-gray-50 min-h-[70px] p-3 pl-4 w-[45vw] bg-transparent"
                 type="text"
+                autoComplete="off"
+                autoCorrect="off"
               />
             </span>
 
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-600 text-white rounded-md mt-4 self-center bottom-0 fixed"
-            ></button>
+            />
           </div>
         )}
       </motion.form>
     </section>
   );
 }
+

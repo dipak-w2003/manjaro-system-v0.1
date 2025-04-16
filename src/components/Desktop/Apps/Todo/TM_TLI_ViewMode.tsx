@@ -1,6 +1,6 @@
 import { AppDispatch, RootState } from "@/Redux/store";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   MdOutlineRadioButtonChecked,
   MdOutlineRadioButtonUnchecked,
@@ -26,6 +26,7 @@ export default function TM_TodoListItemsViewMode() {
   // 1. collect items on two basis isCompleted false : top else isCompleted true bottom
   // make two array notCompleted [{}] and completed [{}] merge those two and map
   // 2. Research priority based styling
+
   return (
     <main
       className="flex flex-col *:mt-4 items-center overflow-y-scroll  scrollbar-hide scroll-smooth noto-sans "
@@ -46,7 +47,7 @@ export default function TM_TodoListItemsViewMode() {
               }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
               key={item.id}
-              className={`bg-[#252525] max-h-[480px] min-h-[70px] p-3 pl-4 w-[45vw] rounded-sm transition-all flex
+              className={`bg-[#252525] max-h-[480px] min-h-[70px] p-3 pl-4 w-[45vw] rounded-sm transition-all flex overflow-hidden
                   ${
                     isFocused ? "items-start" : "items-center"
                   } justify-center relative`}
@@ -81,6 +82,7 @@ export default function TM_TodoListItemsViewMode() {
                   />
                 ))}
 
+              {/* If Update/Input:NotFocused,i.e focuses on input:focus */}
               {!isFocused && (
                 <article
                   className="flex flex-col relative w-full gap-2 ml-3 *:transition-all duration-300"
@@ -99,7 +101,7 @@ export default function TM_TodoListItemsViewMode() {
                   </pre>
                   <h3>{item.todoTitle}</h3>
                   <pre className="absolute right-1 top-3 text-gray-500">
-                    #{item.tag}
+                    {item.tag.includes("#") ? item.tag : `#${item.tag}`}
                   </pre>
                 </article>
               )}
@@ -110,6 +112,14 @@ export default function TM_TodoListItemsViewMode() {
                   TodoItems={item}
                 />
               )}
+
+              <div
+                className={`h-full w-fit absolute border-l-4 left-0 top-0
+               ${item.priority.includes("low") && "border-l-emerald-600"}
+               ${item.priority.includes("mid") && "border-l-yellow-600"}
+               ${item.priority.includes("high") && "border-l-red-600"}
+                `}
+              />
             </motion.section>
           );
         })
@@ -119,3 +129,12 @@ export default function TM_TodoListItemsViewMode() {
     </main>
   );
 }
+
+/**
+ * @Optimization :
+ *  <div className={`h-full w-fit absolute border-l-2 left-0 top-0 
+         ${item.priority === "low" && "border-l-emerald-600"}
+         ${item.priority === "mid" && "border-l-yellow-600"}
+         ${item.priority === "high" && "border-l-red-600"}
+         `}/>
+ */

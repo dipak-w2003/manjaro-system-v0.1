@@ -61,7 +61,7 @@ const RenderApp: React.FC<RenderAppProps> = React.memo(({ app, removeApp }) => {
       >
         {/* Show Apps Title bar. i.e close, maximize minimize titles etc includes */}
         <div
-          className=" h-[3vh] w-full relative bg-slate-900"
+          className=" h-[3vh] w-full relative bg-slate-900 "
           title="close"
           onClick={setView}
         >

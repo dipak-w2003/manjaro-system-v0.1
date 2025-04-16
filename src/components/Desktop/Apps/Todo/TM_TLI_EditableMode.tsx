@@ -39,7 +39,7 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
     dispatch(
       updateTodoListItems({
         idx,
-        item: { ...formDataProp, isCompleted: false },
+        item: { ...formDataProp },
       })
     );
   };
@@ -57,7 +57,7 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
       initial={{ height: "70px" }}
       animate={{ height: "400px" }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
-      className="rounded overflow-hidden flex flex-col   p-0 transition-all duration-100  bg-[#252525] relative w-[45vw] bg-transparent "
+      className="rounded overflow-hidden flex flex-col p-0 transition-all duration-100  bg-[#252525] relative w-[45vw] bg-transparent "
     >
       <input
         required
@@ -150,6 +150,8 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
           placeholder="#tag"
           className="focus-within:outline-none max-h-[70px] placeholder:text-gray-50 min-h-[70px] p-3 pl-4 w-[45vw] bg-transparent"
           type="text"
+          autoCorrect="off"
+          autoComplete="off"
           value={formDataProp.tag}
           onChange={handleOnChange}
         />
@@ -165,7 +167,26 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
           <FaTrashCan />
         </button>
       </span>
-      <button type="submit" className="absolute "></button>
+      <button type="submit" className="absolute"/>
     </motion.form>
   );
 };
+
+/**
+ * @Optimization
+ * * 14th April
+ * - 'Changes confirmation' like wise while updating and not entering or submitting for better UI? UX approach
+ * @BUGS
+ * * 14th April
+ *  - 1) OverFlow Fixed while focused
+ *   2) while updatingForm: where list.isCompleted = true but after submission it was doing falsy 
+ * @BUGS_FIXED
+ * 2.1) Problem : updateTodoListItems({
+        idx,
+        item: { ...formDataProp,isCompleted:false },
+      })
+* 2.2) Solution : updateTodoListItems({
+        idx,
+        item: { ...formDataProp},
+      })
+ */
