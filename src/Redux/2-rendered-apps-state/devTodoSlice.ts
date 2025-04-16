@@ -13,8 +13,8 @@ export interface TodoItems {
     hour: number;
     minute: number;
     isAmPm: string;
-    // Optional 
-    song?:string
+    // Optional
+    song?: string;
   };
 }
 
@@ -31,7 +31,8 @@ const loadFromLocalStorage = (): TodoState => {
   try {
     const storedState = localStorage.getItem("devTodo");
     return storedState ? JSON.parse(storedState) : { activeIndex: 0, todo: [] };
-  } catch (e) {
+  } catch (error) {
+    console.log(error);
     return { activeIndex: 0, todo: [] };
   }
 };
@@ -69,7 +70,7 @@ const todoSlice = createSlice({
 
     updateTodoListTitle: (
       state,
-      action: PayloadAction<{ listIdx: number; newTitle: string }>
+      action: PayloadAction<{ listIdx: number; newTitle: string }>,
     ) => {
       state.todo[action.payload.listIdx].listTitle = action.payload.newTitle;
       saveToLocalStorage(state);
@@ -99,12 +100,12 @@ const todoSlice = createSlice({
     // Update Todo List Items
     updateTodoListItems: (
       state,
-      action: PayloadAction<{ idx: number; item: TodoItems }>
+      action: PayloadAction<{ idx: number; item: TodoItems }>,
     ) => {
       state.todo[state.activeIndex].items.splice(
         action.payload.idx,
         1,
-        action.payload.item
+        action.payload.item,
       );
       saveToLocalStorage(state);
     },
@@ -113,13 +114,13 @@ const todoSlice = createSlice({
     // Todo : Update this code
     updateTodoListItemSetIsComplete: (
       state,
-      action: PayloadAction<{ uid: string; completion: boolean }>
+      action: PayloadAction<{ uid: string; completion: boolean }>,
     ) => {
       const grabItem = state.todo[state.activeIndex].items.find(
-        (item) => item.id === action.payload.uid
+        (item) => item.id === action.payload.uid,
       );
       const idx: number = state.todo[state.activeIndex].items.findIndex(
-        (item) => item.id === grabItem.id
+        (item) => item.id === grabItem.id,
       );
       // alert(idx);
 

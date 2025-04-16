@@ -13,7 +13,8 @@ const Login = () => {
       }
     >
       <div
-        className={`cursor-default h-[100vh] noto-sans overflow-hidden bg-no-repeat bg-cover flex justify-center items-center relative bg-black
+        className={`cursor-default h-[100vh] noto-sans overflow-hidden bg-no-repeat bg-cover
+          flex justify-center items-center relative bg-black
         `}
       >
         <div className=" *:h-full *:full overflow-hidden  h-[190px] w-[380px] rounded-md absolute">
