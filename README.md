@@ -48,7 +48,11 @@ export default tseslint.config({
   },
 });
 ```
+
 ---
+
+<br/><br/>
+
 # UUID
 
 The uuid library supports multiple UUID versions
@@ -103,7 +107,11 @@ const App = () => {
 };
 export default App;
 ```
+
 ---
+
+<br/><br/>
+
 # BrowserStorage(session,local,index,cookies else) Data Update issue to UI
 
 Storage which holds up our data in the string format with the limited storage(approximately 10Mib).
@@ -403,14 +411,13 @@ export const RenderIcon = ({ iconKey }) => {
 };
 ```
 
-
 ## `handleBlur` Function: Updating Todo List Titles
 
-The `handleBlur` function is used when editing the title of a **Todo list item**. When the user finishes editing and **clicks away** or **tabs out** of the input field, this function ensures the **Redux store** is updated with the new title. 
+The `handleBlur` function is used when editing the title of a **Todo list item**. When the user finishes editing and **clicks away** or **tabs out** of the input field, this function ensures the **Redux store** is updated with the new title.
 
 ### Use Case
 
-Imagine you have a list of **Todo lists** in an app, each with a title. When editing a title, you want to ensure that the **title in the Redux store** is only updated once the user finishes typing. 
+Imagine you have a list of **Todo lists** in an app, each with a title. When editing a title, you want to ensure that the **title in the Redux store** is only updated once the user finishes typing.
 
 ### Why Not Update While Typing?
 
@@ -421,17 +428,23 @@ Updating the store constantly while the user is typing can be inefficient. It ca
 ```tsx
 const handleBlur = (index: number) => {
   // Check if the new title is different from the original title in the Redux store
-  if (tempTitles[index] !== undefined && tempTitles[index] !== todoList?.todo[index]?.listTitle) {
+  if (
+    tempTitles[index] !== undefined &&
+    tempTitles[index] !== todoList?.todo[index]?.listTitle
+  ) {
     // If it's different, dispatch the update to Redux
-    dispatch(updateTodoListTitle({ listIdx: index, newTitle: tempTitles[index] }));
+    dispatch(
+      updateTodoListTitle({ listIdx: index, newTitle: tempTitles[index] })
+    );
   }
 };
 ```
------
-----
 
+---
 
+---
 
+<br/><br/>
 
 # React-Router-DomV^7
 
@@ -463,7 +476,6 @@ function ProtectedRoute({ isAuthenticated }) {
 
 - `replace` prop ensures that the current history entry is replaced (user cannot go back)
 - UI Blocking: Causes Page Smoothness with fast redirect
-
 
 ### `<useNavigate/>`
 
@@ -563,8 +575,6 @@ const App = () => {
 export default App;
 ```
 
----
-
 ### Main.tsx
 
 ```tsx
@@ -590,6 +600,8 @@ createRoot(document.getElementById("root")!).render(
 ```
 
 - Using protected routes in an application is essential for managing access control and ensuring that certain parts of your app are accessible only to authorized or authenticated users.
+
+<br/><br/>
 
 # Event Listener + React TS (Key)
 
@@ -689,6 +701,8 @@ const HandleLogin = ({ event, user }: HandleLoginType) => {
 };
 ```
 
+<br/><br/>
+
 # Tips & Build - "noEmit":false
 
 It prevents to compile side by side .tsx and .js file after `npm run build`.
@@ -716,3 +730,31 @@ It prevents to compile side by side .tsx and .js file after `npm run build`.
   "include": ["src"]
 }
 ```
+
+---
+
+<br/><br/>
+
+# 🛠️ Vercel Deployment 404 Error – Solution ()
+
+If you're seeing a 404 error after deploying your app to Vercel, it’s likely due to missing configuration for routing.
+
+## 🧠 Problem
+
+Single-page applications (SPAs) like React, Vue, or Svelte use client-side routing. When you refresh or directly access a route other than `/`, Vercel doesn’t know how to serve it and returns a `404`.
+
+## ✅ Solution
+
+To fix this, you need to add a vercel.json configuration file to redirect all routes to index.html.
+
+## 📁 Steps
+
+1. Create a vercel.json file in the root of your project:
+
+```json
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+}
+```
+
+- Note : Not Same process for `create-react-app` instead for vite, vue, svelte etc

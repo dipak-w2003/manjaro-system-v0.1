@@ -16,7 +16,22 @@ export interface AppCategoryList {
 
 // Favorites (Set as readonly with `as const`)
 // note : appIcon is imported svg -> useable for img tag
-export const FavoritesApps:AppCategoryList[] = [
+export const FavoritesApps: AppCategoryList[] = [
+  {
+    pkgId: "utilities-todo",
+    appName: "Todos",
+    appIcon: notes,
+    desc: "Schedule with us.",
+    isFocused: false,
+  },
+  {
+    pkgId: "entertainment-musicplayer",
+    appName: "Music Player",
+    appIcon: musicplayer,
+    desc: "Command-line interface hub.",
+    isFocused: false,
+  },
+
   {
     pkgId: "development-vscode",
     appName: "VS Code",
@@ -31,25 +46,7 @@ export const FavoritesApps:AppCategoryList[] = [
     desc: "Audio playback tool.",
     isFocused: false,
   },
-  {
-    pkgId: "entertainment-musicplayer",
-    appName: "Music Player",
-    appIcon: musicplayer,
-    desc: "Command-line interface hub.",
-    isFocused: false,
-  },
-  {
-    pkgId: "utilities-todo",
-    appName: "Todos",
-    appIcon: notes,
-    desc: "Schedule with us.",
-    isFocused: false,
-  },
-
-
-  
 ] as const; // ✅ `as const` ensures pkgId values are inferred as literals
 
 // Dynamically generate a union type
 export type AppPkgId = (typeof FavoritesApps)[number]["pkgId"];
-

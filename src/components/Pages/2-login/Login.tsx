@@ -25,7 +25,7 @@ const Login = () => {
         </div>
 
         {/* default user login provider */}
-        <div className="absolute top-0 right-0 p-2 bg-slate-700 rounded-md animate-pulse">
+        <div className="absolute top-0 right-0 p-2 bg-slate-700 rounded-md selection:text-emerald-500">
           <ul className="list-decimal p-4">
             <h2>Default User (Free Use)</h2>
             <li>Username : Naruto Uzumaki</li>
