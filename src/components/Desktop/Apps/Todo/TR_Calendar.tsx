@@ -47,10 +47,13 @@ const TR_Calendar = () => {
   };
 
   const DevTodo = useSelector((state: RootState) => state.devTodo);
+
   const TODO_ACTIVE_DATES = useMemo(
     () => DevTodo.todo[DevTodo.activeIndex]?.items || [],
     [DevTodo.todo, DevTodo.activeIndex]
   );
+
+  // Collect activeDate with formatting []
   const activeDates = useMemo(
     () =>
       TODO_ACTIVE_DATES.map((item) =>
@@ -58,7 +61,16 @@ const TR_Calendar = () => {
       ),
     [TODO_ACTIVE_DATES]
   );
-  // Todo : 4 times rendering activeDates
+
+  // Count number of date duplication which will let us know to find total notification
+  const totalNumber_activeDate = (iDate: Date): number => {
+    const filterOutNums = activeDates.filter(
+      (date) => date === iDate.toLocaleString("default", { dateStyle: "long" })
+    );
+    return filterOutNums.length;
+  };
+
+  // BUG : Todo -> 4 times rendering activeDates
   // console.log(activeDates);
 
   return (
@@ -96,7 +108,7 @@ const TR_Calendar = () => {
         {daysInMonth.map((day, _) => (
           <button
             key={`${day}:${_}`}
-            className={`day h-[35px] w-[35px] opacity-80 rounded-[50%] flex justify-center items-center transition-all ease-linear duration-100
+            className={`day h-[35px] w-[35px] opacity-80 rounded-[50%] flex justify-center items-center transition-all relative ease-linear duration-100
             ${
               activeDates.includes(
                 day.toLocaleString("default", { dateStyle: "long" })
@@ -105,7 +117,22 @@ const TR_Calendar = () => {
             ${isToday(day) ? "bg-[#ffca4e] text-black" : ""}
             `}
           >
-            {day.getDate()}
+            <pre>{day.getDate()}</pre>
+            {/* Pre Number count : Notification */}
+            <pre
+              className={`absolute text-sm text-[black] font-extrabold -top-3 left-6 rounded-md p-[1px] border-[#252525] border-2
+                ${isToday(day) ? "bg-[#ffca4e]" : "bg-gray-500"} 
+             ${
+               activeDates.includes(
+                 day.toLocaleString("default", { dateStyle: "long" })
+               ) || isToday(day)
+                 ? "absolute"
+                 : "hidden"
+             }      `}
+            >
+              {totalNumber_activeDate(day)}
+              <sup>+</sup>
+            </pre>
           </button>
         ))}
       </section>

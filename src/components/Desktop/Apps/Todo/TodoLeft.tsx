@@ -91,8 +91,7 @@ const TodoLeft: React.FC<TodoPROPS> = ({ styles, todoList }): JSX.Element => {
                         placeholder={`Edit: ${list.listTitle}`}
                         value={tempListTitle}
                         type="text"
-                        className={`w-[10vw] text-gray-950 placeholder:text-gray-950 
-                          placeholder:underline
+                        className={`w-[10vw] text-gray-950 placeholder:text-gray-900 
                           bg-transparent selection:bg-transparent   selection:text-inherit pl-2 focus:outline-none 
                         ${
                           activeIndex === i ? "cursor-text" : "cursor-pointer"
