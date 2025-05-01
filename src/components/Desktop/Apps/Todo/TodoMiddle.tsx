@@ -16,7 +16,7 @@ const TodoMiddle: React.FC<TodoMiddleProp> = ({ styles }) => {
 
   const collectTodos = Todos_.todo[Todos_.activeIndex]?.items || [];
 
-  // Keep updating time every second
+  // ⏱️ Keep updating time every second
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
@@ -24,14 +24,30 @@ const TodoMiddle: React.FC<TodoMiddleProp> = ({ styles }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Recompute reminders every time todos or time changes : Real Time Changes
+  /**
+   * 🚨 Root Crash Cause:
+   * When `e.reminder` is undefined (no reminder set on some todos),
+   * accessing `e.reminder.hour` causes a crash.
+   * ✅ Fix: Guard against undefined `reminder` before accessing `hour` or `minute`.
+   */
   const todayReminders = useMemo(() => {
     return collectTodos.filter((e) => {
+      // 🚫 Skip if reminder object is missing or malformed
+      if (
+        !e.reminder ||
+        typeof e.reminder.hour !== "number" ||
+        typeof e.reminder.minute !== "number"
+      ) {
+        return false;
+      }
+
       const todoDate = new Date(e.date);
+
+      // Convert AM/PM to 24-hour format safely
       const reminderHour =
-        e.reminder?.isAmPm === "pm" && e.reminder.hour !== 12
+        e.reminder.isAmPm === "pm" && e.reminder.hour !== 12
           ? e.reminder.hour + 12
-          : e.reminder?.isAmPm === "am" && e.reminder.hour === 12
+          : e.reminder.isAmPm === "am" && e.reminder.hour === 12
           ? 0
           : e.reminder.hour;
 
@@ -52,19 +68,20 @@ const TodoMiddle: React.FC<TodoMiddleProp> = ({ styles }) => {
         todoDate.getMonth() === currentTime.getMonth() &&
         todoDate.getDate() === currentTime.getDate() &&
         diff >= 0 &&
-        diff < 60000 // reminder is due within this current minute
+        diff < 60000 // ✅ only show reminder due within current minute
       );
     });
   }, [collectTodos, currentTime]);
 
-  const currentReminder = todayReminders.length > 0 ? todayReminders[0] : null;
+  // 🧠 Use short-circuit logic to assign the first matching reminder (or false)
+  const currentReminder = todayReminders.length > 0 && todayReminders[0];
 
   return (
     <main
       className={`${styles} flex flex-col bg-[#131313] items-center pb-9 relative`}
     >
-      {/* Reminder section */}
-      {currentReminder && (
+      {/* 🔔 Show reminder popup only if valid */}
+      {currentReminder && currentReminder.reminder && (
         <TM_TodoReminder
           date={currentReminder.date}
           reminder={currentReminder.reminder}
@@ -78,6 +95,7 @@ const TodoMiddle: React.FC<TodoMiddleProp> = ({ styles }) => {
 
       <DateMonthReminder />
 
+      {/* ✅ Main Todo Content */}
       {Todos_.todo.length > 0 ? (
         <>
           <AddTodoListItems />
@@ -89,7 +107,7 @@ const TodoMiddle: React.FC<TodoMiddleProp> = ({ styles }) => {
         </h2>
       )}
 
-      {/* Optional debug clock */}
+      {/* 🧪 Optional: Real-time debug clock */}
       {/* <pre className="absolute bottom-10 text-3xl">
         {currentTime.getHours()} :: {currentTime.getMinutes()} ::{" "}
         {currentTime.getSeconds()}
@@ -99,12 +117,3 @@ const TodoMiddle: React.FC<TodoMiddleProp> = ({ styles }) => {
 };
 
 export default TodoMiddle;
-
-/*
-# Add real-time array updating example with useMemo hook and optimization
-- Implemented useState and useMemo hooks to handle array filtering and sorting based on even/odd criteria
-- Added buttons to toggle between even and odd numbers, and to add new items to the list
-- Optimized re-rendering by memoizing the filtered and sorted array
-- Included a detailed README with usage instructions and explanation of the code
-
-*/
