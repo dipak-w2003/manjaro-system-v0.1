@@ -12,6 +12,11 @@ interface TodoProps {
 const TodoApp: React.FC<TodoProps> = ({ children }) => {
   const Todos = useSelector((state: RootState) => state.devTodo);
   // console.log(Todos.todo[Todos.activeIndex]);
+
+  const allReminders = Todos.todo.flatMap((list) =>
+    (list.items ?? []).filter((item) => item.reminder && !item.isCompleted)
+  );
+
   return (
     <main
       className={`bg-[#252525] h-full overflow-hidden  w-full flex noto-sans  `}

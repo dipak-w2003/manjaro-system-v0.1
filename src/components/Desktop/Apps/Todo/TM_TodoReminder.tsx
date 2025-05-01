@@ -22,7 +22,7 @@ const TM_TodoReminder: React.FC<TodoItems> = ({
   useEffect(() => {
     const timeout = setTimeout(() => {
       setVisible(false);
-    }, 10000); // 10 seconds
+    }, 60000); // 10 seconds
 
     return () => clearTimeout(timeout);
   }, []);

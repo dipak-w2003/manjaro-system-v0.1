@@ -13,10 +13,12 @@ interface TodoMiddleProp {
 const TodoMiddle: React.FC<TodoMiddleProp> = ({ styles }) => {
   const Todos_ = useSelector((state: RootState) => state.devTodo);
   const [currentTime, setCurrentTime] = useState(new Date());
-
-  const collectTodos = Todos_.todo[Todos_.activeIndex]?.items || [];
-
+  const allReminders = Todos_.todo.flatMap((list) =>
+    (list.items ?? []).filter((item) => item.reminder && !item.isCompleted)
+  );
+  const collectTodos = allReminders || [];
   // ⏱️ Keep updating time every second
+  console.log(allReminders);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
@@ -93,7 +95,7 @@ const TodoMiddle: React.FC<TodoMiddleProp> = ({ styles }) => {
         />
       )}
 
-      <DateMonthReminder />
+      <DateMonthReminder reminderPanel={todayReminders.length > 0 && true} />
 
       {/* ✅ Main Todo Content */}
       {Todos_.todo.length > 0 ? (

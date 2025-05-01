@@ -1,4 +1,9 @@
-export default function DateMonthReminder(): JSX.Element {
+interface DateMonthReminderProps {
+  reminderPanel: boolean;
+}
+export default function DateMonthReminder({
+  reminderPanel = false,
+}: DateMonthReminderProps): JSX.Element {
   const date = new Date();
   const hours = date.getHours();
 
@@ -18,14 +23,18 @@ export default function DateMonthReminder(): JSX.Element {
   };
 
   return (
-    <section className="w-full p-6 flex justify-center items-center *:p-2 text-4xl font-extrabold">
+    <section
+      className={`w-full p-6 flex justify-center items-center *:p-2 text-4xl font-extrabold ${
+        reminderPanel && "invisible"
+      }`}
+    >
       <span className="text-center text-2xl">
         <h4>{date.toLocaleDateString("default", { month: "short" })}</h4>
         <h4>{date.getDate()}</h4>
       </span>
       <span className="text-3xl">
         <h4>{getGreeting()}</h4>
-        <h4 className="text-gray-600">{getPlanMessage()}</h4>
+        <h4 className={"text-gray-600"}>{getPlanMessage()}</h4>
       </span>
     </section>
   );
