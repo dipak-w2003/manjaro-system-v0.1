@@ -7,15 +7,14 @@ import {
   TodoState,
   removeTodoList,
 } from "@/Redux/2-rendered-apps-state/devTodoSlice";
-import { AppDispatch, RootState } from "@/Redux/store";
-import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/Redux/store";
+import { useDispatch } from "react-redux";
 import { RxCross2 } from "react-icons/rx";
 import { toast, ToastContainer } from "react-toastify";
 
 interface TodoPROPS {
   styles: string;
   todoList?: TodoState;
-  // ? For removeListTitle
 }
 
 const TodoLeft: React.FC<TodoPROPS> = ({ styles, todoList }): JSX.Element => {
@@ -42,13 +41,12 @@ const TodoLeft: React.FC<TodoPROPS> = ({ styles, todoList }): JSX.Element => {
       setTempListTitle("");
     } else
       toast.error(`Title Insufficient`, {
-        position: "bottom-left",
+        position: "bottom-right",
         autoClose: 5000,
         pauseOnHover: true,
         draggable: true,
       });
   };
-
   // ? HTML'S
   return (
     <main className={`${styles} relative`}>

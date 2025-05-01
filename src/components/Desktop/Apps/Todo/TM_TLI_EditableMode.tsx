@@ -10,6 +10,8 @@ import {
 import { FaRegTrashAlt } from "react-icons/fa";
 
 import { SiTicktick } from "react-icons/si";
+import { MdOutlineTimer } from "react-icons/md";
+import { RxCross2 } from "react-icons/rx";
 
 interface ListItemEditableModeProps {
   TodoItems: TodoItems;
@@ -23,6 +25,15 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
   setFocusedItem,
 }) => {
   const [formDataProp, setFormDataProp] = useState<TodoItems>({ ...TodoItems });
+  const [focused, setFocused] = useState(false);
+  const [toggleReminerPanel, setToggleReminerPanel] = useState<boolean>(false);
+  const [timeInput, setTimeInput] = useState<string>(() => {
+    const { hour, minute } = TodoItems.reminder;
+    const formattedHour = hour.toString().padStart(2, "0");
+    const formattedMinute = minute.toString().padStart(2, "0");
+    return `${formattedHour}:${formattedMinute}`;
+  });
+
   const dispatch: AppDispatch = useDispatch();
 
   const handleUpdateSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,16 +49,37 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
     }
 
     setFocusedItem(false);
+
+    // Time Reminder Formatting
+    let [timeHH, timeMM] = timeInput.split(":").map(Number);
+    const isAmOrPM: string = timeHH >= 12 ? "pm" : "am";
+    if (timeHH >= 13) timeHH = timeHH - 12;
+
+    const reminder = {
+      hour: timeHH,
+      isAmPm: isAmOrPM,
+      minute: timeMM,
+    };
+
+    setToggleReminerPanel(false);
+
+    // Dispatch devTodo
     dispatch(
       updateTodoListItems({
         idx,
-        item: { ...formDataProp },
-      }),
+        item: {
+          ...formDataProp,
+          reminder: {
+            ...reminder,
+          },
+        },
+      })
     );
   };
 
+  // handleChange input
   const handleOnChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormDataProp((prev) => ({ ...prev, [name]: value }));
@@ -59,7 +91,7 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
       initial={{ height: "70px" }}
       animate={{ height: "400px" }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
-      className="rounded overflow-hidden flex flex-col p-0 transition-all duration-100  bg-[#252525]
+      className="rounded overflow-hidden flex flex-col transition-all duration-100  bg-[#252525]
       relative w-[45vw] bg-transparent "
     >
       <input
@@ -76,22 +108,6 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
         maxLength={50}
         list="todo-suggestions"
       />
-
-      {/** For now drop suggestions mapping */}
-      {/* <datalist id="todo-suggestions">
-        {dataList
-          .filter(
-            (list) =>
-              typeof list.list === "string" &&
-              list.list
-                .toLowerCase()
-                .includes(formDataProp.todoTitle.toLowerCase())
-          )
-          .map((list) => (
-            <option key={list.id} value={String(list.list)} />
-          ))}
-      </datalist> */}
-
       <textarea
         title="Todo-Summary"
         className="w-full p-2 pl-4 min-h-[105px] max-h-[105px] focus:outline-none resize-none
@@ -102,7 +118,6 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
         value={formDataProp.todoSummarize}
         placeholder="Make Summarization.."
       />
-
       <span
         className="p-3  flex justify-between items-center h-[70px] transition-all duration-100"
         title="Todo-Date"
@@ -117,7 +132,6 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
           required
         />
       </span>
-
       <section
         title="Todo-Priority"
         id="todo-list-items-priority"
@@ -147,7 +161,6 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
           ))}
         </div>
       </section>
-
       <span className="transition-all duration-100">
         <input
           title="Todo-Tag"
@@ -164,6 +177,19 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
         />
       </span>
 
+      {/* ? Reminder section */}
+      <motion.button
+        type="button"
+        onClick={() => setToggleReminerPanel(!toggleReminerPanel)}
+        transition={{ duration: 0.3, ease: "easeIn" }}
+        className={`${
+          toggleReminerPanel ? "text-black" : "text-white"
+        } rounded-md  bottom-12 right-6  z-50 absolute mr-4 *:text-xl`}
+      >
+        {!toggleReminerPanel ? <MdOutlineTimer /> : <RxCross2 />}
+      </motion.button>
+
+      {/* --------------------------------------------------------------------------------------------------- */}
       {/* ? Buttons : ACtions */}
       <button
         onClick={() => dispatch(removeTodoListItems(idx))}
@@ -173,7 +199,6 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
       >
         <FaRegTrashAlt />
       </button>
-
       <button
         type="submit"
         onClick={() => handleUpdateSubmit}
@@ -182,6 +207,37 @@ export const ListItemEditableMode: React.FC<ListItemEditableModeProps> = ({
       >
         <SiTicktick className="text-xl" />
       </button>
+      {/* ? Timer */}
+      {toggleReminerPanel && (
+        <motion.span
+          initial={{ bottom: "-50%" }}
+          animate={{ bottom: toggleReminerPanel ? "2%" : "-50%" }}
+          transition={{ duration: 0.3, ease: "easeIn" }}
+          className="absolute bottom-0 h-16 w-full  bg-white text-black overflow-hidden flex justify-around items-center "
+          onMouseEnter={() => setFocused((prev) => (prev = true))}
+          onClick={() => setFocused((prev) => (prev = true))}
+        >
+          <h4>Set Reminder</h4>
+          <div className="flex justify-around items-center *:p-2 bg-[#D3D3D3] *:text-center">
+            {/* Hour Input */}
+            <input
+              name="todoReminder"
+              type="time"
+              className="w-[10vw]"
+              value={timeInput}
+              onChange={(e) => setTimeInput(e.target.value)}
+            />
+          </div>
+
+          {/* Optional Music Input */}
+          <input
+            type="file"
+            name="todo-music"
+            id="todo-music"
+            placeholder="."
+          />
+        </motion.span>
+      )}
     </motion.form>
   );
 };

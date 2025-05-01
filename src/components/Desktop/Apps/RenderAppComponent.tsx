@@ -56,7 +56,7 @@ const RenderApp: React.FC<RenderAppProps> = React.memo(({ app, removeApp }) => {
     <Suspense fallback={<p className="text-gray-400">...loading {appName}</p>}>
       <main
         className={` ${
-          ViewPort ? "h-full w-full" : "h-[50vh] w-[50vw]"
+          ViewPort ? "h-full w-[100vw]" : "h-[50vh] w-[50vw]"
         }  bg-slate-800 relative`}
       >
         {/* Show Apps Title bar. i.e close, maximize minimize titles etc includes */}

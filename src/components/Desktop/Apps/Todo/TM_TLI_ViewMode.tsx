@@ -106,11 +106,15 @@ export default function TM_TodoListItemsViewMode() {
                 </article>
               )}
               {isFocused && (
-                <ListItemEditableMode
-                  idx={idx}
-                  setFocusedItem={() => setFocusedItem((prev) => (prev = null))}
-                  TodoItems={item}
-                />
+                <div>
+                  <ListItemEditableMode
+                    idx={idx}
+                    setFocusedItem={() =>
+                      setFocusedItem((prev) => (prev = null))
+                    }
+                    TodoItems={item}
+                  />
+                </div>
               )}
 
               <div
