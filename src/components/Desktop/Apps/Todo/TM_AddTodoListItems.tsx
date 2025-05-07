@@ -74,6 +74,7 @@ export default function AddTodoListItems(): JSX.Element {
     // ? Dispatch To redux
     dispatch(
       addTodoListItems({
+        parentListIndex: activeIndex,
         date: String(FinalDate),
         id: uuidv4(),
         isCompleted: false,

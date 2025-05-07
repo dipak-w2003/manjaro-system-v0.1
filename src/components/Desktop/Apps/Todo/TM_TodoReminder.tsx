@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { TodoItems } from "@/Redux/2-rendered-apps-state/devTodoSlice";
-
+import {
+  TodoItems,
+  updateTodoListItemSetIsComplete,
+  updateTodoListItemSetIsComplete2,
+} from "@/Redux/2-rendered-apps-state/devTodoSlice";
+import { AppDispatch } from "@/Redux/store";
+import { useDispatch } from "react-redux";
 const TM_TodoReminder: React.FC<TodoItems> = ({
   todoTitle,
   reminder,
@@ -9,7 +14,9 @@ const TM_TodoReminder: React.FC<TodoItems> = ({
   id,
   isCompleted,
   priority,
+  parentListIndex,
 }) => {
+  const dispatch: AppDispatch = useDispatch();
   const [visible, setVisible] = useState(true);
 
   // Format time
@@ -27,7 +34,7 @@ const TM_TodoReminder: React.FC<TodoItems> = ({
     return () => clearTimeout(timeout);
   }, []);
 
-  if (!visible) return null;
+  if (!visible && !isCompleted) return null;
 
   return (
     <div
@@ -51,7 +58,17 @@ const TM_TodoReminder: React.FC<TodoItems> = ({
       {/* Right section */}
       <section className="flex flex-col gap-3">
         <button
-          onClick={() => setVisible(false)}
+          onClick={() => {
+            setVisible(false);
+
+            dispatch(
+              updateTodoListItemSetIsComplete2({
+                parentListIndex: parentListIndex,
+                uid: id,
+                completion: isCompleted,
+              })
+            );
+          }}
           className="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-md transition"
         >
           Done

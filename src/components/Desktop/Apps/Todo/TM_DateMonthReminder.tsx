@@ -1,5 +1,6 @@
 interface DateMonthReminderProps {
   reminderPanel: boolean;
+  itemIsCompleted?: boolean;
 }
 export default function DateMonthReminder({
   reminderPanel = false,

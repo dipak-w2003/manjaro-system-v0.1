@@ -6,85 +6,77 @@ import AddTodoListItems from "./TM_AddTodoListItems";
 import TodoListItems from "./TM_TodoListItems";
 import TM_TodoReminder from "./TM_TodoReminder";
 
-interface TodoMiddleProp {
+interface TodoMiddleProps {
   styles?: string;
 }
 
-const TodoMiddle: React.FC<TodoMiddleProp> = ({ styles }) => {
-  const Todos_ = useSelector((state: RootState) => state.devTodo);
+const TodoMiddle: React.FC<TodoMiddleProps> = ({ styles }) => {
+  const { todo } = useSelector((state: RootState) => state.devTodo);
   const [currentTime, setCurrentTime] = useState(new Date());
-  const allReminders = Todos_.todo.flatMap((list) =>
-    (list.items ?? []).filter((item) => item.reminder && !item.isCompleted)
-  );
-  const collectTodos = allReminders || [];
-  // ⏱️ Keep updating time every second
-  console.log(allReminders);
+
+  // ⏱️ Live clock ticking every second
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
+    const interval = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
 
-  /**
-   * 🚨 Root Crash Cause:
-   * When `e.reminder` is undefined (no reminder set on some todos),
-   * accessing `e.reminder.hour` causes a crash.
-   * ✅ Fix: Guard against undefined `reminder` before accessing `hour` or `minute`.
-   */
+  // 📦 Get all items with valid reminders that aren't completed
+  const remindersPool = useMemo(() => {
+    return todo.flatMap((list, listIndex) =>
+      (list.items ?? [])
+        .filter((item) => item.reminder && !item.isCompleted)
+        .map((item) => ({ ...item, listIndex }))
+    );
+  }, [todo]);
+
+  // 🎯 Filter today's active reminders that match the current minute
   const todayReminders = useMemo(() => {
-    return collectTodos.filter((e) => {
-      // 🚫 Skip if reminder object is missing or malformed
+    return remindersPool.filter((item) => {
+      const { reminder, date } = item;
       if (
-        !e.reminder ||
-        typeof e.reminder.hour !== "number" ||
-        typeof e.reminder.minute !== "number"
+        !reminder ||
+        typeof reminder.hour !== "number" ||
+        typeof reminder.minute !== "number"
       ) {
         return false;
       }
 
-      const todoDate = new Date(e.date);
-
-      // Convert AM/PM to 24-hour format safely
+      const todoDate = new Date(date);
       const reminderHour =
-        e.reminder.isAmPm === "pm" && e.reminder.hour !== 12
-          ? e.reminder.hour + 12
-          : e.reminder.isAmPm === "am" && e.reminder.hour === 12
+        reminder.isAmPm === "pm" && reminder.hour !== 12
+          ? reminder.hour + 12
+          : reminder.isAmPm === "am" && reminder.hour === 12
           ? 0
-          : e.reminder.hour;
-
-      const reminderMinute = e.reminder.minute;
+          : reminder.hour;
 
       const reminderTime = new Date(
         todoDate.getFullYear(),
         todoDate.getMonth(),
         todoDate.getDate(),
         reminderHour,
-        reminderMinute
+        reminder.minute
       );
 
-      const diff = currentTime.getTime() - reminderTime.getTime();
-
-      return (
+      const isToday =
         todoDate.getFullYear() === currentTime.getFullYear() &&
         todoDate.getMonth() === currentTime.getMonth() &&
-        todoDate.getDate() === currentTime.getDate() &&
-        diff >= 0 &&
-        diff < 60000 // ✅ only show reminder due within current minute
-      );
-    });
-  }, [collectTodos, currentTime]);
+        todoDate.getDate() === currentTime.getDate();
 
-  // 🧠 Use short-circuit logic to assign the first matching reminder (or false)
-  const currentReminder = todayReminders.length > 0 && todayReminders[0];
+      const diff = currentTime.getTime() - reminderTime.getTime();
+      return isToday && diff >= 0 && diff < 60000; // within current minute
+    });
+  }, [remindersPool, currentTime]);
+
+  const currentReminder = todayReminders[0];
 
   return (
     <main
       className={`${styles} flex flex-col bg-[#131313] items-center pb-9 relative`}
     >
-      {/* 🔔 Show reminder popup only if valid */}
-      {currentReminder && currentReminder.reminder && (
+      {/* 🔔 Reminder Popup */}
+      {currentReminder && (
         <TM_TodoReminder
+          parentListIndex={currentReminder.listIndex}
           date={currentReminder.date}
           reminder={currentReminder.reminder}
           todoTitle={currentReminder.todoTitle}
@@ -95,24 +87,24 @@ const TodoMiddle: React.FC<TodoMiddleProp> = ({ styles }) => {
         />
       )}
 
-      <DateMonthReminder reminderPanel={todayReminders.length > 0 && true} />
+      {/* 📆 Calendar strip */}
+      <DateMonthReminder reminderPanel={!!todayReminders.length} />
 
-      {/* ✅ Main Todo Content */}
-      {Todos_.todo.length > 0 ? (
+      {/* 📝 Main Content */}
+      {todo.length > 0 ? (
         <>
           <AddTodoListItems />
           <TodoListItems />
         </>
       ) : (
-        <h2 className="text-xl text-center my-0 w-full h-fit text-gray-500 mt-10">
+        <h2 className="text-xl text-center w-full mt-10 text-gray-500">
           Create List
         </h2>
       )}
 
-      {/* 🧪 Optional: Real-time debug clock */}
+      {/* 🧪 Optional Clock Debug */}
       {/* <pre className="absolute bottom-10 text-3xl">
-        {currentTime.getHours()} :: {currentTime.getMinutes()} ::{" "}
-        {currentTime.getSeconds()}
+        {currentTime.toLocaleTimeString()}
       </pre> */}
     </main>
   );

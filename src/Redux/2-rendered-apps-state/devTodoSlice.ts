@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface TodoItems {
+  parentListIndex: number;
   id: string;
   todoTitle: string | number;
   todoSummarize?: any;
@@ -70,7 +71,7 @@ const todoSlice = createSlice({
 
     updateTodoListTitle: (
       state,
-      action: PayloadAction<{ listIdx: number; newTitle: string }>,
+      action: PayloadAction<{ listIdx: number; newTitle: string }>
     ) => {
       state.todo[action.payload.listIdx].listTitle = action.payload.newTitle;
       saveToLocalStorage(state);
@@ -100,12 +101,12 @@ const todoSlice = createSlice({
     // Update Todo List Items
     updateTodoListItems: (
       state,
-      action: PayloadAction<{ idx: number; item: TodoItems }>,
+      action: PayloadAction<{ idx: number; item: TodoItems }>
     ) => {
       state.todo[state.activeIndex].items.splice(
         action.payload.idx,
         1,
-        action.payload.item,
+        action.payload.item
       );
       saveToLocalStorage(state);
     },
@@ -114,13 +115,13 @@ const todoSlice = createSlice({
     // Todo : Update this code
     updateTodoListItemSetIsComplete: (
       state,
-      action: PayloadAction<{ uid: string; completion: boolean }>,
+      action: PayloadAction<{ uid: string; completion: boolean }>
     ) => {
       const grabItem = state.todo[state.activeIndex].items.find(
-        (item) => item.id === action.payload.uid,
+        (item) => item.id === action.payload.uid
       );
       const idx: number = state.todo[state.activeIndex].items.findIndex(
-        (item) => item.id === grabItem.id,
+        (item) => item.id === grabItem.id
       );
       // alert(idx);
 
@@ -130,6 +131,36 @@ const todoSlice = createSlice({
       else setCompleteForT = { ...grabItem, isCompleted: true };
 
       state.todo[state.activeIndex].items.splice(idx, 1, setCompleteForT);
+      saveToLocalStorage(state);
+    },
+
+    // random Active Index UpdateIsComplete
+    updateTodoListItemSetIsComplete2: (
+      state,
+      action: PayloadAction<{
+        parentListIndex: number;
+        uid: string;
+        completion: boolean;
+      }>
+    ) => {
+      const grabItem = state.todo[action.payload.parentListIndex].items.find(
+        (item) => item.id === action.payload.uid
+      );
+      const idx: number = state.todo[
+        action.payload.parentListIndex
+      ].items.findIndex((item) => item.id === grabItem.id);
+      // alert(idx);
+
+      let setCompleteForT: TodoItems = { ...grabItem };
+      if (grabItem.isCompleted)
+        setCompleteForT = { ...grabItem, isCompleted: false };
+      else setCompleteForT = { ...grabItem, isCompleted: true };
+
+      state.todo[action.payload.parentListIndex].items.splice(
+        idx,
+        1,
+        setCompleteForT
+      );
       saveToLocalStorage(state);
     },
   },
@@ -144,6 +175,7 @@ export const {
   updateTodoListItems,
   removeTodoListItems,
   updateTodoListItemSetIsComplete,
+  updateTodoListItemSetIsComplete2,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;
