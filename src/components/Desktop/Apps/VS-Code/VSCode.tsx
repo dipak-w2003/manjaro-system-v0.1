@@ -7,7 +7,8 @@ interface VSCodeProps {
 
 const VSCode: React.FC<VSCodeProps> = ({ app }) => {
   return (
-    <div className="vscode-container">
+    <div className={`vscode-container   `}>
+      <img src={app.appIcon} className={`h-1/2`} alt="" />
       <h2>{app.appName}</h2>
     </div>
   );

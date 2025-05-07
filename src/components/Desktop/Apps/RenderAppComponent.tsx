@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useCallback, useEffect } from "react";
 import { RecentPkg } from "@/Redux/1-user-state/recentSlice";
 import { AppPkgId } from "../kde/Pages/1-taskbar/1-apps-menu/AppCategoryList";
 import { IoCloseCircle } from "react-icons/io5";
+import SuspenseLoadingAppView from "./SuspenseLoadingAppView";
 
 const VSCode = lazy(() => import("@/components/Desktop/Apps/VS-Code/VSCode"));
 const TerminalApp = lazy(
@@ -25,7 +26,7 @@ interface RenderAppProps {
 }
 
 const RenderApp: React.FC<RenderAppProps> = React.memo(({ app, removeApp }) => {
-  const { pkgId, appName, desc } = app;
+  const { pkgId, appName, desc, appIcon } = app;
   const Component = AppComponentRender[pkgId];
 
   // Avoid unnecessary re-creation of the function
@@ -53,7 +54,7 @@ const RenderApp: React.FC<RenderAppProps> = React.memo(({ app, removeApp }) => {
   useEffect(() => {}, [clicked, ViewPort]);
 
   return (
-    <Suspense fallback={<p className="text-gray-400">...loading {appName}</p>}>
+    <Suspense fallback={<SuspenseLoadingAppView app={app} />}>
       <main
         className={` ${
           ViewPort ? "h-full w-[100vw]" : "h-[50vh] w-[50vw]"
@@ -61,14 +62,18 @@ const RenderApp: React.FC<RenderAppProps> = React.memo(({ app, removeApp }) => {
       >
         {/* Show Apps Title bar. i.e close, maximize minimize titles etc includes */}
         <div
-          className=" h-[3vh] w-full relative bg-slate-900 "
+          className=" h-[3vh] w-full flex justify-center items-center relative bg-slate-800 "
           title="close"
           onClick={setView}
         >
           <h2 className="text-center text-sm ">
-            {appName} - {desc}
+            <i>
+              {" "}
+              {appName} - {desc}{" "}
+            </i>
           </h2>
           <IoCloseCircle
+            title={`close-app-${app.appName}`}
             className="text-lg absolute right-2 top-[1.5px] hover:text-red-600 transition-all cursor-pointer text-white"
             onClick={handleRemove}
           />
