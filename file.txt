@@ -1,0 +1,169 @@
+src/
+├── App.css
+├── App.tsx
+├── assets
+│   └── react.svg
+├── components
+│   ├── Desktop
+│   │   ├── Apps
+│   │   │   ├── Games
+│   │   │   │   └── GamesApp.tsx
+│   │   │   ├── Music-Player
+│   │   │   │   └── MusicPlayerApp.tsx
+│   │   │   ├── RenderAppComponent.tsx
+│   │   │   ├── SuspenseLoadingAppView.tsx
+│   │   │   ├── Terminal
+│   │   │   │   └── TerminalApp.tsx
+│   │   │   ├── Todo
+│   │   │   │   ├── clover.svg
+│   │   │   │   ├── TM_AddTodoListItems.tsx
+│   │   │   │   ├── TM_DateMonthReminder.tsx
+│   │   │   │   ├── TM_TLI_EditableMode.tsx
+│   │   │   │   ├── TM_TLI_ViewMode.tsx
+│   │   │   │   ├── TM_TodoListItems.tsx
+│   │   │   │   ├── TM_TodoReminder.tsx
+│   │   │   │   ├── TodoApp.tsx
+│   │   │   │   ├── TodoLeft.tsx
+│   │   │   │   ├── TodoMiddle.tsx
+│   │   │   │   ├── TodoRight.tsx
+│   │   │   │   ├── todo_utils.ts
+│   │   │   │   ├── TR_Calendar.css
+│   │   │   │   └── TR_Calendar.tsx
+│   │   │   └── VS-Code
+│   │   │       └── VSCode.tsx
+│   │   ├── DesktopMain.tsx
+│   │   ├── gnome
+│   │   │   └── GnomeMain.tsx
+│   │   ├── kde
+│   │   │   ├── KdeApp.tsx
+│   │   │   ├── KdeMain.tsx
+│   │   │   └── Pages
+│   │   │       ├── 1-taskbar
+│   │   │       │   ├── 1-apps-menu
+│   │   │       │   │   ├── AppCategoryList.ts
+│   │   │       │   │   ├── AppMenuList.ts
+│   │   │       │   │   ├── AppMenu.tsx
+│   │   │       │   │   └── Contents
+│   │   │       │   │       ├── AppMenuContents.tsx
+│   │   │       │   │       ├── BottomMenu.tsx
+│   │   │       │   │       ├── CenterMenu.tsx
+│   │   │       │   │       ├── CMLeft.tsx
+│   │   │       │   │       ├── CMRight.tsx
+│   │   │       │   │       └── TopMenu.tsx
+│   │   │       │   └── TaskbarApp.tsx
+│   │   │       ├── 2-main-screen
+│   │   │       │   ├── 1-title-bar
+│   │   │       │   │   └── TitleBarLayout.tsx
+│   │   │       │   └── MainScreen.tsx
+│   │   │       └── LazyKdeLoad.tsx
+│   │   ├── protectedRoutes.ts
+│   │   ├── Themes
+│   │   │   ├── CSS
+│   │   │   │   └── CursorTheme.css
+│   │   │   ├── Images
+│   │   │   │   ├── wallpaper-leaves.jpg
+│   │   │   │   └── wallpaper-village.jpg
+│   │   │   └── SVG
+│   │   │       ├── Apps
+│   │   │       │   ├── applications.svg
+│   │   │       │   ├── Categories
+│   │   │       │   │   └── categoryAppsSvgs.ts
+│   │   │       │   ├── developments.svg
+│   │   │       │   ├── favorites.svg
+│   │   │       │   ├── games.svg
+│   │   │       │   ├── game.svg
+│   │   │       │   ├── graphics.svg
+│   │   │       │   ├── internets.svg
+│   │   │       │   ├── music-player.svg
+│   │   │       │   ├── notes.svg
+│   │   │       │   ├── offices.svg
+│   │   │       │   ├── settings.svg
+│   │   │       │   ├── SVGs.ts
+│   │   │       │   ├── systems.svg
+│   │   │       │   ├── terminal.svg
+│   │   │       │   ├── utilities.svg
+│   │   │       │   └── vs-code.svg
+│   │   │       ├── Cursors
+│   │   │       │   ├── click.svg
+│   │   │       │   └── pointer.svg
+│   │   │       ├── reusableSVGs.tsx
+│   │   │       └── triangle-selected.svg
+│   │   └── xfce
+│   │       └── XfceMain.tsx
+│   ├── Pages
+│   │   ├── 1-system-load
+│   │   │   ├── ManjaroLoading1.tsx
+│   │   │   ├── SystemBooting2.tsx
+│   │   │   ├── systemBootings.ts
+│   │   │   └── SystemLoadMain.tsx
+│   │   ├── 2-login
+│   │   │   ├── 1-TaskBar
+│   │   │   │   ├── RenderDesktopIcon.tsx
+│   │   │   │   ├── TbAccessibility.tsx
+│   │   │   │   ├── TbDesktopChange.tsx
+│   │   │   │   ├── TbLangChange.tsx
+│   │   │   │   └── TbPowerBtn.tsx
+│   │   │   ├── LoginTaskBar.tsx
+│   │   │   ├── Login.tsx
+│   │   │   ├── SelectUser.tsx
+│   │   │   ├── UserLogIn.tsx
+│   │   │   └── usersAccount.ts
+│   │   └── ProjectCopyDisclaimer.tsx
+│   ├── ProtectedRoute.tsx
+│   ├── ui
+│   │   ├── button.tsx
+│   │   ├── calendar.tsx
+│   │   ├── dropdown-menu.tsx
+│   │   ├── form.tsx
+│   │   ├── input.tsx
+│   │   ├── label.tsx
+│   │   ├── navigation-menu.tsx
+│   │   ├── scroll-area.tsx
+│   │   ├── select.tsx
+│   │   ├── separator.tsx
+│   │   └── toast.tsx
+│   └── Utils
+│       ├── Buttons
+│       │   └── delayLog.ts
+│       └── DropDown.tsx
+├── constants
+│   ├── checkUserAuth.ts
+│   ├── constants.tsx
+│   ├── fullDateTimeExtract.ts
+│   ├── languages.ts
+│   ├── sessionStorage.ts
+│   ├── toast.ts
+│   └── Toggling.tsx
+├── context
+│   └── 1-isBooted
+│       └── isBootedContext.tsx
+├── Designs
+│   ├── 240_F_877171986_zdZyjGpckBq69FGfT0AiHZyhAAELHLZE.jpg
+│   └── appMenu.png
+├── hooks
+│   └── selectOption.tsx
+├── index.css
+├── lib
+│   └── utils.ts
+├── main.tsx
+├── Redux
+│   ├── 1-user-state
+│   │   ├── activeUserSlice.ts
+│   │   ├── desktopUserSlice.ts
+│   │   ├── isLoggedSlice.ts
+│   │   └── recentSlice.ts
+│   ├── 2-rendered-apps-state
+│   │   ├── devTodoSlice.ts
+│   │   └── devTodoSlice.type.ts
+│   ├── slices
+│   │   └── counter.ts
+│   └── store.ts
+├── SysDesign FlowChart
+│   ├── manjaro System v0^1_2.drawio
+│   ├── manjaro System v0^1.drawio
+│   └── manjaro System v0^1.drawio.png
+├── UI Ux Designs
+│   └── TitleBar.free
+└── vite-env.d.ts
+
+45 directories, 122 files

@@ -758,3 +758,182 @@ To fix this, you need to add a vercel.json configuration file to redirect all ro
 ```
 
 - Note : Not Same process for `create-react-app` instead for vite, vue, svelte etc
+
+
+
+# Project is under maintenance
+
+# Folder Structure (Future Review)
+```bash
+src/
+├── App.css
+├── App.tsx
+├── assets
+│   └── react.svg
+├── components
+│   ├── Desktop  # Contains Desktop Related Files
+│   │   ├── Apps # Desktop Apps
+│   │   │   ├── Games # Games
+│   │   │   │   └── GamesApp.tsx
+│   │   │   ├── Music-Player # Music Player
+│   │   │   │   └── MusicPlayerApp.tsx
+│   │   │   ├── RenderAppComponent.tsx # Render Apps
+│   │   │   ├── SuspenseLoadingAppView.tsx # App Loading UI
+│   │   │   ├── Terminal # Terminal App
+│   │   │   │   └── TerminalApp.tsx
+│   │   │   ├── Todo # Todo
+│   │   │   │   ├── clover.svg
+│   │   │   │   ├── TM_AddTodoListItems.tsx
+│   │   │   │   ├── TM_DateMonthReminder.tsx
+│   │   │   │   ├── TM_TLI_EditableMode.tsx
+│   │   │   │   ├── TM_TLI_ViewMode.tsx
+│   │   │   │   ├── TM_TodoListItems.tsx
+│   │   │   │   ├── TM_TodoReminder.tsx
+│   │   │   │   ├── TodoApp.tsx
+│   │   │   │   ├── TodoLeft.tsx
+│   │   │   │   ├── TodoMiddle.tsx
+│   │   │   │   ├── TodoRight.tsx
+│   │   │   │   ├── todo_utils.ts
+│   │   │   │   ├── TR_Calendar.css
+│   │   │   │   └── TR_Calendar.tsx
+│   │   │   └── VS-Code # Vsc code
+│   │   │       └── VSCode.tsx
+│   │   ├── DesktopMain.tsx # Switch Desktops UI on the basis of user desktopEnv selected
+│   │   ├── gnome # NA : desktop GNOME
+│   │   │   └── GnomeMain.tsx
+│   │   ├── kde # currently working : desktop GNOME
+│   │   │   ├── KdeApp.tsx # Kde : Handle Main Screen and Tabs UI
+│   │   │   ├── KdeMain.tsx # HandleKde kdeApp.tsx 
+│   │   │   └── Pages # Pages
+│   │   │       ├── 1-taskbar # Task Bar related ui & functionalities
+│   │   │       │   ├── 1-apps-menu
+│   │   │       │   │   ├── AppCategoryList.ts
+│   │   │       │   │   ├── AppMenuList.ts
+│   │   │       │   │   ├── AppMenu.tsx
+│   │   │       │   │   └── Contents
+│   │   │       │   │       ├── AppMenuContents.tsx
+│   │   │       │   │       ├── BottomMenu.tsx
+│   │   │       │   │       ├── CenterMenu.tsx
+│   │   │       │   │       ├── CMLeft.tsx
+│   │   │       │   │       ├── CMRight.tsx
+│   │   │       │   │       └── TopMenu.tsx
+│   │   │       │   └── TaskbarApp.tsx
+│   │   │       ├── 2-main-screen # Kde Main screen
+│   │   │       │   ├── 1-title-bar
+│   │   │       │   │   └── TitleBarLayout.tsx
+│   │   │       │   └── MainScreen.tsx
+│   │   │       └── LazyKdeLoad.tsx
+│   │   ├── protectedRoutes.ts
+│   │   ├── Themes # Desktop related themes : cursor, images / svg custom modification
+│   │   │   ├── CSS
+│   │   │   │   └── CursorTheme.css
+│   │   │   ├── Images
+│   │   │   │   ├── wallpaper-leaves.jpg
+│   │   │   │   └── wallpaper-village.jpg
+│   │   │   └── SVG
+│   │   │       ├── Apps
+│   │   │       │   ├── applications.svg
+│   │   │       │   ├── Categories
+│   │   │       │   │   └── categoryAppsSvgs.ts
+│   │   │       │   ├── developments.svg
+│   │   │       │   ├── favorites.svg
+│   │   │       │   ├── games.svg
+│   │   │       │   ├── game.svg
+│   │   │       │   ├── graphics.svg
+│   │   │       │   ├── internets.svg
+│   │   │       │   ├── music-player.svg
+│   │   │       │   ├── notes.svg
+│   │   │       │   ├── offices.svg
+│   │   │       │   ├── settings.svg
+│   │   │       │   ├── SVGs.ts
+│   │   │       │   ├── systems.svg
+│   │   │       │   ├── terminal.svg
+│   │   │       │   ├── utilities.svg
+│   │   │       │   └── vs-code.svg
+│   │   │       ├── Cursors
+│   │   │       │   ├── click.svg
+│   │   │       │   └── pointer.svg
+│   │   │       ├── reusableSVGs.tsx
+│   │   │       └── triangle-selected.svg
+│   │   └── xfce # NA : desktop Xfce
+│   │       └── XfceMain.tsx
+│   ├── Pages # Pages 
+│   │   ├── 1-system-load # system boots ui
+│   │   │   ├── ManjaroLoading1.tsx
+│   │   │   ├── SystemBooting2.tsx
+│   │   │   ├── systemBootings.ts
+│   │   │   └── SystemLoadMain.tsx
+│   │   ├── 2-login # System Login UI's for Desktop UI Entry
+│   │   │   ├── 1-TaskBar # NA : for now not working for on this
+│   │   │   │   ├── RenderDesktopIcon.tsx
+│   │   │   │   ├── TbAccessibility.tsx
+│   │   │   │   ├── TbDesktopChange.tsx
+│   │   │   │   ├── TbLangChange.tsx
+│   │   │   │   └── TbPowerBtn.tsx
+│   │   │   ├── LoginTaskBar.tsx
+│   │   │   ├── Login.tsx
+│   │   │   ├── SelectUser.tsx
+│   │   │   ├── UserLogIn.tsx
+│   │   │   └── usersAccount.ts
+│   │   └── ProjectCopyDisclaimer.tsx # imp : project disclaimer due to copyright issue's
+│   ├── ProtectedRoute.tsx
+│   ├── ui # some random shadCN libraries
+│   │   ├── button.tsx
+│   │   ├── calendar.tsx
+│   │   ├── dropdown-menu.tsx
+│   │   ├── form.tsx
+│   │   ├── input.tsx
+│   │   ├── label.tsx
+│   │   ├── navigation-menu.tsx
+│   │   ├── scroll-area.tsx
+│   │   ├── select.tsx
+│   │   ├── separator.tsx
+│   │   └── toast.tsx
+│   └── Utils
+│       ├── Buttons
+│       │   └── delayLog.ts
+│       └── DropDown.tsx
+├── constants # constant values
+│   ├── checkUserAuth.ts
+│   ├── constants.tsx
+│   ├── fullDateTimeExtract.ts
+│   ├── languages.ts
+│   ├── sessionStorage.ts
+│   ├── toast.ts
+│   └── Toggling.tsx
+├── context # Context API's
+│   └── 1-isBooted 
+│       └── isBootedContext.tsx # TODO : BootedState to be under redux/state management due to future modification comport 
+├── Designs # system designs & todo make system designs for login like API's
+│   ├── 240_F_877171986_zdZyjGpckBq69FGfT0AiHZyhAAELHLZE.jpg
+│   └── appMenu.png
+├── hooks # custom hook
+│   └── selectOption.tsx
+├── index.css
+├── lib
+│   └── utils.ts
+├── main.tsx
+├── Redux # redux state managements | Todo : Folder Structure lacks so make it better
+│   ├── 1-user-state # 
+│   │   ├── activeUserSlice.ts
+│   │   ├── desktopUserSlice.ts
+│   │   ├── isLoggedSlice.ts
+│   │   └── recentSlice.ts
+│   ├── 2-rendered-apps-state
+│   │   ├── devTodoSlice.ts
+│   │   └── devTodoSlice.type.ts
+│   ├── slices
+│   │   └── counter.ts
+│   └── store.ts
+├── SysDesign FlowChart # flow chart of drawio
+│   ├── manjaro System v0^1_2.drawio
+│   ├── manjaro System v0^1.drawio
+│   └── manjaro System v0^1.drawio.png
+├── UI Ux Designs 
+│   └── TitleBar.free
+└── vite-env.d.ts
+45 directories, 122 files
+```
+
+# Updates / Modification's 
+check the LogSeq 
